@@ -20,8 +20,17 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:25.3.1'
-    implementation project(':xpagelib')
+//    implementation project(':xpagelib')
 
+
+    implementation 'com.github.xuexiangjys:XPage:1.0'
+    //butterknife的sdk
     implementation 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    //leak
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    implementation 'com.alibaba:fastjson:1.2.8'
 }
