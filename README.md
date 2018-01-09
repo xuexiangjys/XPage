@@ -1,4 +1,6 @@
 # XPage
+[![xp][xpsvg]][xp]  [![api][apisvg]][api]
+
 一个非常方便的fragment页面框架
 
 ## 关于我
@@ -121,3 +123,8 @@
             break;
     }
 ```
+
+[xpsvg]: https://img.shields.io/badge/XPage-v1.0-brightgreen.svg
+[xp]: https://github.com/xuexiangjys/XPage
+[apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
+[api]: https://android-arsenal.com/api?level=14
