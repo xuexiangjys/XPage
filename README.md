@@ -1,7 +1,8 @@
 # XPage
-[![github](https://img.shields.io/badge/GitHub-xuexiangjys-blue.svg)](https://github.com/xuexiangjys)   [![csdn](https://img.shields.io/badge/CSDN-xuexiangjys-green.svg)](http://blog.csdn.net/xuexiangjys)
-
 一个非常方便的fragment页面框架
+
+## 关于我
+[![github](https://img.shields.io/badge/GitHub-xuexiangjys-blue.svg)](https://github.com/xuexiangjys)   [![csdn](https://img.shields.io/badge/CSDN-xuexiangjys-green.svg)](http://blog.csdn.net/xuexiangjys)
 
 ## 1、演示
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/1.gif)
