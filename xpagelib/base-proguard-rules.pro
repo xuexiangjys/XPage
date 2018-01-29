@@ -1,3 +1,4 @@
+#=========================================基础不变的混淆配置=========================================##
 #指定代码的压缩级别
 -optimizationpasses 5
 #包名不混合大小写
@@ -125,6 +126,33 @@
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.google.gson.examples.android.model.** { *; }
 
+# zxing
+-dontwarn com.google.zxing.**
+-keep class com.google.zxing.**{*;}
+
+#SignalR推送
+-keep class microsoft.aspnet.signalr.** { *; }
+
+# 极光推送混淆
+-dontoptimize
+-dontpreverify
+
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+
+-dontwarn cn.jiguang.**
+-keep class cn.jiguang.** { *; }
+
+# 数据库框架OrmLite
+-keepattributes *DatabaseField*
+-keepattributes *DatabaseTable*
+-keepattributes *SerializedName*
+-keep class com.j256.**
+-keepclassmembers class com.j256.** { *; }
+-keep enum com.j256.**
+-keepclassmembers enum com.j256.** { *; }
+-keep interface com.j256.**
+-keepclassmembers interface com.j256.** { *; }
 
 # RxJava RxAndroid
 -dontwarn sun.misc.**
@@ -138,6 +166,11 @@
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
+
+-dontwarn okio.**
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn javax.annotation.**
 
 # fastjson
 -dontwarn com.alibaba.fastjson.**

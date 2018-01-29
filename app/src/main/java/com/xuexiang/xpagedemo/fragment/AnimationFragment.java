@@ -38,19 +38,19 @@ public class AnimationFragment extends ListSimpleFragment {
     protected void onItemClick(int position) {
         switch(position) {
             case 0:
-                openPage(TestFragment.PAGE_NAME, null, CoreAnim.none);
+                openPage(TestFragment.PAGE_NAME, null, CoreAnim.none);//没有动画
                 break;
             case 1:
-                openPage(TestFragment.PAGE_NAME, null, CoreAnim.present);
+                openPage(TestFragment.PAGE_NAME, null, CoreAnim.present);//由下到上动画
                 break;
             case 2:
-                openPage(TestFragment.PAGE_NAME, null, CoreAnim.slide);
+                openPage(TestFragment.PAGE_NAME, null, CoreAnim.slide);//从左到右动画
                 break;
             case 3:
-                openPage(TestFragment.PAGE_NAME, null, CoreAnim.fade);
+                openPage(TestFragment.PAGE_NAME, null, CoreAnim.fade);//渐变
                 break;
             case 4:
-                openPage(TestFragment.PAGE_NAME, null, CoreAnim.zoom);
+                openPage(TestFragment.PAGE_NAME, null, CoreAnim.zoom);//放大
                 break;
             default:
                 break;
