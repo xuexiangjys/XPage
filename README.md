@@ -6,6 +6,18 @@
 ## 关于我
 [![github](https://img.shields.io/badge/GitHub-xuexiangjys-blue.svg)](https://github.com/xuexiangjys)   [![csdn](https://img.shields.io/badge/CSDN-xuexiangjys-green.svg)](http://blog.csdn.net/xuexiangjys)
 
+## 特点
+- 支持assets下“corepage.json”静态配置Fragment页面信息。
+- 支持Application中动态配置Fragment页面信息。
+- 支持通过注解@Page的方式动态自动配置页面信息。
+- 支持自定义Fragment页面信息配置。
+- 支持4种默认Fragment页面切换动画。
+- 支持Fragment页面间参数传递。
+- 支持Fragment页面属性保存。
+- 支持Fragment页面的onKeyDown、onFragmentResult等生命周期
+- 支持Fragment和Fragment页面自由跳转以及数据交互。
+- 支持导航栏通过注解的方式自动添加及设置。
+
 ## 1、演示
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/1.gif)
 
@@ -123,6 +135,8 @@
             break;
     }
 ```
+## 特别感谢
+https://github.com/lizhangqu/CorePage/
 
 [xpsvg]: https://img.shields.io/badge/XPage-v1.0-brightgreen.svg
 [xp]: https://github.com/xuexiangjys/XPage
