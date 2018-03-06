@@ -18,7 +18,7 @@
 - 支持Fragment和Fragment页面自由跳转以及数据交互。
 - 支持导航栏通过注解的方式自动添加及设置。
 
-## 1、演示
+## 1、演示（请star支持）
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/1.gif)
 
 ## 2、如何使用
