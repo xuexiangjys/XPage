@@ -2,12 +2,12 @@ package com.xuexiang.xpagedemo;
 
 import android.content.Context;
 
+import com.xuexiang.xpage.AppPageConfig;
 import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.PageConfiguration;
-import com.xuexiang.xpage.annotation.PageInfo;
 import com.xuexiang.xpage.base.ListSimpleFragment;
 import com.xuexiang.xpage.base.app.BaseApplication;
-import com.xuexiang.xpage.utils.PageLog;
+import com.xuexiang.xpage.model.PageInfo;
 import com.xuexiang.xpage.utils.ToastUtil;
 import com.xuexiang.xpagedemo.fragment.DateReceiveFragment;
 import com.xuexiang.xpagedemo.fragment.MainFragment;
@@ -31,10 +31,10 @@ public class MyApplication extends BaseApplication {
         PageConfig.getInstance().setPageConfiguration(new PageConfiguration() {
             @Override
             public List<PageInfo> registerPages(Context context) {
-                List<PageInfo> pageInfos = new ArrayList<>();
-                addPageInfoAndSubPages(pageInfos, MainFragment.class);
-                pageInfos.add(PageConfig.getPageInfo(DateReceiveFragment.class));
-                return pageInfos;
+//                List<PageInfo> pageInfos = new ArrayList<>();
+//                addPageInfoAndSubPages(pageInfos, MainFragment.class);
+//                pageInfos.add(PageConfig.getPageInfo(DateReceiveFragment.class));
+                return AppPageConfig.getInstance().getPages();
             }
         }).debug("PageLog").init(this);
 

@@ -1,9 +1,9 @@
-package com.xuexiang.xpage.core;
+package com.xuexiang.xpage.enums;
 
 /**
- * 页面切换动画类别
- * @author XUE
- * @date 2017/9/8 14:38
+ * 页面切换动画枚举
+ * @author xuexiang
+ * @date 2018/4/4 上午12:43
  */
 public enum CoreAnim {
 	/**

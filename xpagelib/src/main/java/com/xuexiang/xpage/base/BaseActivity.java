@@ -20,11 +20,11 @@ import android.widget.LinearLayout.LayoutParams;
 
 import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.R;
-import com.xuexiang.xpage.core.CoreAnim;
 import com.xuexiang.xpage.core.CoreConfig;
 import com.xuexiang.xpage.core.CorePageManager;
 import com.xuexiang.xpage.core.CoreSwitchBean;
 import com.xuexiang.xpage.core.CoreSwitcher;
+import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xpage.utils.PageLog;
 import com.xuexiang.xpage.utils.ToastUtil;
 import com.xuexiang.xpage.utils.Utils;

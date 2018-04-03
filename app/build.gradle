@@ -1,13 +1,21 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+
     defaultConfig {
         applicationId "com.xuexiang.xpagedemo"
-        minSdkVersion 19
-        targetSdkVersion 25
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
     }
     buildTypes {
         release {
@@ -19,19 +27,20 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:25.3.1'
-    implementation 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    implementation deps.support.app_compat
+    //butterknife的sdk
+    implementation deps.butterknife.runtime
+    annotationProcessor deps.butterknife.compiler
 
     implementation project(':xpagelib')
+    annotationProcessor project(':xpage_comiler')
+    //    implementation 'com.github.xuexiangjys:XPage:1.0'
+    //    //butterknife的sdk
+    //    //leak
+    //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    //    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    //
+    //    implementation 'com.alibaba:fastjson:1.2.8'
 
-//    implementation 'com.github.xuexiangjys:XPage:1.0'
-//    //butterknife的sdk
-
-//    //leak
-//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-//    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-//
-//    implementation 'com.alibaba:fastjson:1.2.8'
 }

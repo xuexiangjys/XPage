@@ -1,1 +1,1 @@
-include ':app', ':xpagelib'
+include ':app', ':xpagelib', ':xpage_annotation', ':xpage_comiler'

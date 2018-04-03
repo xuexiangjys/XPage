@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.xuexiang.xpage.R;
+import com.xuexiang.xpage.enums.CoreAnim;
 
 import java.util.Arrays;
 

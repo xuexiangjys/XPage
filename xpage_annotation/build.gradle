@@ -1,0 +1,8 @@
+apply plugin: 'java'
+
+dependencies {
+    compile 'com.alibaba:fastjson:1.2.8'
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8

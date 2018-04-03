@@ -2,7 +2,7 @@ package com.xuexiang.xpagedemo.fragment;
 
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.ListSimpleFragment;
-import com.xuexiang.xpage.core.CoreAnim;
+import com.xuexiang.xpage.enums.CoreAnim;
 
 import java.util.List;
 

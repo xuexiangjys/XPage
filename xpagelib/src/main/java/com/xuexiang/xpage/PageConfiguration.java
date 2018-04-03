@@ -2,7 +2,8 @@ package com.xuexiang.xpage;
 
 import android.content.Context;
 
-import com.xuexiang.xpage.annotation.PageInfo;
+
+import com.xuexiang.xpage.model.PageInfo;
 
 import java.util.List;
 

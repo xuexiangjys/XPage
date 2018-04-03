@@ -7,8 +7,8 @@ import android.text.TextUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.annotation.PageInfo;
 import com.xuexiang.xpage.core.CoreConfig;
+import com.xuexiang.xpage.model.PageInfo;
 import com.xuexiang.xpage.utils.PageLog;
 import com.xuexiang.xpage.utils.Utils;
 

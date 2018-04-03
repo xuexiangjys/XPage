@@ -4,11 +4,12 @@ apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.xuexiangjys' // 指定group，com.github.<用户名>
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 25
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
     }
@@ -23,18 +24,19 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:25.0.1'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation deps.support.app_compat
     //butterknife的sdk
-    implementation 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    implementation deps.butterknife.runtime
+    annotationProcessor deps.butterknife.compiler
 
-    implementation 'com.alibaba:fastjson:1.2.8'
+    api project(':xpage_annotation')
 
     //leak
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
 }
 
 

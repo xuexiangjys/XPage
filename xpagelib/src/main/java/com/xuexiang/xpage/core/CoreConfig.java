@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.alibaba.fastjson.JSON;
-import com.xuexiang.xpage.annotation.PageInfo;
 import com.xuexiang.xpage.base.BaseActivity;
+import com.xuexiang.xpage.model.PageInfo;
 
 import java.util.ArrayList;
 import java.util.List;
