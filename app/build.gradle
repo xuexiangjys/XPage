@@ -32,15 +32,14 @@ dependencies {
     implementation deps.butterknife.runtime
     annotationProcessor deps.butterknife.compiler
 
-    implementation project(':xpagelib')
-    annotationProcessor project(':xpage_comiler')
-    //    implementation 'com.github.xuexiangjys:XPage:1.0'
-    //    //butterknife的sdk
-    //    //leak
-    //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    //    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    //
-    //    implementation 'com.alibaba:fastjson:1.2.8'
+//    implementation project(':xpagelib')
+//    annotationProcessor project(':xpage_comiler')
+
+    implementation 'com.github.xuexiangjys.XPage:xpagelib:2.0.0'
+    annotationProcessor 'com.github.xuexiangjys.XPage:xpage_comiler:2.0.0'
+    //leak
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
 }
