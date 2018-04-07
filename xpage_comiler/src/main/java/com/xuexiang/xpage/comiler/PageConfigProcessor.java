@@ -46,7 +46,6 @@ import static com.xuexiang.xpage.util.Consts.KEY_MODULE_NAME;
 /**
  * 页面配置自动生成器
  * @author xuexiang
- * @date 2018/4/3 上午12:27
  */
 @AutoService(Processor.class)
 @SupportedOptions(KEY_MODULE_NAME)

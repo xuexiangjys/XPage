@@ -12,7 +12,6 @@ import java.util.Map;
  * 页面信息
  *
  * @author xuexiang
- * @date 2018/4/3 下午11:44
  */
 public class PageInfo implements Serializable {
 

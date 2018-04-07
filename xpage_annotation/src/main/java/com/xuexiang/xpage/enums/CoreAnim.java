@@ -3,7 +3,6 @@ package com.xuexiang.xpage.enums;
 /**
  * 页面切换动画枚举
  * @author xuexiang
- * @date 2018/4/4 上午12:43
  */
 public enum CoreAnim {
 	/**

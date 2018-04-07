@@ -3,7 +3,6 @@ package com.xuexiang.xpage.util;
 /**
  * 常量
  * @author xuexiang
- * @date 2018/4/2 上午12:04
  */
 public class Consts {
     // Generate
