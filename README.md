@@ -26,32 +26,46 @@
 
 ### 2.1、Android Studio导入方法，添加Gradle依赖
 
-   先在项目根目录的 build.gradle 的 repositories 添加:
+1.先在项目根目录的 build.gradle 的 repositories 添加:
 ```
-    allprojects {
-         repositories {
-            ...
-            maven { url "https://jitpack.io" }
+allprojects {
+     repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+2.然后在dependencies添加:
+
+```
+dependencies {
+  ...
+   implementation 'com.github.xuexiangjys.XPage:xpagelib:2.1.1'
+      annotationProcessor 'com.github.xuexiangjys.XPage:xpage_comiler:2.1.1'
+  //butterknife的sdk
+  implementation 'com.jakewharton:butterknife:8.4.0'
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+  //leak
+  debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+  releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+  testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+}
+```
+
+3.进行moduleName注册
+
+```
+defaultConfig {
+    ...
+
+    javaCompileOptions {
+        annotationProcessorOptions {
+            arguments = [ moduleName : project.getName() ]
         }
     }
-```
-
- 然后在dependencies添加:
-
-```
-    dependencies {
-      ...
-      implementation 'com.github.xuexiangjys:XPage:1.0'
-      implementation 'com.alibaba:fastjson:1.2.8'
-      //butterknife的sdk
-      implementation 'com.jakewharton:butterknife:8.4.0'
-      annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-      //leak
-      debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-      releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-      testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-      
-    }
+}
 ```
 
 ### 2.2、页面注册
@@ -60,34 +74,50 @@
 
 在assets文件夹中新建“corepage.json“，然后进行如下配置：
 ```
-    [
-      {
-        "name": "测试页面1",
-        "classPath": "com.xuexiang.xpagedemo.fragment.TestFragment1",
-        "params": ""
-      },
-      {
-        "name": "测试页面2",
-        "classPath": "com.xuexiang.xpagedemo.fragment.TestFragment2",
-        "params": {
-          "key1":"这是参数1的值",
-          "key2":"这是参数2的值"
-        }
-      }，
-    ]
+[
+  {
+    "name": "测试页面1",
+    "classPath": "com.xuexiang.xpagedemo.fragment.TestFragment1",
+    "params": ""
+  },
+  {
+    "name": "测试页面2",
+    "classPath": "com.xuexiang.xpagedemo.fragment.TestFragment2",
+    "params": {
+      "key1":"这是参数1的值",
+      "key2":"这是参数2的值"
+    }
+  }，
+]
 ```
 
 #### 2.2.2、Application中注册
+
+1.手动动态进行页面注册
+
 ```
-    PageConfig.getInstance().setPageConfiguration(new PageConfiguration() {
-        @Override
-        public List<PageInfo> registerPages(Context context) {
-            List<PageInfo> pageInfos = new ArrayList<>();
-            addPageInfoAndSubPages(pageInfos, MainFragment.class);
-            pageInfos.add(PageConfig.getPageInfo(DateReceiveFragment.class));
-            return pageInfos;
-        }
-    }).debug("PageLog").init(this);
+PageConfig.getInstance().setPageConfiguration(new PageConfiguration() {
+    @Override
+    public List<PageInfo> registerPages(Context context) {
+        List<PageInfo> pageInfos = new ArrayList<>();
+        addPageInfoAndSubPages(pageInfos, MainFragment.class);
+        pageInfos.add(PageConfig.getPageInfo(DateReceiveFragment.class));
+        return pageInfos;
+    }
+}).debug("PageLog").init(this);
+```
+
+2.自动进行页面注册
+
+使用apt自动生成的页面注册配置类 "moduleName"+PageConfig 的getPages()进行注册。
+
+```
+PageConfig.getInstance().setPageConfiguration(new PageConfiguration() {
+    @Override
+    public List<PageInfo> registerPages(Context context) {
+        return AppPageConfig.getInstance().getPages();
+    }
+}).debug("PageLog").init(this);
 ```
 
 ### 2.3、页面跳转

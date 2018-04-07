@@ -39,8 +39,8 @@ dependencies {
 //    implementation project(':xpagelib')
 //    annotationProcessor project(':xpage_comiler')
 
-    implementation 'com.github.xuexiangjys.XPage:xpagelib:2.0.0'
-    annotationProcessor 'com.github.xuexiangjys.XPage:xpage_comiler:2.0.0'
+    implementation 'com.github.xuexiangjys.XPage:xpagelib:2.1.1'
+    annotationProcessor 'com.github.xuexiangjys.XPage:xpage_comiler:2.1.1'
     //leak
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
