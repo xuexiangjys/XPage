@@ -1,8 +1,5 @@
 apply plugin: 'java'
 
-apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.xuexiangjys'
-
 dependencies {
     implementation 'com.google.auto.service:auto-service:1.0-rc2'
     //谷歌的帮助我们快速实现注解处理器
@@ -16,3 +13,5 @@ dependencies {
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
+
+apply from: "https://raw.githubusercontent.com/xuexiangjys/XUtil/master/JitPackUpload.gradle"
