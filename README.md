@@ -168,7 +168,7 @@ PageConfig.getInstance().setPageConfiguration(new PageConfiguration() {
 ## 特别感谢
 https://github.com/lizhangqu/CorePage/
 
-[xpsvg]: https://img.shields.io/badge/XPage-v1.0-brightgreen.svg
+[xpsvg]: https://img.shields.io/badge/XPage-v2.1.1-brightgreen.svg
 [xp]: https://github.com/xuexiangjys/XPage
 [apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
 [api]: https://android-arsenal.com/api?level=14
