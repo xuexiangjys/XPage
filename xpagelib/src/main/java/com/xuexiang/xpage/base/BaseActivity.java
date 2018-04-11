@@ -864,17 +864,8 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      * 提示信息
      * @param msg
      */
-    protected void Toast(final String msg) {
-        if (isMainThread()) {
-            ToastUtil.getInstance(getApplicationContext()).showToast(msg);
-        } else {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    ToastUtil.getInstance(getApplicationContext()).showToast(msg);
-                }
-            });
-        }
+    protected void Toast(String msg) {
+        ToastUtil.getInstance(this).showToast(msg);
     }
 
     /**-------------------------------------点击非输入区域键盘消失--------------------------------------------**/

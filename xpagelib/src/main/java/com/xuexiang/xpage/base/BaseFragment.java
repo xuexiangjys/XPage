@@ -568,23 +568,8 @@ public abstract class BaseFragment extends Fragment {
      * 提示信息
      * @param msg
      */
-    protected void Toast(final String msg) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ToastUtil.getInstance(getActivity()).showToast(msg);
-            }
-        });
-        if (isMainThread()) {
-            ToastUtil.getInstance(getActivity()).showToast(msg);
-        } else {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    ToastUtil.getInstance(getActivity()).showToast(msg);
-                }
-            });
-        }
+    protected void Toast(String msg) {
+        ToastUtil.getInstance(getContext()).showToast(msg);
     }
 
     /**
