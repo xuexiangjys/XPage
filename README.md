@@ -175,7 +175,7 @@ https://github.com/lizhangqu/CorePage/
 
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/qq_group.jpg)
 
-[xpsvg]: https://img.shields.io/badge/XPage-v2.1.1-brightgreen.svg
+[xpsvg]: https://img.shields.io/badge/XPage-v2.1.3-brightgreen.svg
 [xp]: https://github.com/xuexiangjys/XPage
 [apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
 [api]: https://android-arsenal.com/api?level=14
