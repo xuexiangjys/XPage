@@ -8,7 +8,7 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.4'
     implementation 'org.apache.commons:commons-collections4:4.1'
 
-    implementation project(':xpage_annotation')
+    implementation project(':xpage-annotation')
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8

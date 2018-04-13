@@ -6,13 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xuexiang.xpage.R;
 import com.xuexiang.xpage.base.BaseActivity;
 import com.xuexiang.xpage.base.BaseFragment;
-import com.xuexiang.xpage.utils.PageLog;
+import com.xuexiang.xpage.logger.PageLog;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

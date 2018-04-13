@@ -33,7 +33,7 @@ public class TestFragment extends BaseFragment {
      * 初始化监听
      */
     @Override
-    protected void initListener() {
+    protected void initListeners() {
 
     }
 }

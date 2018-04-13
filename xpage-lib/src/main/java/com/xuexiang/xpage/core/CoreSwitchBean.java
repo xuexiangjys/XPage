@@ -84,16 +84,16 @@ public class CoreSwitchBean implements Parcelable {
      */
     public static int[] convertAnimations(CoreAnim coreAnim) {
         if (coreAnim == CoreAnim.present) {
-            int[] animations = {R.anim.push_in_down, R.anim.push_no_ani, R.anim.push_no_ani, R.anim.push_out_down};
+            int[] animations = {R.anim.xpage_push_in_down, R.anim.xpage_push_no_ani, R.anim.xpage_push_no_ani, R.anim.xpage_push_out_down};
             return animations;
         } else if (coreAnim == CoreAnim.fade) {
-            int[] animations = {R.anim.alpha_in, R.anim.alpha_out, R.anim.alpha_in, R.anim.alpha_out};
+            int[] animations = {R.anim.xpage_alpha_in, R.anim.xpage_alpha_out, R.anim.xpage_alpha_in, R.anim.xpage_alpha_out};
             return animations;
         } else if (coreAnim == CoreAnim.slide) {
-            int[] animations = {R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right};
+            int[] animations = {R.anim.xpage_slide_in_right, R.anim.xpage_slide_out_left, R.anim.xpage_slide_in_left, R.anim.xpage_slide_out_right};
             return animations;
         } else if (coreAnim == CoreAnim.zoom) {
-            int[] animations = {R.anim.zoom_in, R.anim.zoom_out, R.anim.zoom_in, R.anim.zoom_out};
+            int[] animations = {R.anim.xpage_zoom_in, R.anim.xpage_zoom_out, R.anim.xpage_zoom_in, R.anim.xpage_zoom_out};
             return animations;
         }
         return null;

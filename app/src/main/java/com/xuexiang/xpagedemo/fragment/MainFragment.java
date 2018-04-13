@@ -27,7 +27,7 @@ public class MainFragment extends BaseSimpleFragment {
         tabbar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyApplication.exitBy2Click(getContext());
+                MyApplication.exitBy2Click();
             }
         });
         return tabbar;
@@ -39,7 +39,7 @@ public class MainFragment extends BaseSimpleFragment {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            MyApplication.exitBy2Click(getContext());
+            MyApplication.exitBy2Click();
         }
         return true;
     }

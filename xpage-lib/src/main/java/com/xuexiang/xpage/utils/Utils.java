@@ -89,8 +89,6 @@ public class Utils {
             int top = leftTop[1];
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
-            PageLog.d("left:" + left + ", top:" + top  + ", right:" + right + ", bottom:" + bottom);
-            PageLog.d("event.getRawX():" + event.getRawX() + ", event.getX():" + event.getX() + ", event.getRawY():" + event.getRawY() + ", event.getY():" + event.getY());
             if (event.getRawX() > left && event.getRawX() < right && event.getRawY() > top && event.getRawY() < bottom) {
                 // 点击的是输入框区域，保留点击EditText的事件
                 return false;

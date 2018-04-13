@@ -1,18 +1,16 @@
 package com.xuexiang.xpagedemo;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.xuexiang.xpage.AppPageConfig;
 import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.PageConfiguration;
 import com.xuexiang.xpage.base.ListSimpleFragment;
-import com.xuexiang.xpage.base.app.BaseApplication;
 import com.xuexiang.xpage.model.PageInfo;
-import com.xuexiang.xpage.utils.ToastUtil;
-import com.xuexiang.xpagedemo.fragment.DateReceiveFragment;
-import com.xuexiang.xpagedemo.fragment.MainFragment;
+import com.xuexiang.xutil.XUtil;
+import com.xuexiang.xutil.tip.ToastUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,13 +19,15 @@ import java.util.TimerTask;
  * @author xuexiang
  * @date 2018/1/7 下午6:40
  */
-public class MyApplication extends BaseApplication {
+public class MyApplication extends Application {
 
-    /**
-     * 初始化程序
-     */
+
     @Override
-    protected void init() {
+    public void onCreate() {
+        super.onCreate();
+        XUtil.init(this);
+        XUtil.debug(true);
+
         PageConfig.getInstance().setPageConfiguration(new PageConfiguration() {
             @Override
             public List<PageInfo> registerPages(Context context) {
@@ -37,9 +37,7 @@ public class MyApplication extends BaseApplication {
                 return AppPageConfig.getInstance().getPages();
             }
         }).debug("PageLog").init(this);
-
     }
-
 
     /**
      * 增加组件信息和子演示页信息
@@ -70,10 +68,10 @@ public class MyApplication extends BaseApplication {
      */
     private static boolean gIsExit = false;
 
-    public static void exitBy2Click(Context context) {
+    public static void exitBy2Click() {
         if (!gIsExit) {
             gIsExit = true; // 准备退出
-            ToastUtil.getInstance(context).showToast("再按一次退出程序");
+            ToastUtil.get().showToast("再按一次退出程序");
             Timer tExit = new Timer();
             tExit.schedule(new TimerTask() {
                 @Override
@@ -82,7 +80,7 @@ public class MyApplication extends BaseApplication {
                 }
             }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
         } else {
-            MyApplication.exitApp(context);
+            XUtil.get().exitApp();
         }
     }
 

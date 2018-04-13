@@ -133,7 +133,7 @@ public class TitleUtil {
      */
     public static TitleBar initTitleBarStyle(TitleBar titleBar, String title, View.OnClickListener listener) {
         titleBar.setImmersive(false)
-                .setBackImageResource(R.drawable.ic_return_back)
+                .setBackImageResource(R.drawable.xpage_ic_return_back)
                 .setLeftClickListener(listener)
                 .setTitle(title)
                 .setBackgroundColor(Color.parseColor("#299EE3"));

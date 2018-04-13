@@ -14,7 +14,7 @@ public abstract class BaseListFragment extends BaseFragment implements AdapterVi
     ListView mListView;
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_listview;
+        return R.layout.xpage_fragment_listview;
     }
 
     @Override
@@ -27,7 +27,7 @@ public abstract class BaseListFragment extends BaseFragment implements AdapterVi
     protected abstract void initData();
 
     @Override
-    protected void initListener() {
+    protected void initListeners() {
 
     }
 

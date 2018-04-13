@@ -8,8 +8,8 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.core.CoreConfig;
+import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.model.PageInfo;
-import com.xuexiang.xpage.utils.PageLog;
 import com.xuexiang.xpage.utils.Utils;
 
 import java.util.ArrayList;
@@ -63,12 +63,7 @@ public class PageConfig {
      * @return
      */
     public PageConfig debug(String tag) {
-        if (TextUtils.isEmpty(tag)) {
-            PageLog.setDebugMode(false);
-        } else {
-            PageLog.setDebugMode(true);
-            PageLog.setLogTag(tag);
-        }
+        PageLog.debug(tag);
         return this;
     }
 

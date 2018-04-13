@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 简单的listview演示fragment
+ * 简单的ListView演示fragment
  * @author XUE
  * @date 2017/9/10 23:30
  */

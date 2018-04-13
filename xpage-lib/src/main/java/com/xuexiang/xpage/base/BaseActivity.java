@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,7 +26,7 @@ import com.xuexiang.xpage.core.CorePageManager;
 import com.xuexiang.xpage.core.CoreSwitchBean;
 import com.xuexiang.xpage.core.CoreSwitcher;
 import com.xuexiang.xpage.enums.CoreAnim;
-import com.xuexiang.xpage.utils.PageLog;
+import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.utils.ToastUtil;
 import com.xuexiang.xpage.utils.Utils;
 
@@ -315,16 +316,25 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            PageLog.e(e.getMessage());
+            PageLog.e(e);
         }
     }
 
     @Override
     public void startActivity(Intent intent) {
-        try {
-            super.startActivity(intent);
-        } catch (Exception e) {
-            PageLog.d("startActivity" + e.getMessage());
+        if (intent == null) {
+            PageLog.e("[startActivity failed]: intent == null");
+            return;
+        }
+        if (getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+            try {
+                super.startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+                PageLog.e(e);
+            }
+        } else {
+            PageLog.e("[resolveActivity failed]: " + intent.getComponent().getClassName() + " do not register in manifest");
         }
     }
 
@@ -584,7 +594,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
         //获得主线程handler
         mHandler = new Handler(getMainLooper());
         //当前activity弱引用
-        mCurrentInstance = new WeakReference<BaseActivity>(this);
+        mCurrentInstance = new WeakReference<>(this);
         //当前activity增加到activity列表中
         mActivities.add(mCurrentInstance);
         //打印所有activity情况
@@ -707,10 +717,9 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
                         } else if (o instanceof Bundle) {
                             outState.putBundle(fieldName, (Bundle) f.get(this));
                         }
-                    } catch (IllegalArgumentException e) {
+                    } catch (IllegalArgumentException | IllegalAccessException e) {
                         e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        PageLog.e(e);
                     }
                 }
             }
@@ -721,10 +730,19 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
 
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
-        try {
-            super.startActivityForResult(intent, requestCode);
-        } catch (Exception e) {
-            PageLog.d("startActivityForResult" + e.getMessage());
+        if (intent == null) {
+            PageLog.e("[startActivity failed]: intent == null");
+            return;
+        }
+        if (getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+            try {
+                super.startActivityForResult(intent, requestCode);
+            } catch (Exception e) {
+                e.printStackTrace();
+                PageLog.e(e);
+            }
+        } else {
+            PageLog.e("[resolveActivity failed]: " + intent.getComponent().getClassName() + " do not register in manifest");
         }
     }
 
@@ -774,10 +792,9 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
                         } else if (Bundle.class.isAssignableFrom(cls)) {
                             f.set(this, savedInstanceState.getBundle(fieldName));
                         }
-                    } catch (IllegalArgumentException e) {
+                    } catch (IllegalArgumentException | IllegalAccessException e) {
                         e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        PageLog.e(e);
                     }
                 }
             }
@@ -831,7 +848,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            PageLog.d(e.getMessage());
+            PageLog.e(e);
             finish();
         }
     }

@@ -17,7 +17,7 @@ import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.core.CoreSwitchBean;
 import com.xuexiang.xpage.core.CoreSwitcher;
 import com.xuexiang.xpage.enums.CoreAnim;
-import com.xuexiang.xpage.utils.PageLog;
+import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpage.utils.TitleUtil;
 import com.xuexiang.xpage.utils.ToastUtil;
@@ -32,7 +32,6 @@ import butterknife.Unbinder;
  * @date 2017/9/8 14:29
  */
 public abstract class BaseFragment extends Fragment {
-    private static final String TAG = BaseFragment.class.getSimpleName();
     /**
      * 所在activity
      */
@@ -472,6 +471,14 @@ public abstract class BaseFragment extends Fragment {
     @LayoutRes
     protected abstract int getLayoutId();
 
+
+    /**
+     * 初始化参数
+     */
+    protected void initArgs() {
+
+    }
+
     /**
      * 初始化控件
      */
@@ -480,18 +487,21 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 初始化监听
      */
-    protected abstract void initListener();
+    protected abstract void initListeners();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(getLayoutId(), container, false);
         mUnbinder = ButterKnife.bind(this, mRootView);
+        initArgs();
         initTitleBar();
         initViews();
-        initListener();
+        initListeners();
         return mRootView;
     }
+
+
 
     /**
      * 初始化标题
