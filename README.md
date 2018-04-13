@@ -41,15 +41,16 @@ allprojects {
 ```
 dependencies {
   ...
-   implementation 'com.github.xuexiangjys.XPage:xpagelib:2.1.1'
-      annotationProcessor 'com.github.xuexiangjys.XPage:xpage_comiler:2.1.1'
+  //XPage
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.3'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.3'
   //butterknife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
   //leak
-  debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-  releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-  testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+  debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+  releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+  testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
 }
 ```
