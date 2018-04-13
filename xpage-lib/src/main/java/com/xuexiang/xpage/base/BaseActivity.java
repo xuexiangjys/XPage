@@ -81,7 +81,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(CoreConfig.ACTION_EXIT_APP)) {
+            if (CoreConfig.ACTION_EXIT_APP.equals(action)) {
                 PageLog.d("exit from broadcast");
                 finish();
             }
@@ -637,14 +637,14 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         BaseFragment activeFragment = getActiveFragment();
-        boolean isHanlded = false;
+        boolean isHandled = false;
         if (activeFragment != null) {
-            isHanlded = activeFragment.onKeyDown(keyCode, event);
+            isHandled = activeFragment.onKeyDown(keyCode, event);
         }
-        if (!isHanlded) {
+        if (!isHandled) {
             return super.onKeyDown(keyCode, event);
         } else {
-            return isHanlded;
+            return isHandled;
         }
     }
 
@@ -875,6 +875,21 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
                 overridePendingTransition(animations[2], animations[3]);
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        if (isFinishing()) {
+            onRelease();
+        }
+        super.onStop();
+    }
+
+    /**
+     * 资源释放
+     */
+    protected void onRelease() {
+
     }
 
     /**

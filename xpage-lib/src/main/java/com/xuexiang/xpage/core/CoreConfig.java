@@ -42,7 +42,7 @@ public class CoreConfig {
 	/**
 	 * Atlas支持 end
 	 */
-	public final static String ACTION_EXIT_APP = "com.xuexiang.view.corepage.core.exit";
+	public final static String ACTION_EXIT_APP = "com.xuexiang.xpage.corepage.core.exit";
 	// 本地广播退出
 
 	private static LocalBroadcastManager mLocalBroadcatManager;
