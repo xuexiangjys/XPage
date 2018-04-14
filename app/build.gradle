@@ -36,11 +36,11 @@ dependencies {
     implementation deps.butterknife.runtime
     annotationProcessor deps.butterknife.compiler
 
-    implementation project(':xpage-lib')
-    annotationProcessor project(':xpage-compiler')
+//    implementation project(':xpage-lib')
+//    annotationProcessor project(':xpage-compiler')
 
-//    implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.3'
-//    annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.3'
+    implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.4'
+    annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.4'
     //leak
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
