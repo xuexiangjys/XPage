@@ -44,6 +44,7 @@ import java.util.List;
 /**
  * 页面跳转都通过BaseActivity 嵌套Fragment来实现,动态替换fragment只需要指定相应的参数。 避免Activity 需要再manifest中注册的问题。
  * 1.管理应用中所有BaseActivity 实例。 2.管理BaseActivity 实例和fragment的跳转
+ *
  * @author XUE
  * @date 2017/9/8 14:28
  */
@@ -117,6 +118,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
 
     /**
      * 获得当前活动页面名
+     *
      * @return 当前页名
      */
     protected String getPageName() {
@@ -126,6 +128,8 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
         }
         return "";
     }
+
+    //======================页面返回退出==========================//
 
     /**
      * 弹出页面
@@ -162,6 +166,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
 
     /**
      * 是否是主线程
+     *
      * @return 是否是主线程
      */
     private boolean isMainThread() {
@@ -169,7 +174,33 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     }
 
     /**
+     * 结束activity，设置是否显示动画
+     *
+     * @param activity      BaseActivity对象
+     * @param showAnimation 是否显示动画
+     */
+    private void finishActivity(BaseActivity activity, boolean showAnimation) {
+        if (activity != null) {
+            activity.finish();
+            //从activity列表中移除当前实例
+            mActivities.remove(mCurrentInstance);
+        }
+        if (showAnimation) {
+            //动画
+            int[] animations = null;
+            if (activity.mFirstCoreSwitchBean != null && activity.mFirstCoreSwitchBean.getAnim() != null) {
+                animations = activity.mFirstCoreSwitchBean.getAnim();
+            }
+            if (animations != null && animations.length >= 4) {
+                overridePendingTransition(animations[2], animations[3]);
+            }
+        }
+    }
+
+
+    /**
      * 是否位于栈顶
+     *
      * @param fragmentTag fragment的tag
      * @return 指定Fragment是否位于栈顶
      */
@@ -198,6 +229,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
 
     /**
      * 查找fragment
+     *
      * @param pageName page的名字
      * @return 是否找到对应Fragment
      */
@@ -232,6 +264,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
 
     /**
      * 弹出并用bundle刷新数据，在onFragmentDataReset中回调
+     *
      * @param page page的名字
      * @return 跳转到对应的fragment的对象
      */
@@ -270,17 +303,18 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     }
 
     /**
-     * 当前activiti中弹fragment
-     * @param pageName page的名字
-     * @param bundle 传递的参数
-     * @param findAcitivity 当前activity
+     * 当前activity中弹fragment
+     *
+     * @param pageName     page的名字
+     * @param bundle       传递的参数
+     * @param findActivity 当前activity
      * @return 是否弹出成功
      */
-    protected boolean popFragmentInActivity(final String pageName, Bundle bundle, BaseActivity findAcitivity) {
-        if (pageName == null || findAcitivity == null || findAcitivity.isFinishing()) {
+    protected boolean popFragmentInActivity(final String pageName, Bundle bundle, BaseActivity findActivity) {
+        if (pageName == null || findActivity == null || findActivity.isFinishing()) {
             return false;
         } else {
-            final FragmentManager fragmentManager = findAcitivity.getSupportFragmentManager();
+            final FragmentManager fragmentManager = findActivity.getSupportFragmentManager();
             if (fragmentManager != null) {
                 Fragment frg = fragmentManager.findFragmentByTag(pageName);
                 if (frg != null && frg instanceof BaseFragment) {
@@ -300,8 +334,11 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
         return false;
     }
 
+    //==================startActivity=======================//
+
     /**
-     * 根据Switchpage打开activity
+     * 根据SwitchPage打开activity
+     *
      * @param page CoreSwitchBean对象
      */
     public void startActivity(CoreSwitchBean page) {
@@ -339,56 +376,9 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     }
 
     /**
-     * 根据SwitchBean打开fragment
-     * @param page CoreSwitchBean对象
-     * @return 打开的Fragment对象
-     */
-    @Override
-    public Fragment openPage(CoreSwitchBean page) {
-        boolean addToBackStack = page.isAddToBackStack();
-        boolean newActivity = page.isNewActivity();
-        Bundle bundle = page.getBundle();
-
-        int[] animations = page.getAnim();
-        if (newActivity) {
-            startActivity(page);
-            return null;
-        } else {
-            String pageName = page.getPageName();
-            return CorePageManager.getInstance().openPageWithNewFragmentManager(getSupportFragmentManager(), pageName, bundle, animations, addToBackStack);
-        }
-
-    }
-
-    /**
-     * 移除无用fragment
-     * @param fragmentLists 移除的fragment列表
-     */
-    @Override
-    public void removeUnlessFragment(List<String> fragmentLists) {
-        if (isFinishing()) {
-            return;
-        }
-        FragmentManager manager = getSupportFragmentManager();
-        if (manager != null) {
-            FragmentTransaction transaction = manager.beginTransaction();
-            for (String tag : fragmentLists) {
-                Fragment fragment = manager.findFragmentByTag(tag);
-                if (fragment != null) {
-                    transaction.remove(fragment);
-                }
-            }
-            transaction.commitAllowingStateLoss();
-            int count = manager.getBackStackEntryCount();
-            if (count == 0) {
-                finish();
-            }
-        }
-    }
-
-    /**
      * 给BaseFragment调用
-     * @param page CoreSwitchBean对象
+     *
+     * @param page     CoreSwitchBean对象
      * @param fragment 要求返回结果的BaseFragment对象
      * @return 打开的fragment对象
      */
@@ -427,7 +417,6 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     }
 
     /**
-     *
      * @param page CoreSwitchBean对象
      */
     public void startActivityForResult(CoreSwitchBean page) {
@@ -446,14 +435,84 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
         }
     }
 
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        if (intent == null) {
+            PageLog.e("[startActivity failed]: intent == null");
+            return;
+        }
+        if (getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+            try {
+                super.startActivityForResult(intent, requestCode);
+            } catch (Exception e) {
+                e.printStackTrace();
+                PageLog.e(e);
+            }
+        } else {
+            PageLog.e("[resolveActivity failed]: " + intent.getComponent().getClassName() + " do not register in manifest");
+        }
+    }
+
+    //==================openPage 打开页面=======================//
+
+    /**
+     * 根据SwitchBean打开fragment
+     *
+     * @param page CoreSwitchBean对象
+     * @return 打开的Fragment对象
+     */
+    @Override
+    public Fragment openPage(CoreSwitchBean page) {
+        boolean addToBackStack = page.isAddToBackStack();
+        boolean newActivity = page.isNewActivity();
+        Bundle bundle = page.getBundle();
+
+        int[] animations = page.getAnim();
+        if (newActivity) {
+            startActivity(page);
+            return null;
+        } else {
+            String pageName = page.getPageName();
+            return CorePageManager.getInstance().openPageWithNewFragmentManager(getSupportFragmentManager(), pageName, bundle, animations, addToBackStack);
+        }
+
+    }
+
+    /**
+     * 移除无用fragment
+     *
+     * @param fragmentLists 移除的fragment列表
+     */
+    @Override
+    public void removeUnlessFragment(List<String> fragmentLists) {
+        if (isFinishing()) {
+            return;
+        }
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager != null) {
+            FragmentTransaction transaction = manager.beginTransaction();
+            for (String tag : fragmentLists) {
+                Fragment fragment = manager.findFragmentByTag(tag);
+                if (fragment != null) {
+                    transaction.remove(fragment);
+                }
+            }
+            transaction.commitAllowingStateLoss();
+            int count = manager.getBackStackEntryCount();
+            if (count == 0) {
+                finish();
+            }
+        }
+    }
+
     /**
      * 打开fragment，并设置是否新开activity，设置是否添加到返回栈
      *
-     * @param pageName 页面名
-     * @param bundle 参数
-     * @param coreAnim 动画
+     * @param pageName       页面名
+     * @param bundle         参数
+     * @param coreAnim       动画
      * @param addToBackStack 返回栈
-     * @param newActivity 新activity
+     * @param newActivity    新activity
      * @return 打开的fragment对象
      */
     public Fragment openPage(String pageName, Bundle bundle, CoreAnim coreAnim, boolean addToBackStack, boolean newActivity) {
@@ -464,11 +523,11 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     /**
      * 打开fragment，并设置是否新开activity，设置是否添加到返回栈
      *
-     * @param pageName 页面名
-     * @param bundle 参数
-     * @param anim 动画
+     * @param pageName       页面名
+     * @param bundle         参数
+     * @param anim           动画
      * @param addToBackStack 返回栈
-     * @param newActivity 新activity
+     * @param newActivity    新activity
      * @return 打开的fragment对象
      */
     public Fragment openPage(String pageName, Bundle bundle, int[] anim, boolean addToBackStack, boolean newActivity) {
@@ -479,9 +538,9 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     /**
      * 打开fragment，并设置是否添加到返回栈
      *
-     * @param pageName 页面名
-     * @param bundle 参数
-     * @param coreAnim 动画
+     * @param pageName       页面名
+     * @param bundle         参数
+     * @param coreAnim       动画
      * @param addToBackStack 返回栈
      * @return 打开的fragment对象
      */
@@ -493,9 +552,9 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     /**
      * 打开fragment，并设置是否添加到返回栈
      *
-     * @param pageName 页面名
-     * @param bundle 参数
-     * @param anim 动画
+     * @param pageName       页面名
+     * @param bundle         参数
+     * @param anim           动画
      * @param addToBackStack 返回栈
      * @return 打开的fragment对象
      */
@@ -508,7 +567,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      * 打开fragment
      *
      * @param pageName 页面名
-     * @param bundle 参数
+     * @param bundle   参数
      * @param coreAnim 动画
      * @return 打开的fragment对象
      */
@@ -529,7 +588,8 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
 
     /**
      * 打开fragment
-     * @param clazz 页面类
+     *
+     * @param clazz  页面类
      * @param bundle 参数
      * @return 打开的fragment对象
      */
@@ -542,8 +602,8 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      * 打开fragment
      *
      * @param pageName 页面名
-     * @param bundle 参数
-     * @param anim 动画
+     * @param bundle   参数
+     * @param anim     动画
      * @return 打开的fragment对象
      */
     public Fragment openPage(String pageName, Bundle bundle, int[] anim) {
@@ -551,35 +611,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
         return openPage(page);
     }
 
-    /**
-     * 如果是fragment发起的由fragment处理，否则默认处理
-     * @param requestCode 请求码
-     * @param resultCode 结果码
-     * @param data 返回数据
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        PageLog.d("onActivityResult from baseActivity" + requestCode + " " + resultCode);
-        if (mFragmentRequestCode == requestCode && mFragmentForResult != null) {
-            mFragmentForResult.onFragmentResult(mFragmentRequestCode, resultCode, data);
-
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    /**
-     * 如果当前activity中只有一个activity，则关闭activity，否则父类处理
-     */
-    @Override
-    public void onBackPressed() {
-        if (this.getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            this.finishActivity(this, true);
-
-        } else {
-            super.onBackPressed();
-        }
-    }
-
+    //==================生命周期=======================//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -610,16 +642,17 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     }
 
     /**
-	 * 设置根布局
-	 * @return
-	 */
+     * 设置根布局
+     *
+     * @return
+     */
     protected FrameLayout getBaseLayout() {
-		FrameLayout baseLayout = new FrameLayout(this);
+        FrameLayout baseLayout = new FrameLayout(this);
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         baseLayout.setId(R.id.fragment_container);
         baseLayout.setLayoutParams(params);
-		return baseLayout;
-	}
+        return baseLayout;
+    }
 
     @Override
     protected void onDestroy() {
@@ -630,8 +663,9 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
 
     /**
      * 如果fragment中处理了则fragment处理否则activity处理
+     *
      * @param keyCode keyCode码
-     * @param event KeyEvent对象
+     * @param event   KeyEvent对象
      * @return 是否处理时间
      */
     @Override
@@ -649,7 +683,37 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     }
 
     /**
-     * 获得当前活动fragmnet
+     * 如果是fragment发起的由fragment处理，否则默认处理
+     *
+     * @param requestCode 请求码
+     * @param resultCode  结果码
+     * @param data        返回数据
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        PageLog.d("onActivityResult from baseActivity" + requestCode + " " + resultCode);
+        if (mFragmentRequestCode == requestCode && mFragmentForResult != null) {
+            mFragmentForResult.onFragmentResult(mFragmentRequestCode, resultCode, data);
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * 如果当前activity中只有一个activity，则关闭activity，否则父类处理
+     */
+    @Override
+    public void onBackPressed() {
+        if (this.getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            this.finishActivity(this, true);
+
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    /**
+     * 获得当前活动fragment
      *
      * @return 当前活动Fragment对象
      */
@@ -667,6 +731,85 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
         }
         return null;
     }
+
+    /**
+     * 打印，调试用
+     */
+    private void printAllActivities() {
+        PageLog.d("------------BaseActivity print all------------activities size:" + mActivities.size());
+        for (WeakReference<BaseActivity> ref : mActivities) {
+            if (ref != null) {
+                BaseActivity item = ref.get();
+                if (item != null) {
+                    PageLog.d(item.toString());
+                }
+            }
+        }
+    }
+
+    /**
+     * 初始化intent
+     *
+     * @param newIntent Intent对象
+     */
+    private void init(Intent newIntent) {
+        try {
+            CoreSwitchBean page = newIntent.getParcelableExtra(CoreSwitchBean.KEY_SWITCHBEAN);
+            boolean startActivityForResult = newIntent.getBooleanExtra(CoreSwitchBean.KEY_START_ACTIVITY_FOR_RESULT, false);
+            mFirstCoreSwitchBean = page;
+            if (page != null) {
+                BaseFragment fragment = null;
+                boolean addToBackStack = page.isAddToBackStack();
+                String pageName = page.getPageName();
+                Bundle bundle = page.getBundle();
+                fragment = (BaseFragment) CorePageManager.getInstance().openPageWithNewFragmentManager(getSupportFragmentManager(), pageName, bundle, null, addToBackStack);
+                if (fragment != null) {
+                    if (startActivityForResult) {
+                        fragment.setRequestCode(page.getRequestCode());
+                        fragment.setFragmentFinishListener(new BaseFragment.OnFragmentFinishListener() {
+                            @Override
+                            public void onFragmentResult(int requestCode, int resultCode, Intent intent) {
+                                BaseActivity.this.setResult(resultCode, intent);
+                            }
+                        });
+                    }
+                } else {
+                    finish();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            PageLog.e(e);
+            finish();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        if (isFinishing()) {
+            onRelease();
+        }
+        super.onStop();
+    }
+
+    /**
+     * 资源释放
+     */
+    protected void onRelease() {
+
+    }
+
+    /**
+     * 提示信息
+     *
+     * @param msg
+     */
+    protected void Toast(String msg) {
+        ToastUtil.getInstance(this).showToast(msg);
+    }
+
+
+    //==============数据保存=================//
 
     /**
      * 保存数据
@@ -724,26 +867,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
                 }
             }
         }
-
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
-        if (intent == null) {
-            PageLog.e("[startActivity failed]: intent == null");
-            return;
-        }
-        if (getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
-            try {
-                super.startActivityForResult(intent, requestCode);
-            } catch (Exception e) {
-                e.printStackTrace();
-                PageLog.e(e);
-            }
-        } else {
-            PageLog.e("[resolveActivity failed]: " + intent.getComponent().getClassName() + " do not register in manifest");
-        }
     }
 
     /**
@@ -802,105 +926,16 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     }
 
     /**
-     * 打印，调试用
+     * 注解了该注解数据会被保存
      */
-    private void printAllActivities() {
-        PageLog.d("------------BaseActivity print all------------activities size:" + mActivities.size());
-        for (WeakReference<BaseActivity> ref : mActivities) {
-            if (ref != null) {
-                BaseActivity item = ref.get();
-                if (item != null) {
-                    PageLog.d(item.toString());
-                }
-            }
-        }
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.FIELD)
+    public @interface SaveWithActivity {
     }
 
     /**
-     * 初始化intent
-     *
-     * @param newIntent Intent对象
-     */
-    private void init(Intent newIntent) {
-        try {
-            CoreSwitchBean page = newIntent.getParcelableExtra(CoreSwitchBean.KEY_SWITCHBEAN);
-            boolean startActivityForResult = newIntent.getBooleanExtra(CoreSwitchBean.KEY_START_ACTIVITY_FOR_RESULT, false);
-            mFirstCoreSwitchBean = page;
-            if (page != null) {
-                BaseFragment fragment = null;
-                boolean addToBackStack = page.isAddToBackStack();
-                String pageName = page.getPageName();
-                Bundle bundle = page.getBundle();
-                fragment = (BaseFragment) CorePageManager.getInstance().openPageWithNewFragmentManager(getSupportFragmentManager(), pageName, bundle, null, addToBackStack);
-                if (fragment != null) {
-                    if (startActivityForResult) {
-                        fragment.setRequestCode(page.getRequestCode());
-                        fragment.setFragmentFinishListener(new BaseFragment.OnFragmentFinishListener() {
-                            @Override
-                            public void onFragmentResult(int requestCode, int resultCode, Intent intent) {
-                                BaseActivity.this.setResult(resultCode, intent);
-                            }
-                        });
-                    }
-                } else {
-                    finish();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            PageLog.e(e);
-            finish();
-        }
-    }
-
-    /**
-     * 结束activity，设置是否显示动画
-     *
-     * @param activity BaseActivity对象
-     * @param showAnimation 是否显示动画
-     */
-    private void finishActivity(BaseActivity activity, boolean showAnimation) {
-        if (activity != null) {
-            activity.finish();
-            //从activity列表中移除当前实例
-            mActivities.remove(mCurrentInstance);
-        }
-        if (showAnimation) {
-            //动画
-            int[] animations = null;
-            if (activity.mFirstCoreSwitchBean != null && activity.mFirstCoreSwitchBean.getAnim() != null) {
-                animations = activity.mFirstCoreSwitchBean.getAnim();
-            }
-            if (animations != null && animations.length >= 4) {
-                overridePendingTransition(animations[2], animations[3]);
-            }
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        if (isFinishing()) {
-            onRelease();
-        }
-        super.onStop();
-    }
-
-    /**
-     * 资源释放
-     */
-    protected void onRelease() {
-
-    }
-
-    /**
-     * 提示信息
-     * @param msg
-     */
-    protected void Toast(String msg) {
-        ToastUtil.getInstance(this).showToast(msg);
-    }
-
-    /**-------------------------------------点击非输入区域键盘消失--------------------------------------------**/
+     * -------------------------------------点击非输入区域键盘消失--------------------------------------------
+     **/
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
@@ -911,13 +946,4 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
         }
         return super.dispatchTouchEvent(ev);
     }
-
-    /**
-     * 注解了该注解数据会被保存
-     */
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.FIELD)
-    public @interface SaveWithActivity {
-    }
-
 }

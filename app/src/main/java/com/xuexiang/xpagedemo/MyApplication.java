@@ -6,7 +6,7 @@ import android.content.Context;
 import com.xuexiang.xpage.AppPageConfig;
 import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.PageConfiguration;
-import com.xuexiang.xpage.base.ListSimpleFragment;
+import com.xuexiang.xpage.base.SimpleListFragment;
 import com.xuexiang.xpage.model.PageInfo;
 import com.xuexiang.xutil.XUtil;
 import com.xuexiang.xutil.tip.ToastUtil;
@@ -43,10 +43,10 @@ public class MyApplication extends Application {
      * 增加组件信息和子演示页信息
      * @param clazz 【继承了ListSimpleFragment的类】
      */
-    private void addPageInfoAndSubPages(List<PageInfo> pageInfos, Class<? extends ListSimpleFragment> clazz) {
+    private void addPageInfoAndSubPages(List<PageInfo> pageInfos, Class<? extends SimpleListFragment> clazz) {
         pageInfos.add(PageConfig.getPageInfo(clazz));
         try {
-            registerPageInfos(pageInfos, clazz.newInstance().getSimpleDataClazzes());
+            registerPageInfos(pageInfos, clazz.newInstance().getSimplePageClasses());
         } catch (Exception e) {
             e.printStackTrace();
         }

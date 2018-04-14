@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.base.ListSimpleFragment;
+import com.xuexiang.xpage.base.SimpleListFragment;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @date 2018/1/7 下午9:47
  */
 @Page(name = "数据传递")
-public class DataTransmitFragment extends ListSimpleFragment {
+public class DataTransmitFragment extends SimpleListFragment {
     /**
      * 初始化例子
      *

@@ -1,7 +1,7 @@
 package com.xuexiang.xpagedemo.fragment;
 
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.base.ListSimpleFragment;
+import com.xuexiang.xpage.base.SimpleListFragment;
 import com.xuexiang.xpage.enums.CoreAnim;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2018/1/7 下午11:22
  */
 @Page(name = "切换动画")
-public class AnimationFragment extends ListSimpleFragment {
+public class AnimationFragment extends SimpleListFragment {
 
     /**
      * 初始化例子

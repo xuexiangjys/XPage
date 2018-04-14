@@ -4,6 +4,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.xuexiang.xpage.annotation.Page;
+import com.xuexiang.xpage.base.PageContainerListFragment;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpagedemo.MyApplication;
 
@@ -12,9 +13,15 @@ import com.xuexiang.xpagedemo.MyApplication;
  * @date 2018/1/7 下午6:47
  */
 @Page(name = "XPage")
-public class MainFragment extends BaseSimpleFragment {
+public class MainFragment extends PageContainerListFragment {
+
+    /**
+     * 获取页面的类集合[使用@Page注解进行注册的页面]
+     *
+     * @return
+     */
     @Override
-    public Class[] getSimpleDataClazzes() {
+    protected Class[] getPagesClasses() {
         return new Class[]{
                 DataTransmitFragment.class,
                 AnimationFragment.class
@@ -23,14 +30,12 @@ public class MainFragment extends BaseSimpleFragment {
 
     @Override
     protected TitleBar initTitleBar() {
-        TitleBar tabbar = super.initTitleBar();
-        tabbar.setLeftClickListener(new View.OnClickListener() {
+        return super.initTitleBar().setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MyApplication.exitBy2Click();
             }
         });
-        return tabbar;
     }
 
     /**

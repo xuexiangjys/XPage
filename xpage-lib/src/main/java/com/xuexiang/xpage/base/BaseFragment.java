@@ -81,7 +81,7 @@ public abstract class BaseFragment extends Fragment {
      * @return 请求码
      */
     public int getRequestCode() {
-        return this.mRequestCode;
+        return mRequestCode;
     }
 
     /**
@@ -90,7 +90,7 @@ public abstract class BaseFragment extends Fragment {
      * @param code 请求码
      */
     public void setRequestCode(int code) {
-        this.mRequestCode = code;
+        mRequestCode = code;
     }
 
     /**
@@ -104,6 +104,8 @@ public abstract class BaseFragment extends Fragment {
         return false;
     }
 
+
+    //================页面返回===================//
     /**
      * 数据设置，回调
      *
@@ -172,8 +174,8 @@ public abstract class BaseFragment extends Fragment {
                 }
                 if (mPageCoreSwitcher == null) {
                     BaseActivity topActivity = BaseActivity.getTopActivity();
-                    if (topActivity != null && topActivity instanceof CoreSwitcher) {
-                        mPageCoreSwitcher = (CoreSwitcher) topActivity;
+                    if (topActivity != null) {
+                        mPageCoreSwitcher = topActivity;
                     }
                 }
             }
@@ -186,8 +188,9 @@ public abstract class BaseFragment extends Fragment {
      *
      * @param pageCoreSwitcher CoreSwitcher对象
      */
-    public void setSwitcher(CoreSwitcher pageCoreSwitcher) {
-        this.mPageCoreSwitcher = pageCoreSwitcher;
+    public BaseFragment setSwitcher(CoreSwitcher pageCoreSwitcher) {
+        mPageCoreSwitcher = pageCoreSwitcher;
+        return this;
     }
 
     /**
@@ -239,17 +242,10 @@ public abstract class BaseFragment extends Fragment {
         PageLog.d("onFragmentResult from baseFragment：requestCode-" + requestCode + "  resultCode-" + resultCode);
     }
 
-    /**
-     * 打开fragment
-     *
-     * @return 打开的fragment对象
-     */
-    public Fragment openPage(String pageName) {
-        return openPage(pageName, null, CoreAnim.slide);
-    }
+    //====================openPage=========================//
 
     /**
-     * 打开fragment
+     * 打开fragment[使用注解反射]
      *
      * @return 打开的fragment对象
      */
@@ -258,7 +254,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * 打开fragment
+     * 打开fragment[使用注解反射]
      *
      * @param clazz  页面类
      * @param bundle 页面跳转时传递的参数
@@ -269,7 +265,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * 打开fragment
+     * 打开fragment[使用注解反射]
      *
      * @param clazz  页面类
      * @param bundle 页面跳转时传递的参数
@@ -280,9 +276,31 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
+     * 打开fragment
+     *
+     * @param pageName 页面名称
+     * @return 打开的fragment对象
+     */
+    public Fragment openPage(String pageName) {
+        return openPage(pageName, null, CoreAnim.slide);
+    }
+
+
+    /**
+     * 打开fragment
+     *
+     * @param pageName 页面名称
+     * @param bundle   页面跳转时传递的参数
+     * @return 打开的fragment对象
+     */
+    public Fragment openPage(String pageName, Bundle bundle) {
+        return openPage(pageName, bundle, CoreAnim.slide);
+    }
+
+    /**
      * 在当前activity中打开一个fragment，并添加到返回栈中
      *
-     * @param pageName Fragemnt 名，在page.json中配置。
+     * @param pageName Fragment 名，在page.json中配置。
      * @param bundle   页面跳转时传递的参数
      * @param coreAnim 指定的动画理性 none/slide(左右平移)/present(由下向上)/fade(fade 动画)
      * @return 打开的fragment对象
@@ -403,7 +421,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 打开fragment并请求获得返回值
      *
-     * @param clazz  页面类
+     * @param clazz       页面类
      * @param bundle      参数
      * @param requestCode 请求码
      * @return 打开的fragment对象
@@ -448,6 +466,7 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    //======================生命周期=======================//
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -500,8 +519,6 @@ public abstract class BaseFragment extends Fragment {
         initListeners();
         return mRootView;
     }
-
-
 
     /**
      * 初始化标题
@@ -568,6 +585,7 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 是否是主线程
+     *
      * @return 是否是主线程
      */
     private boolean isMainThread() {
@@ -576,6 +594,7 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 提示信息
+     *
      * @param msg
      */
     protected void Toast(String msg) {

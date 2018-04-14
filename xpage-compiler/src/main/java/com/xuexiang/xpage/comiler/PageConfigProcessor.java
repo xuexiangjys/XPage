@@ -163,7 +163,7 @@ public class PageConfigProcessor extends AbstractProcessor {
                     mLogger.info(">>> Found Fragment Page: " + tm.toString() + " <<<");
 
                     Page page = element.getAnnotation(Page.class);
-                    name = StringUtils.isEmpty(page.name()) ? tm.getClass().getSimpleName() : page.name();
+                    name = StringUtils.isEmpty(page.name()) ? element.getSimpleName().toString() : page.name();
 
                     constructorBuilder.addStatement("mPages.add(new $T($S, $S, $S, $T.$L))",
                             PageInfo.class,

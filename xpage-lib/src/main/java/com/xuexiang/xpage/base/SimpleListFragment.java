@@ -4,8 +4,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.xuexiang.xpage.PageConfig;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,7 @@ import java.util.List;
  * @author XUE
  * @date 2017/9/10 23:30
  */
-public abstract class ListSimpleFragment extends BaseListFragment {
+public abstract class SimpleListFragment extends BaseListFragment {
     protected List<String> mSimpleData = new ArrayList<>();
 
     @Override
@@ -62,21 +60,12 @@ public abstract class ListSimpleFragment extends BaseListFragment {
         return mSimpleData.get(position);
     }
 
-    protected List<String> getSimpleDatas(Class... clazzes) {
-        List<String> simpleDatalist = new ArrayList<>();
-        if (clazzes != null && clazzes.length > 0) {
-            for (int i = 0; i < clazzes.length; i ++) {
-                simpleDatalist.add(PageConfig.getPageInfo(clazzes[i]).getName());
-            }
-        }
-        return simpleDatalist;
-    }
-
     /**
-     * 获取演示demo的类集合
+     * 获取页面类的集合
      * @return
      */
-    public Class[] getSimpleDataClazzes() {
-        return null;
+    public Class[] getSimplePageClasses() {
+        return new Class[0];
     }
+
 }
