@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.SimpleListFragment;
+import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class DataTransmitFragment extends SimpleListFragment {
         super.onFragmentResult(requestCode, resultCode, data);
         if (data != null) {
             Bundle extras = data.getExtras();
-            Toast("requestCode:" + requestCode + " resultCode:" + resultCode + " data:" + extras.getString(DateReceiveFragment.KEY_BACK_DATA));
+            ToastUtils.toast("requestCode:" + requestCode + " resultCode:" + resultCode + " data:" + extras.getString(DateReceiveFragment.KEY_BACK_DATA));
         }
     }
 }

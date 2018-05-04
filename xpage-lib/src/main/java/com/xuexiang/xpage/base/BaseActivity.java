@@ -27,7 +27,6 @@ import com.xuexiang.xpage.core.CoreSwitchBean;
 import com.xuexiang.xpage.core.CoreSwitcher;
 import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xpage.logger.PageLog;
-import com.xuexiang.xpage.utils.ToastUtil;
 import com.xuexiang.xpage.utils.Utils;
 
 import java.io.Serializable;
@@ -567,6 +566,28 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      * 打开fragment
      *
      * @param pageName 页面名
+     * @return 打开的fragment对象
+     */
+    public Fragment openPage(String pageName) {
+        CoreSwitchBean page = new CoreSwitchBean(pageName, null, CoreAnim.slide);
+        return openPage(page);
+    }
+
+    /**
+     * 打开fragment
+     *
+     * @param pageName 页面名
+     * @return 打开的fragment对象
+     */
+    public Fragment openPage(String pageName, Bundle bundle) {
+        CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, CoreAnim.slide);
+        return openPage(page);
+    }
+
+    /**
+     * 打开fragment
+     *
+     * @param pageName 页面名
      * @param bundle   参数
      * @param coreAnim 动画
      * @return 打开的fragment对象
@@ -799,16 +820,6 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
 
     }
 
-    /**
-     * 提示信息
-     *
-     * @param msg
-     */
-    protected void Toast(String msg) {
-        ToastUtil.getInstance(this).showToast(msg);
-    }
-
-
     //==============数据保存=================//
 
     /**
@@ -941,7 +952,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
             if (Utils.isShouldHideInput(v, ev)) {
-                Utils.hideKeyboard(v);
+                Utils.hideSoftInput(v);
             }
         }
         return super.dispatchTouchEvent(ev);

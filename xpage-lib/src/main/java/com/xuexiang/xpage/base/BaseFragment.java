@@ -20,7 +20,6 @@ import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpage.utils.TitleUtil;
-import com.xuexiang.xpage.utils.ToastUtil;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -492,6 +491,13 @@ public abstract class BaseFragment extends Fragment {
 
 
     /**
+     * 获取页面标题
+     */
+    protected String getPageTitle() {
+        return PageConfig.getPageInfo(getClass()).getName();
+    }
+
+    /**
      * 初始化参数
      */
     protected void initArgs() {
@@ -524,7 +530,7 @@ public abstract class BaseFragment extends Fragment {
      * 初始化标题
      */
     protected TitleBar initTitleBar() {
-        return TitleUtil.addTitleBarDynamic((ViewGroup) mRootView, PageConfig.getPageInfo(getClass()).getName(), new View.OnClickListener() {
+        return TitleUtil.addTitleBarDynamic((ViewGroup) mRootView, getPageTitle(), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popToBack();
@@ -579,26 +585,8 @@ public abstract class BaseFragment extends Fragment {
         mActivity = null;
     }
 
-    protected <T extends View> T findView(int id) {
-        return (T) mRootView.findViewById(id);
-    }
-
-    /**
-     * 是否是主线程
-     *
-     * @return 是否是主线程
-     */
-    private boolean isMainThread() {
-        return Thread.currentThread() == Looper.getMainLooper().getThread();
-    }
-
-    /**
-     * 提示信息
-     *
-     * @param msg
-     */
-    protected void Toast(String msg) {
-        ToastUtil.getInstance(getContext()).showToast(msg);
+    protected <T extends View> T findViewById(int id) {
+        return mRootView.findViewById(id);
     }
 
     /**

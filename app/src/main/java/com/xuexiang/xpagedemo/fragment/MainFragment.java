@@ -7,6 +7,7 @@ import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.PageContainerListFragment;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpagedemo.MyApplication;
+import com.xuexiang.xutil.common.ClickUtils;
 
 /**
  * @author xuexiang
@@ -33,7 +34,7 @@ public class MainFragment extends PageContainerListFragment {
         return super.initTitleBar().setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyApplication.exitBy2Click();
+                ClickUtils.exitBy2Click();
             }
         });
     }
@@ -44,7 +45,7 @@ public class MainFragment extends PageContainerListFragment {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            MyApplication.exitBy2Click();
+            ClickUtils.exitBy2Click();
         }
         return true;
     }

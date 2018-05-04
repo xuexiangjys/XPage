@@ -9,7 +9,6 @@ import com.xuexiang.xpage.PageConfiguration;
 import com.xuexiang.xpage.base.SimpleListFragment;
 import com.xuexiang.xpage.model.PageInfo;
 import com.xuexiang.xutil.XUtil;
-import com.xuexiang.xutil.tip.ToastUtil;
 
 import java.util.List;
 import java.util.Timer;
@@ -60,27 +59,6 @@ public class MyApplication extends Application {
     private void registerPageInfos(List<PageInfo> pageInfos, Class... clazz) {
         for (int i = 0; i < clazz.length; i ++) {
             pageInfos.add(PageConfig.getPageInfo(clazz[i]));
-        }
-    }
-
-    /**
-     * 双击退出函数
-     */
-    private static boolean gIsExit = false;
-
-    public static void exitBy2Click() {
-        if (!gIsExit) {
-            gIsExit = true; // 准备退出
-            ToastUtil.get().showToast("再按一次退出程序");
-            Timer tExit = new Timer();
-            tExit.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    gIsExit = false; // 取消退出
-                }
-            }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
-        } else {
-            XUtil.get().exitApp();
         }
     }
 

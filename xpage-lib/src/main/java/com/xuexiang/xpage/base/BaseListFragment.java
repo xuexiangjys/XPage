@@ -19,7 +19,7 @@ public abstract class BaseListFragment extends BaseFragment implements AdapterVi
 
     @Override
     protected void initViews() {
-        mListView = findView(R.id.lv_simple);
+        mListView = findViewById(R.id.lv_simple);
         mListView.setOnItemClickListener(this);
         initData();
     }
