@@ -11,8 +11,6 @@ import com.xuexiang.xpage.model.PageInfo;
 import com.xuexiang.xutil.XUtil;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * @author xuexiang
@@ -27,19 +25,21 @@ public class MyApplication extends Application {
         XUtil.init(this);
         XUtil.debug(true);
 
-        PageConfig.getInstance().setPageConfiguration(new PageConfiguration() {
-            @Override
-            public List<PageInfo> registerPages(Context context) {
-//                List<PageInfo> pageInfos = new ArrayList<>();
-//                addPageInfoAndSubPages(pageInfos, MainFragment.class);
-//                pageInfos.add(PageConfig.getPageInfo(DateReceiveFragment.class));
-                return AppPageConfig.getInstance().getPages();
-            }
-        }).debug("PageLog").init(this);
+        PageConfig.getInstance()
+                .setPageConfiguration(new PageConfiguration() { //页面注册
+                    @Override
+                    public List<PageInfo> registerPages(Context context) {
+                        return AppPageConfig.getInstance().getPages();
+                    }
+                })
+                .debug("PageLog")       //开启调试
+                .enableWatcher(false)   //设置是否开启内存泄露监测
+                .init(this);   //初始化页面配置
     }
 
     /**
      * 增加组件信息和子演示页信息
+     *
      * @param clazz 【继承了ListSimpleFragment的类】
      */
     private void addPageInfoAndSubPages(List<PageInfo> pageInfos, Class<? extends SimpleListFragment> clazz) {
@@ -53,6 +53,7 @@ public class MyApplication extends Application {
 
     /**
      * 注册多个页面信息
+     *
      * @param clazz
      * @return
      */
