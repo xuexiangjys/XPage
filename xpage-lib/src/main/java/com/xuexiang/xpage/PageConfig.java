@@ -29,7 +29,7 @@ public class PageConfig {
     /**
      * 是否监测内存泄露
      */
-    private boolean mIsEnableWatcher;
+    private boolean mIsEnableWatcher = true;
 
     private List<PageInfo> mPages = new ArrayList<>();
 
