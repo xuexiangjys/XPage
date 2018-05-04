@@ -548,8 +548,10 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RefWatcher refWatcher = PageConfig.getInstance().getRefWatcher();
-        refWatcher.watch(this);
+        if (PageConfig.getInstance().isEnableWatcher()) {
+            RefWatcher refWatcher = PageConfig.getInstance().getRefWatcher();
+            refWatcher.watch(this);
+        }
     }
 
     /**

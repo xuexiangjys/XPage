@@ -35,7 +35,7 @@ public class MyApplication extends Application {
 //                pageInfos.add(PageConfig.getPageInfo(DateReceiveFragment.class));
                 return AppPageConfig.getInstance().getPages();
             }
-        }).debug("PageLog").init(this);
+        }).debug("PageLog").enableWatcher(false).init(this);
     }
 
     /**
@@ -57,8 +57,8 @@ public class MyApplication extends Application {
      * @return
      */
     private void registerPageInfos(List<PageInfo> pageInfos, Class... clazz) {
-        for (int i = 0; i < clazz.length; i ++) {
-            pageInfos.add(PageConfig.getPageInfo(clazz[i]));
+        for (Class aClazz : clazz) {
+            pageInfos.add(PageConfig.getPageInfo(aClazz));
         }
     }
 

@@ -41,12 +41,11 @@ dependencies {
 
 //    implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.4'
 //    annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.4'
-    //leak
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+//    //leak
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+//    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+//    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
     implementation 'com.github.xuexiangjys.XUtil:xutil-core:1.1.2'
-    implementation deps.gson
 
 }

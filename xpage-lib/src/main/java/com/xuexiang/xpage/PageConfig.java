@@ -26,6 +26,10 @@ public class PageConfig {
      * 页面配置接口
      */
     private PageConfiguration mPageConfiguration;
+    /**
+     * 是否监测内存泄露
+     */
+    private boolean mIsEnableWatcher;
 
     private List<PageInfo> mPages = new ArrayList<>();
 
@@ -48,11 +52,27 @@ public class PageConfig {
     }
 
     /**
+     * 是否监控内存泄露
+     * @param enableWatcher
+     * @return
+     */
+    public PageConfig enableWatcher(boolean enableWatcher) {
+        mIsEnableWatcher = enableWatcher;
+        return this;
+    }
+
+    public boolean isEnableWatcher() {
+        return mIsEnableWatcher;
+    }
+
+    /**
      * 初始化页面配置
      * @param application
      */
     public void init(Application application) {
-        initCanary(application);
+        if (mIsEnableWatcher) {
+            initCanary(application);
+        }
 
         initPages(application);
     }
