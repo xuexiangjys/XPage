@@ -7,7 +7,7 @@
 
 [![github](https://img.shields.io/badge/GitHub-xuexiangjys-blue.svg)](https://github.com/xuexiangjys)   [![csdn](https://img.shields.io/badge/CSDN-xuexiangjys-green.svg)](http://blog.csdn.net/xuexiangjys)
 
-## 特点
+## 特征
 
 * 支持assets下“corepage.json”静态配置Fragment页面信息。
 * 支持Application中动态配置Fragment页面信息。
