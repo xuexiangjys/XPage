@@ -89,7 +89,8 @@ public class PageConfigProcessor extends AbstractProcessor {
                     "        arguments = [ moduleName : project.getName() ]\n" +
                     "    }\n" +
                     "}\n");
-            throw new RuntimeException("XPage::Compiler >>> No module name, for more information, look at gradle log.");
+            moduleName = "app"; //默认是app
+//            throw new RuntimeException("XPage::Compiler >>> No module name, for more information, look at gradle log.");
         }
 
         mFragment = mElements.getTypeElement(Consts.FRAGMENT).asType();
