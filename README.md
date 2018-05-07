@@ -20,6 +20,7 @@
 * 支持Fragment和Fragment页面自由跳转以及数据交互。
 * 支持导航栏通过注解的方式自动添加及设置。
 * 支持进行内存泄露监测。
+* 支持自定义TitleBar全局主题属性。
 
 ## 1、演示（请star支持）
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/1.gif)
@@ -45,8 +46,8 @@ allprojects {
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.6'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.6'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.7'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.7'
   //butterknife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -71,6 +72,7 @@ defaultConfig {
     }
 }
 ```
+【注意】：如果不注册的话，默认ModuleName为`app`。
 
 ### 2.2、页面注册
 
@@ -179,6 +181,31 @@ switch(position) {
 }
 ```
 
+### 2.4、TitleBar样式自定义
+
+```
+<!-- Base application theme. -->
+<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/xpage_default_actionbar_color</item>
+    <item name="colorPrimaryDark">@color/xpage_default_actionbar_color</item>
+    <item name="colorAccent">@color/xpage_default_actionbar_color</item>
+
+    <!--标题栏的高度-->
+    <item name="xpage_actionbar_height">60dp</item>
+    <!--标题栏标题文字的大小-->
+    <item name="xpage_actionbar_title_text_size">21sp</item>
+    <!--标题栏副标题文字的大小-->
+    <item name="xpage_actionbar_sub_text_size">14sp</item>
+    <!--标题栏动作文字的大小-->
+    <item name="xpage_actionbar_action_text_size">18sp</item>
+    <!--标题栏动作图片的padding-->
+    <item name="xpage_actionbar_action_padding">6dp</item>
+    <!--标题栏两侧文字的padding-->
+    <item name="xpage_actionbar_sidetext_padding">16dp</item>
+</style>
+```
+
 ## 特别感谢
 https://github.com/lizhangqu/CorePage/
 
@@ -188,7 +215,7 @@ https://github.com/lizhangqu/CorePage/
 
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/qq_group.jpg)
 
-[xpsvg]: https://img.shields.io/badge/XPage-v2.1.6-brightgreen.svg
+[xpsvg]: https://img.shields.io/badge/XPage-v2.1.7-brightgreen.svg
 [xp]: https://github.com/xuexiangjys/XPage
 [apisvg]: https://img.shields.io/badge/API-19+-brightgreen.svg
 [api]: https://android-arsenal.com/api?level=19

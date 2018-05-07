@@ -8,6 +8,19 @@
         <item name="colorAccent">@color/xpage_default_actionbar_color</item>
 
         <item name="android:windowBackground">@android:color/white</item>
+
+        <!--标题栏的高度-->
+        <item name="xpage_actionbar_height">60dp</item>
+        <!--标题栏标题文字的大小-->
+        <item name="xpage_actionbar_title_text_size">21sp</item>
+        <!--标题栏副标题文字的大小-->
+        <item name="xpage_actionbar_sub_text_size">14sp</item>
+        <!--标题栏动作文字的大小-->
+        <item name="xpage_actionbar_action_text_size">18sp</item>
+        <!--标题栏动作图片的padding-->
+        <item name="xpage_actionbar_action_padding">6dp</item>
+        <!--标题栏两侧文字的padding-->
+        <item name="xpage_actionbar_sidetext_padding">16dp</item>
     </style>
 
 </resources>
