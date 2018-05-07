@@ -19,7 +19,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation deps.support.app_compat
+    compileOnly deps.support.app_compat
     //butterknife的sdk
     implementation deps.butterknife.runtime
     annotationProcessor deps.butterknife.compiler
