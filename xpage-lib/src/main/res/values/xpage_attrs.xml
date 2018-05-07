@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <attr name="xpage_actionbar_color" format="color"/>
+    <attr name="xpage_actionbar_height" format="dimension"/>
+    <attr name="xpage_actionbar_title_text_size" format="dimension"/>
+    <attr name="xpage_actionbar_action_text_size" format="dimension"/>
+    <attr name="xpage_actionbar_sub_text_size" format="dimension"/>
+    <attr name="xpage_actionbar_action_padding" format="dimension"/>
+    <attr name="xpage_actionbar_sidetext_padding" format="dimension"/>
+
     <!--ActionBar  TitleBar-->
     <declare-styleable name="TitleBar">
         <!--标题栏的高度， 默认52dp-->

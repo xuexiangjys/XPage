@@ -79,35 +79,39 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     private int mDividerColor;
 
     public TitleBar(Context context) {
-        this(context, null);
+        super(context);
+        initAttrs(context, null);
+        init(context);
     }
 
     public TitleBar(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        initAttrs(context, attrs);
+        init(context);
     }
 
     public TitleBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        getAttr(context, attrs);
+        initAttrs(context, attrs);
         init(context);
     }
 
-    private void getAttr(Context context, AttributeSet attrs) {
+    private void initAttrs(Context context, AttributeSet attrs) {
         if (isInEditMode()) {
             return;
         }
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TitleBar);
         if (typedArray != null) {
-            mBarHeight = typedArray.getDimensionPixelOffset(R.styleable.TitleBar_tb_barHeight, Utils.getDimensionPixelOffset(context, R.dimen.default_titlebar_height));
+            mBarHeight = typedArray.getDimensionPixelOffset(R.styleable.TitleBar_tb_barHeight, Utils.resolveDimension(context, R.attr.xpage_actionbar_height, Utils.getDimensionPixelOffset(context, R.dimen.xpage_default_titlebar_height)));
             mImmersive = typedArray.getBoolean(R.styleable.TitleBar_tb_immersive, false);
 
-            mActionPadding = typedArray.getDimensionPixelOffset(R.styleable.TitleBar_tb_actionPadding, Utils.getDimensionPixelOffset(context, R.dimen.default_action_padding));
-            mSideTextPadding = typedArray.getDimensionPixelOffset(R.styleable.TitleBar_tb_sideTextPadding, Utils.getDimensionPixelOffset(context, R.dimen.default_sidetext_padding));
+            mActionPadding = typedArray.getDimensionPixelOffset(R.styleable.TitleBar_tb_actionPadding, Utils.resolveDimension(context, R.attr.xpage_actionbar_action_padding, Utils.getDimensionPixelOffset(context, R.dimen.xpage_default_action_padding)));
+            mSideTextPadding = typedArray.getDimensionPixelOffset(R.styleable.TitleBar_tb_sideTextPadding, Utils.resolveDimension(context, R.attr.xpage_actionbar_sidetext_padding, Utils.getDimensionPixelOffset(context, R.dimen.xpage_default_sidetext_padding)));
 
-            mSideTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_tb_sideTextSize, Utils.getDimensionPixelSize(context, R.dimen.default_action_text_size));
-            mTitleTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_tb_titleTextSize, Utils.getDimensionPixelSize(context, R.dimen.default_main_text_size));
-            mSubTitleTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_tb_subTitleTextSize, Utils.getDimensionPixelSize(context, R.dimen.default_sub_text_size));
-            mActionTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_tb_actionTextSize, Utils.getDimensionPixelSize(context, R.dimen.default_action_text_size));
+            mSideTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_tb_sideTextSize, Utils.resolveDimension(context, R.attr.xpage_actionbar_action_text_size, Utils.getDimensionPixelSize(context, R.dimen.xpage_default_action_text_size)));
+            mTitleTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_tb_titleTextSize, Utils.resolveDimension(context, R.attr.xpage_actionbar_title_text_size, Utils.getDimensionPixelSize(context, R.dimen.xpage_default_title_text_size)));
+            mSubTitleTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_tb_subTitleTextSize, Utils.resolveDimension(context, R.attr.xpage_actionbar_sub_text_size, Utils.getDimensionPixelSize(context, R.dimen.xpage_default_sub_text_size)));
+            mActionTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_tb_actionTextSize, Utils.resolveDimension(context, R.attr.xpage_actionbar_action_text_size, Utils.getDimensionPixelSize(context, R.dimen.xpage_default_action_text_size)));
 
             mSideTextColor = typedArray.getColor(R.styleable.TitleBar_tb_sideTextColor, DEFAULT_TEXT_COLOR);
             mTitleTextColor = typedArray.getColor(R.styleable.TitleBar_tb_titleTextColor, DEFAULT_TEXT_COLOR);
@@ -208,9 +212,14 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     }
 
     public TitleBar setBackImageResource(int resId) {
-        mLeftImageResource = Utils.getDrawable(getContext(), resId);
-        mLeftImageResource.setBounds(0, 0, Utils.dip2px(getContext(), 12), Utils.dip2px(getContext(), 22));
-        mLeftText.setCompoundDrawables(mLeftImageResource, null, null, null);
+        if (resId != 0) {
+            mLeftImageResource = Utils.getDrawable(getContext(), resId);
+            mLeftImageResource.setBounds(0, 0, Utils.dip2px(getContext(), 12), Utils.dip2px(getContext(), 22));
+            mLeftText.setCompoundDrawables(mLeftImageResource, null, null, null);
+        } else {
+            mLeftImageResource = null;
+            mLeftText.setCompoundDrawables(null, null, null, null);
+        }
         return this;
     }
 

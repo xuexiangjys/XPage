@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- TitleBar-->
-    <dimen name="default_titlebar_height">52dp</dimen>
+    <dimen name="xpage_default_titlebar_height">52dp</dimen>
 
-    <dimen name="default_main_text_size">18sp</dimen>
-    <dimen name="default_sub_text_size">12sp</dimen>
-    <dimen name="default_action_text_size">15sp</dimen>
+    <dimen name="xpage_default_title_text_size">18sp</dimen>
+    <dimen name="xpage_default_sub_text_size">12sp</dimen>
+    <dimen name="xpage_default_action_text_size">15sp</dimen>
 
-    <dimen name="default_action_padding">5dp</dimen>
-    <dimen name="default_sidetext_padding">14dp</dimen>
+    <dimen name="xpage_default_action_padding">5dp</dimen>
+    <dimen name="xpage_default_sidetext_padding">14dp</dimen>
 </resources>

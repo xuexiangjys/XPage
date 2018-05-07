@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--对外开放的资源-->
+    <public name="xpage_actionbar_color" type="attr"/>
+    <public name="xpage_actionbar_height" type="attr"/>
+    <public name="xpage_actionbar_title_text_size" type="attr"/>
+    <public name="xpage_actionbar_action_text_size" type="attr"/>
+    <public name="xpage_actionbar_sub_text_size" type="attr"/>
+    <public name="xpage_actionbar_action_padding" type="attr"/>
+    <public name="xpage_actionbar_sidetext_padding" type="attr"/>
 
-
+    <public name="xpage_default_actionbar_color" type="color"/>
+    <public name="xpage_default_titlebar_height" type="dimen"/>
+    <public name="xpage_default_title_text_size" type="dimen"/>
+    <public name="xpage_default_sub_text_size" type="dimen"/>
+    <public name="xpage_default_action_text_size" type="dimen"/>
+    <public name="xpage_default_action_padding" type="dimen"/>
+    <public name="xpage_default_sidetext_padding" type="dimen"/>
 </resources>

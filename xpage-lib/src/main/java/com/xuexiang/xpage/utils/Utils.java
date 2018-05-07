@@ -2,8 +2,10 @@ package com.xuexiang.xpage.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.AttrRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.view.MotionEvent;
@@ -45,6 +47,15 @@ public class Utils {
      */
     public static int getDimensionPixelSize(Context context, @DimenRes int resId) {
         return getResources(context).getDimensionPixelSize(resId);
+    }
+
+    public static int resolveDimension(Context context, @AttrRes int attr, int fallback) {
+        TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {attr});
+        try {
+            return a.getDimensionPixelSize(0, fallback);
+        } finally {
+            a.recycle();
+        }
     }
 
     /**

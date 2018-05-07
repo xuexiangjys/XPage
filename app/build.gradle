@@ -11,11 +11,11 @@ android {
         versionCode 1
         versionName "1.0"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
-            }
-        }
+//        javaCompileOptions {
+//            annotationProcessorOptions {
+//                arguments = [ moduleName : project.getName() ]
+//            }
+//        }
     }
     buildTypes {
         release {
@@ -36,11 +36,11 @@ dependencies {
     implementation deps.butterknife.runtime
     annotationProcessor deps.butterknife.compiler
 
-//    implementation project(':xpage-lib')
-//    annotationProcessor project(':xpage-compiler')
+    implementation project(':xpage-lib')
+    annotationProcessor project(':xpage-compiler')
 
-    implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.6'
-    annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.6'
+//    implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.6'
+//    annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.6'
 
     implementation 'com.github.xuexiangjys.XUtil:xutil-core:1.1.2'
 

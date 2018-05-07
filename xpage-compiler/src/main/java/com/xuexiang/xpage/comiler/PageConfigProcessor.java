@@ -83,7 +83,7 @@ public class PageConfigProcessor extends AbstractProcessor {
 
             mLogger.info("The user has configuration the module name, it was [" + moduleName + "]");
         } else {
-            mLogger.error("These no module name, at 'build.gradle', like :\n" +
+            mLogger.info("These no module name, at 'build.gradle', like :\n" +
                     "javaCompileOptions {\n" +
                     "    annotationProcessorOptions {\n" +
                     "        arguments = [ moduleName : project.getName() ]\n" +
