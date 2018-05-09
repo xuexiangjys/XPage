@@ -1,4 +1,4 @@
-package com.xuexiang.xpage.comiler;
+package com.xuexiang.xpage.compiler;
 
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;

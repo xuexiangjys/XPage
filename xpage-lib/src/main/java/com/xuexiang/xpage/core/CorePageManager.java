@@ -16,6 +16,8 @@ import com.xuexiang.xpage.base.BaseFragment;
 import com.xuexiang.xpage.logger.PageLog;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,10 +25,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 跳转页面管理
- *
- * @author XUE
- * @date 2017/9/8 14:30
+ * <pre>
+ *     desc   : 跳转页面管理
+ *     author : xuexiang
+ *     time   : 2018/5/9 下午3:13
+ * </pre>
  */
 public class CorePageManager {
     /**
@@ -91,6 +94,8 @@ public class CorePageManager {
      */
 
     public void readConfig(String content) {
+        if (TextUtils.isEmpty(content)) return;
+
         PageLog.d("readConfig from json");
         JSONArray jsonArray = JSON.parseArray(content);
         Iterator<Object> iterator = jsonArray.iterator();
@@ -121,17 +126,39 @@ public class CorePageManager {
      * @return
      */
     private String readFileFromAssets(Context context, String fileName) {
-        String result = "";
+        StringBuilder s = new StringBuilder();
+        BufferedReader br = null;
         try {
             InputStreamReader inputReader = new InputStreamReader(context.getResources().getAssets().open(fileName));
-            BufferedReader bufReader = new BufferedReader(inputReader);
+            br = new BufferedReader(inputReader);
             String line;
-            while ((line = bufReader.readLine()) != null)
-                result += line;
+            while ((line = br.readLine()) != null) {
+                s.append(line);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+
+        } finally {
+            closeIO(br);
         }
-        return result;
+        return s.toString();
+    }
+
+    /**
+     * 关闭 IO
+     *
+     * @param closeables closeables
+     */
+    static void closeIO(final Closeable... closeables) {
+        if (closeables == null) return;
+        for (Closeable closeable : closeables) {
+            if (closeable != null) {
+                try {
+                    closeable.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**
@@ -294,7 +321,7 @@ public class CorePageManager {
     /**
      * 判断fragment是否位于栈顶
      *
-     * @param context 上下文
+     * @param context     上下文
      * @param fragmentTag fragment的tag
      * @return 是否是栈顶Fragment
      */
@@ -303,11 +330,7 @@ public class CorePageManager {
             return ((CoreSwitcher) context).isFragmentTop(fragmentTag);
         } else {
             BaseActivity topActivity = BaseActivity.getTopActivity();
-            if (topActivity != null) {
-                return topActivity.isFragmentTop(fragmentTag);
-            } else {
-                return false;
-            }
+            return topActivity != null && topActivity.isFragmentTop(fragmentTag);
         }
     }
 }
