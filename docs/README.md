@@ -37,8 +37,8 @@ allprojects {
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.7'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.7'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.8'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.8'
   //butterknife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -69,7 +69,7 @@ defaultConfig {
  [![](https://img.shields.io/badge/点我一键加入QQ群-602082750-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=9922861ef85c19f1575aecea0e8680f60d9386080a97ed310c971ae074998887)
 
 
-[xpsvg]: https://img.shields.io/badge/XPage-v2.1.7-brightgreen.svg
+[xpsvg]: https://img.shields.io/badge/XPage-v2.1.8-brightgreen.svg
 [xp]: https://github.com/xuexiangjys/XPage
 [apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
 [api]: https://android-arsenal.com/api?level=14
