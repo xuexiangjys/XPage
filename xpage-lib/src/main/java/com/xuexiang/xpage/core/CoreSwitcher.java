@@ -2,14 +2,15 @@ package com.xuexiang.xpage.core;
 
 import android.support.v4.app.Fragment;
 
-import com.xuexiang.xpage.base.BaseFragment;
+import com.xuexiang.xpage.base.XPageFragment;
 
 import java.util.List;
 
 /**
  * 页面跳转接口，用于控制页面跳转或启动新的activity
- * @author XUE
- * @date 2017/9/8 14:37
+ *
+ * @author xuexiang
+ * @since 2018/5/24 下午3:47
  */
 public interface CoreSwitcher {
     /**
@@ -64,6 +65,6 @@ public interface CoreSwitcher {
      * @param fragment BaseFragment对象
      * @return 打开的页面Fragment对象
      */
-    Fragment openPageForResult(final CoreSwitchBean page, final BaseFragment fragment);
+    Fragment openPageForResult(final CoreSwitchBean page, final XPageFragment fragment);
 
 }

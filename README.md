@@ -191,6 +191,8 @@ switch(position) {
     <item name="colorPrimaryDark">@color/xpage_default_actionbar_color</item>
     <item name="colorAccent">@color/xpage_default_actionbar_color</item>
 
+    <!--标题栏的背景颜色-->
+    <item name="xpage_actionbar_color">@color/bar_color</item>
     <!--标题栏的高度-->
     <item name="xpage_actionbar_height">60dp</item>
     <!--标题栏标题文字的大小-->

@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.base.BaseFragment;
+import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpagedemo.R;
 
 import butterknife.BindView;
@@ -18,7 +18,7 @@ import butterknife.OnClick;
  * @date 2018/1/7 下午10:05
  */
 @Page(name = "数据接收", params = {DateReceiveFragment.KEY_IS_NEED_BACK, DateReceiveFragment.KEY_EVENT_NAME, DateReceiveFragment.KEY_EVENT_DATA})
-public class DateReceiveFragment extends BaseFragment {
+public class DateReceiveFragment extends XPageFragment {
     public final static String KEY_IS_NEED_BACK = "is_need_back";
     public final static String KEY_EVENT_NAME = "event_name";
     public final static String KEY_EVENT_DATA = "event_data";

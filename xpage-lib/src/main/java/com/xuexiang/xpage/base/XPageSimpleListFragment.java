@@ -9,10 +9,11 @@ import java.util.List;
 
 /**
  * 简单的ListView演示fragment
- * @author XUE
- * @date 2017/9/10 23:30
+ *
+ * @author xuexiang
+ * @since 2018/5/24 下午3:39
  */
-public abstract class SimpleListFragment extends BaseListFragment {
+public abstract class XPageSimpleListFragment extends XPageListFragment {
     protected List<String> mSimpleData = new ArrayList<>();
 
     @Override

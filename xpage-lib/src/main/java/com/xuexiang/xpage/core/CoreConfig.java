@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.alibaba.fastjson.JSON;
-import com.xuexiang.xpage.base.BaseActivity;
+import com.xuexiang.xpage.base.XPageActivity;
 import com.xuexiang.xpage.model.PageInfo;
 
 import java.util.ArrayList;
@@ -13,8 +13,9 @@ import java.util.List;
 
 /**
  * 全局配置类
+ *
  * @author xuexiang
- * @date 2018/1/6 下午10:00
+ * @since 2018/5/24 下午3:47
  */
 public class CoreConfig {
 	/**
@@ -103,7 +104,7 @@ public class CoreConfig {
 		intent.setAction(CoreConfig.ACTION_EXIT_APP);
 		intent.addCategory(Intent.CATEGORY_DEFAULT);
 		getLocalBroadcastManager().sendBroadcast(intent);
-		BaseActivity.unInit();
+		XPageActivity.unInit();
 		mLocalBroadcatManager = null;
 	}
 
@@ -119,7 +120,7 @@ public class CoreConfig {
 		intent.setAction(CoreConfig.ACTION_EXIT_APP);
 		intent.addCategory(Intent.CATEGORY_DEFAULT);
 		getLocalBroadcastManager().sendBroadcast(intent);
-		BaseActivity.unInit();
+		XPageActivity.unInit();
 	}
 
 	/**

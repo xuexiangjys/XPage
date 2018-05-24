@@ -24,7 +24,7 @@ import android.util.Log;
  * Logger日志记录
  *
  * @author xuexiang
- * @date 2018/3/9 上午12:29
+ * @since 2018/5/24 下午3:46
  */
 public final class PageLog {
 

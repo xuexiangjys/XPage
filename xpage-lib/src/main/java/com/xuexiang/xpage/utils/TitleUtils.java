@@ -11,10 +11,16 @@ import android.widget.RelativeLayout;
 import com.xuexiang.xpage.R;
 
 /**
- * @author XUE
- * @date 2017/9/7 20:33
+ * 导航栏工具
+ *
+ * @author xuexiang
+ * @since 2018/5/24 下午3:41
  */
-public class TitleUtil {
+public final class TitleUtils {
+
+    private TitleUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     //=================================静态添加=======================================//
     /**
@@ -136,7 +142,7 @@ public class TitleUtil {
                 .setBackImageResource(R.drawable.xpage_ic_return_back)
                 .setLeftClickListener(listener)
                 .setTitle(title)
-                .setBackgroundColor(Color.parseColor("#299EE3"));
+                .setBackgroundColor(Utils.resolveColor(titleBar.getContext(), R.attr.xpage_actionbar_color, Color.parseColor("#299EE3")));
         return titleBar;
     }
 }

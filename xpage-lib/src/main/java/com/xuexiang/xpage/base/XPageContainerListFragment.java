@@ -9,9 +9,9 @@ import java.util.List;
  * 简单的页面容器fragment，只需继承PageContainerListFragment， 重写getPagesClasses方法，把需要显示的页面的类传入即可。
  *
  * @author xuexiang
- * @date 2018/4/15 上午1:12
+ * @since 2018/5/24 下午3:48
  */
-public abstract class PageContainerListFragment extends SimpleListFragment {
+public abstract class XPageContainerListFragment extends XPageSimpleListFragment {
     /**
      * 初始化页面容器内容
      *

@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--标题栏的背景颜色-->
     <attr name="xpage_actionbar_color" format="color"/>
+    <!--标题栏的高度-->
     <attr name="xpage_actionbar_height" format="dimension"/>
+    <!--标题栏标题文字的大小-->
     <attr name="xpage_actionbar_title_text_size" format="dimension"/>
-    <attr name="xpage_actionbar_action_text_size" format="dimension"/>
+    <!--标题栏副标题文字的大小-->
     <attr name="xpage_actionbar_sub_text_size" format="dimension"/>
+    <!--标题栏动作文字的大小-->
+    <attr name="xpage_actionbar_action_text_size" format="dimension"/>
+    <!--标题栏动作图片的padding-->
     <attr name="xpage_actionbar_action_padding" format="dimension"/>
+    <!--标题栏两侧文字的padding-->
     <attr name="xpage_actionbar_sidetext_padding" format="dimension"/>
 
     <!--ActionBar  TitleBar-->

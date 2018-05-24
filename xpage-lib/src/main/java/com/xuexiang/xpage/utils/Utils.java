@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.AttrRes;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.view.MotionEvent;
@@ -17,20 +18,25 @@ import android.widget.EditText;
  * 工具类
  *
  * @author xuexiang
- * @date 2018/1/6 下午10:39
+ * @since 2018/5/24 下午3:50
  */
-public class Utils {
+public final class Utils {
+
+    private Utils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
     /**
      * 获取resources对象
      *
      * @return
      */
-    public static Resources getResources(Context context) {
+    private static Resources getResources(Context context) {
         return context.getResources();
     }
 
     /**
-     * 获取dimes值【px不会乘以denstiy.】
+     * 获取dimes值【px不会乘以Denstiy.】
      *
      * @param resId
      * @return
@@ -53,6 +59,16 @@ public class Utils {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {attr});
         try {
             return a.getDimensionPixelSize(0, fallback);
+        } finally {
+            a.recycle();
+        }
+    }
+
+    @ColorInt
+    public static int resolveColor(Context context, @AttrRes int attr, int fallback) {
+        TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {attr});
+        try {
+            return a.getColor(0, fallback);
         } finally {
             a.recycle();
         }

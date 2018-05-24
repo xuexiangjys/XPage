@@ -1,7 +1,7 @@
 package com.xuexiang.xpagedemo.fragment;
 
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.base.BaseFragment;
+import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpagedemo.R;
 
 /**
@@ -9,7 +9,7 @@ import com.xuexiang.xpagedemo.R;
  * @date 2018/1/7 下午11:27
  */
 @Page(name = TestFragment.PAGE_NAME)
-public class TestFragment extends BaseFragment {
+public class TestFragment extends XPageFragment {
     public final static String PAGE_NAME = "测试页面";
     /**
      * 布局的资源id

@@ -17,8 +17,9 @@ import java.util.List;
 
 /**
  * 页面配置
+ *
  * @author xuexiang
- * @date 2018/1/6 下午11:55
+ * @since 2018/5/24 下午3:40
  */
 public class PageConfig {
     private RefWatcher mRefWatcher;

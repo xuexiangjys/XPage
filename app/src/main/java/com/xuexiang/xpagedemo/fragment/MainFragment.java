@@ -4,9 +4,8 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.base.PageContainerListFragment;
+import com.xuexiang.xpage.base.XPageContainerListFragment;
 import com.xuexiang.xpage.utils.TitleBar;
-import com.xuexiang.xpagedemo.MyApplication;
 import com.xuexiang.xutil.common.ClickUtils;
 
 /**
@@ -14,7 +13,7 @@ import com.xuexiang.xutil.common.ClickUtils;
  * @date 2018/1/7 下午6:47
  */
 @Page(name = "XPage")
-public class MainFragment extends PageContainerListFragment {
+public class MainFragment extends XPageContainerListFragment {
 
     /**
      * 获取页面的类集合[使用@Page注解进行注册的页面]

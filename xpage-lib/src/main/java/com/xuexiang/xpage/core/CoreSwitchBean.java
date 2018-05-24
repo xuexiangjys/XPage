@@ -13,8 +13,8 @@ import java.util.Arrays;
 /**
  * 页面跳转控制参数
  *
- * @author XUE
- * @date 2017/9/8 14:31
+ * @author xuexiang
+ * @since 2018/5/24 下午3:47
  */
 public class CoreSwitchBean implements Parcelable {
     public static final String KEY_SWITCHBEAN = "SwitchBean";

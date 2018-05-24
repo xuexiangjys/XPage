@@ -11,8 +11,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xuexiang.xpage.R;
-import com.xuexiang.xpage.base.BaseActivity;
-import com.xuexiang.xpage.base.BaseFragment;
+import com.xuexiang.xpage.base.XPageActivity;
+import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.logger.PageLog;
 
 import java.io.BufferedReader;
@@ -25,11 +25,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * <pre>
- *     desc   : 跳转页面管理
- *     author : xuexiang
- *     time   : 2018/5/9 下午3:13
- * </pre>
+ * 跳转页面管理
+ *
+ * @author xuexiang
+ * @since 2018/5/24 下午3:48
  */
 public class CorePageManager {
     /**
@@ -169,7 +168,7 @@ public class CorePageManager {
      * @param params 页面参数
      * @return 是否新增成功
      */
-    public boolean putPage(String name, Class<? extends BaseFragment> clazz, Map<String, String> params) {
+    public boolean putPage(String name, Class<? extends XPageFragment> clazz, Map<String, String> params) {
         if (TextUtils.isEmpty(name) || clazz == null) {
             PageLog.d("page Name is null or pageClass is null");
             return false;
@@ -235,7 +234,7 @@ public class CorePageManager {
      * @return 打开的Fragment对象
      */
     public Fragment openPageWithNewFragmentManager(FragmentManager fragmentManager, String pageName, Bundle bundle, int[] animations, boolean addToBackStack) {
-        BaseFragment fragment = null;
+        XPageFragment fragment = null;
         try {
             CorePage corePage = mPageMap.get(pageName);
             if (corePage == null) {
@@ -251,9 +250,9 @@ public class CorePageManager {
                     PageLog.d("OpenAtlas bundle ClassLoader is null!");
                     return null;
                 }
-                fragment = (BaseFragment) CoreConfig.getBundleClassLoader().loadClass(corePage.getClazz()).newInstance();
+                fragment = (XPageFragment) CoreConfig.getBundleClassLoader().loadClass(corePage.getClazz()).newInstance();
             } else {
-                fragment = (BaseFragment) Class.forName(corePage.getClazz()).newInstance();
+                fragment = (XPageFragment) Class.forName(corePage.getClazz()).newInstance();
             }
             /**
              * Atlas的支持 end
@@ -329,7 +328,7 @@ public class CorePageManager {
         if (context != null && context instanceof CoreSwitcher) {
             return ((CoreSwitcher) context).isFragmentTop(fragmentTag);
         } else {
-            BaseActivity topActivity = BaseActivity.getTopActivity();
+            XPageActivity topActivity = XPageActivity.getTopActivity();
             return topActivity != null && topActivity.isFragmentTop(fragmentTag);
         }
     }

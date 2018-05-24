@@ -4,8 +4,9 @@ import java.io.Serializable;
 
 /**
  * assets/page.json 页面属性类
- * @author XUE
- * @date 2017/9/8 14:37
+ *
+ * @author xuexiang
+ * @since 2018/5/24 下午3:47
  */
 public class CorePage implements Serializable {
 	private final static long serialVersionUID = 3736359137726536495L;

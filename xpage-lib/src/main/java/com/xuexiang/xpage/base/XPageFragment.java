@@ -3,7 +3,6 @@ package com.xuexiang.xpage.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,7 +18,7 @@ import com.xuexiang.xpage.core.CoreSwitcher;
 import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.utils.TitleBar;
-import com.xuexiang.xpage.utils.TitleUtil;
+import com.xuexiang.xpage.utils.TitleUtils;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -27,10 +26,10 @@ import butterknife.Unbinder;
 /**
  * 全局基类BaseFragment
  *
- * @author XUE
- * @date 2017/9/8 14:29
+ * @author xuexiang
+ * @since 2018/5/24 下午3:49
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class XPageFragment extends Fragment {
     /**
      * 所在activity
      */
@@ -166,13 +165,13 @@ public abstract class BaseFragment extends Fragment {
      * @return 页面切换Switcher
      */
     public CoreSwitcher getSwitcher() {
-        synchronized (BaseFragment.this) {// 加强保护，保证pageSwitcher 不为null
+        synchronized (XPageFragment.this) {// 加强保护，保证pageSwitcher 不为null
             if (mPageCoreSwitcher == null) {
                 if (this.mActivity != null && this.mActivity instanceof CoreSwitcher) {
                     mPageCoreSwitcher = (CoreSwitcher) this.mActivity;
                 }
                 if (mPageCoreSwitcher == null) {
-                    BaseActivity topActivity = BaseActivity.getTopActivity();
+                    XPageActivity topActivity = XPageActivity.getTopActivity();
                     if (topActivity != null) {
                         mPageCoreSwitcher = topActivity;
                     }
@@ -187,7 +186,7 @@ public abstract class BaseFragment extends Fragment {
      *
      * @param pageCoreSwitcher CoreSwitcher对象
      */
-    public BaseFragment setSwitcher(CoreSwitcher pageCoreSwitcher) {
+    public XPageFragment setSwitcher(CoreSwitcher pageCoreSwitcher) {
         mPageCoreSwitcher = pageCoreSwitcher;
         return this;
     }
@@ -530,7 +529,7 @@ public abstract class BaseFragment extends Fragment {
      * 初始化标题
      */
     protected TitleBar initTitleBar() {
-        return TitleUtil.addTitleBarDynamic((ViewGroup) mRootView, getPageTitle(), new View.OnClickListener() {
+        return TitleUtils.addTitleBarDynamic((ViewGroup) mRootView, getPageTitle(), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popToBack();

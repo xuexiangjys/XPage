@@ -22,14 +22,13 @@ import android.util.Log;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-
 /**
  * 默认Logcat日志记录
  *
  * @author xuexiang
- * @date 2018/3/9 上午12:33
+ * @since 2018/5/24 下午3:49
  */
-public class LogcatLogger implements ILogger {
+class LogcatLogger implements ILogger {
 
     /**
      * logcat里日志的最大长度.
@@ -81,7 +80,7 @@ public class LogcatLogger implements ILogger {
      * @param tag      标签
      * @param message  信息
      */
-    public void log(int priority, String tag, String message) {
+    private void log(int priority, String tag, String message) {
         int subNum = message.length() / MAX_LOG_LENGTH;
         if (subNum > 0) {
             int index = 0;

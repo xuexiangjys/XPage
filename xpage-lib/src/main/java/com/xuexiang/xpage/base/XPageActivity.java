@@ -44,14 +44,14 @@ import java.util.List;
  * 页面跳转都通过BaseActivity 嵌套Fragment来实现,动态替换fragment只需要指定相应的参数。 避免Activity 需要再manifest中注册的问题。
  * 1.管理应用中所有BaseActivity 实例。 2.管理BaseActivity 实例和fragment的跳转
  *
- * @author XUE
- * @date 2017/9/8 14:28
+ * @author xuexiang
+ * @since 2018/5/24 下午3:36
  */
-public class BaseActivity extends FragmentActivity implements CoreSwitcher {
+public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     /**
      * 应用中所有BaseActivity的引用
      */
-    private static List<WeakReference<BaseActivity>> mActivities = new ArrayList<WeakReference<BaseActivity>>();
+    private static List<WeakReference<XPageActivity>> mActivities = new ArrayList<WeakReference<XPageActivity>>();
     /**
      * 记录首个CoreSwitchBean，用于页面切换
      */
@@ -63,11 +63,11 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     /**
      * 当前activity的引用
      */
-    private WeakReference<BaseActivity> mCurrentInstance = null;
+    private WeakReference<XPageActivity> mCurrentInstance = null;
     /**
      * forresult 的fragment
      */
-    private BaseFragment mFragmentForResult = null;
+    private XPageFragment mFragmentForResult = null;
     /**
      * 请求码，必须大于等于0
      */
@@ -93,11 +93,11 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      *
      * @return 栈顶Activity
      */
-    public static BaseActivity getTopActivity() {
+    public static XPageActivity getTopActivity() {
         if (mActivities != null) {
             int size = mActivities.size();
             if (size >= 1) {
-                WeakReference<BaseActivity> ref = mActivities.get(size - 1);
+                WeakReference<XPageActivity> ref = mActivities.get(size - 1);
                 if (ref != null) {
                     return ref.get();
                 }
@@ -121,7 +121,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      * @return 当前页名
      */
     protected String getPageName() {
-        BaseFragment frg = getActiveFragment();
+        XPageFragment frg = getActiveFragment();
         if (frg != null) {
             return frg.getPageName();
         }
@@ -178,7 +178,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      * @param activity      BaseActivity对象
      * @param showAnimation 是否显示动画
      */
-    private void finishActivity(BaseActivity activity, boolean showAnimation) {
+    private void finishActivity(XPageActivity activity, boolean showAnimation) {
         if (activity != null) {
             activity.finish();
             //从activity列表中移除当前实例
@@ -207,8 +207,8 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
     public boolean isFragmentTop(String fragmentTag) {
         int size = mActivities.size();
         if (size > 0) {
-            WeakReference<BaseActivity> ref = mActivities.get(size - 1);
-            BaseActivity item = ref.get();
+            WeakReference<XPageActivity> ref = mActivities.get(size - 1);
+            XPageActivity item = ref.get();
             if (item != null && item == this) {
                 FragmentActivity activity = item;
                 FragmentManager manager = activity.getSupportFragmentManager();
@@ -237,9 +237,9 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
         int size = mActivities.size();
         boolean hasFind = false;
         for (int j = size - 1; j >= 0; j--) {
-            WeakReference<BaseActivity> ref = mActivities.get(j);
+            WeakReference<XPageActivity> ref = mActivities.get(j);
             if (ref != null) {
-                BaseActivity item = ref.get();
+                XPageActivity item = ref.get();
                 if (item == null) {
                     PageLog.d("item is null");
                     continue;
@@ -281,9 +281,9 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
 
         int size = mActivities.size();
         for (int i = size - 1; i >= 0; i--) {
-            WeakReference<BaseActivity> ref = mActivities.get(i);
+            WeakReference<XPageActivity> ref = mActivities.get(i);
             if (ref != null) {
-                BaseActivity item = ref.get();
+                XPageActivity item = ref.get();
                 if (item == null) {
                     PageLog.d("item null");
                     continue;
@@ -309,14 +309,14 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      * @param findActivity 当前activity
      * @return 是否弹出成功
      */
-    protected boolean popFragmentInActivity(final String pageName, Bundle bundle, BaseActivity findActivity) {
+    protected boolean popFragmentInActivity(final String pageName, Bundle bundle, XPageActivity findActivity) {
         if (pageName == null || findActivity == null || findActivity.isFinishing()) {
             return false;
         } else {
             final FragmentManager fragmentManager = findActivity.getSupportFragmentManager();
             if (fragmentManager != null) {
                 Fragment frg = fragmentManager.findFragmentByTag(pageName);
-                if (frg != null && frg instanceof BaseFragment) {
+                if (frg != null && frg instanceof XPageFragment) {
                     if (fragmentManager.getBackStackEntryCount() > 1 && mHandler != null) {
                         mHandler.postDelayed(new Runnable() {
                             @Override
@@ -325,7 +325,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
                             }
                         }, 100);
                     }
-                    ((BaseFragment) frg).onFragmentDataReset(bundle);
+                    ((XPageFragment) frg).onFragmentDataReset(bundle);
                     return true;
                 }
             }
@@ -342,7 +342,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      */
     public void startActivity(CoreSwitchBean page) {
         try {
-            Intent intent = new Intent(this, BaseActivity.class);
+            Intent intent = new Intent(this, XPageActivity.class);
             intent.putExtra(CoreSwitchBean.KEY_SWITCHBEAN, page);
 
             this.startActivity(intent);
@@ -382,7 +382,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      * @return 打开的fragment对象
      */
     @Override
-    public Fragment openPageForResult(CoreSwitchBean page, BaseFragment fragment) {
+    public Fragment openPageForResult(CoreSwitchBean page, XPageFragment fragment) {
         if (page != null) {
             if (page.isNewActivity()) {
                 PageLog.d("openPageForResult start new activity-----" + fragment.getPageName());
@@ -395,13 +395,13 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
                 Bundle bundle = page.getBundle();
                 int[] animations = page.getAnim();
                 boolean addToBackStack = page.isAddToBackStack();
-                BaseFragment frg = (BaseFragment) CorePageManager.getInstance().openPageWithNewFragmentManager(getSupportFragmentManager(), pageName, bundle, animations, addToBackStack);
+                XPageFragment frg = (XPageFragment) CorePageManager.getInstance().openPageWithNewFragmentManager(getSupportFragmentManager(), pageName, bundle, animations, addToBackStack);
                 if (frg == null) {
                     return null;
                 }
-                final BaseFragment opener = fragment;
+                final XPageFragment opener = fragment;
                 frg.setRequestCode(page.getRequestCode());
-                frg.setFragmentFinishListener(new BaseFragment.OnFragmentFinishListener() {
+                frg.setFragmentFinishListener(new XPageFragment.OnFragmentFinishListener() {
                     @Override
                     public void onFragmentResult(int requestCode, int resultCode, Intent intent) {
                         opener.onFragmentResult(requestCode, resultCode, intent);
@@ -420,7 +420,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      */
     public void startActivityForResult(CoreSwitchBean page) {
         try {
-            Intent intent = new Intent(this, BaseActivity.class);
+            Intent intent = new Intent(this, XPageActivity.class);
             intent.putExtra(CoreSwitchBean.KEY_SWITCHBEAN, page);
             intent.putExtra(CoreSwitchBean.KEY_START_ACTIVITY_FOR_RESULT, true);
             this.startActivityForResult(intent, page.getRequestCode());
@@ -691,7 +691,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        BaseFragment activeFragment = getActiveFragment();
+        XPageFragment activeFragment = getActiveFragment();
         boolean isHandled = false;
         if (activeFragment != null) {
             isHandled = activeFragment.onKeyDown(keyCode, event);
@@ -738,7 +738,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      *
      * @return 当前活动Fragment对象
      */
-    public BaseFragment getActiveFragment() {
+    public XPageFragment getActiveFragment() {
         if (this.isFinishing()) {
             return null;
         }
@@ -747,7 +747,7 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
             int count = manager.getBackStackEntryCount();
             if (count > 0) {
                 String tag = manager.getBackStackEntryAt(count - 1).getName();
-                return (BaseFragment) manager.findFragmentByTag(tag);
+                return (XPageFragment) manager.findFragmentByTag(tag);
             }
         }
         return null;
@@ -757,10 +757,10 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
      * 打印，调试用
      */
     private void printAllActivities() {
-        PageLog.d("------------BaseActivity print all------------activities size:" + mActivities.size());
-        for (WeakReference<BaseActivity> ref : mActivities) {
+        PageLog.d("------------XPageActivity print all------------activities size:" + mActivities.size());
+        for (WeakReference<XPageActivity> ref : mActivities) {
             if (ref != null) {
-                BaseActivity item = ref.get();
+                XPageActivity item = ref.get();
                 if (item != null) {
                     PageLog.d(item.toString());
                 }
@@ -779,18 +779,18 @@ public class BaseActivity extends FragmentActivity implements CoreSwitcher {
             boolean startActivityForResult = newIntent.getBooleanExtra(CoreSwitchBean.KEY_START_ACTIVITY_FOR_RESULT, false);
             mFirstCoreSwitchBean = page;
             if (page != null) {
-                BaseFragment fragment = null;
+                XPageFragment fragment = null;
                 boolean addToBackStack = page.isAddToBackStack();
                 String pageName = page.getPageName();
                 Bundle bundle = page.getBundle();
-                fragment = (BaseFragment) CorePageManager.getInstance().openPageWithNewFragmentManager(getSupportFragmentManager(), pageName, bundle, null, addToBackStack);
+                fragment = (XPageFragment) CorePageManager.getInstance().openPageWithNewFragmentManager(getSupportFragmentManager(), pageName, bundle, null, addToBackStack);
                 if (fragment != null) {
                     if (startActivityForResult) {
                         fragment.setRequestCode(page.getRequestCode());
-                        fragment.setFragmentFinishListener(new BaseFragment.OnFragmentFinishListener() {
+                        fragment.setFragmentFinishListener(new XPageFragment.OnFragmentFinishListener() {
                             @Override
                             public void onFragmentResult(int requestCode, int resultCode, Intent intent) {
-                                BaseActivity.this.setResult(resultCode, intent);
+                                XPageActivity.this.setResult(resultCode, intent);
                             }
                         });
                     }

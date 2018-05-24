@@ -9,8 +9,9 @@ import java.util.List;
 
 /**
  * 页面配置接口
+ *
  * @author xuexiang
- * @date 2018/1/7 下午6:08
+ * @since 2018/5/24 下午3:40
  */
 public interface PageConfiguration {
 

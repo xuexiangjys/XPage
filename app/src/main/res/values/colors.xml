@@ -3,4 +3,6 @@
     <color name="colorPrimary">#299EE3</color>
     <color name="colorPrimaryDark">#299EE3</color>
     <color name="colorAccent">#299EE3</color>
+
+    <color name="bar_color">#00FF00</color>
 </resources>

@@ -6,11 +6,12 @@ import android.widget.ListView;
 import com.xuexiang.xpage.R;
 
 /**
- * 带listview的基础fragment
- * @author XUE
- * @date 2017/9/10 23:16
+ * 带ListView的基础fragment
+ *
+ * @author xuexiang
+ * @since 2018/5/24 下午3:36
  */
-public abstract class BaseListFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public abstract class XPageListFragment extends XPageFragment implements AdapterView.OnItemClickListener {
     ListView mListView;
     @Override
     protected int getLayoutId() {
