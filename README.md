@@ -46,8 +46,8 @@ allprojects {
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.8'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.8'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.9'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.9'
   //butterknife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -217,7 +217,7 @@ https://github.com/lizhangqu/CorePage/
 
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/qq_group.jpg)
 
-[xpsvg]: https://img.shields.io/badge/XPage-v2.1.8-brightgreen.svg
+[xpsvg]: https://img.shields.io/badge/XPage-v2.1.9-brightgreen.svg
 [xp]: https://github.com/xuexiangjys/XPage
-[apisvg]: https://img.shields.io/badge/API-19+-brightgreen.svg
-[api]: https://android-arsenal.com/api?level=19
+[apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
+[api]: https://android-arsenal.com/api?level=14
