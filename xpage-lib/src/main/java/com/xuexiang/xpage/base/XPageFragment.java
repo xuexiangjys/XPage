@@ -519,14 +519,21 @@ public abstract class XPageFragment extends Fragment {
         mRootView = inflater.inflate(getLayoutId(), container, false);
         mUnbinder = ButterKnife.bind(this, mRootView);
         initArgs();
-        initTitleBar();
-        initViews();
-        initListeners();
+        initPage();
         return mRootView;
     }
 
     /**
-     * 初始化标题
+     * 初始化页面, 可以重写该方法，以增强灵活性
+     */
+    protected void initPage() {
+        initTitleBar();
+        initViews();
+        initListeners();
+    }
+
+    /**
+     * 初始化标题，可进行重写
      */
     protected TitleBar initTitleBar() {
         return TitleUtils.addTitleBarDynamic((ViewGroup) mRootView, getPageTitle(), new View.OnClickListener() {
@@ -539,7 +546,9 @@ public abstract class XPageFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        mUnbinder.unbind();
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
         super.onDestroyView();
 
     }
@@ -594,6 +603,12 @@ public abstract class XPageFragment extends Fragment {
      * 页面跳转接口
      */
     public interface OnFragmentFinishListener {
+        /**
+         * 页面跳转返回的回调接口
+         * @param requestCode 请求码
+         * @param resultCode 结果码
+         * @param intent
+         */
         void onFragmentResult(int requestCode, int resultCode, Intent intent);
     }
 

@@ -20,13 +20,13 @@ public abstract class XPageSimpleListFragment extends XPageListFragment {
     protected void initData() {
         mSimpleData = initSimpleData(mSimpleData);
         getListView().setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, mSimpleData));
-        init();
+        initSimply();
     }
 
     /**
-     * 初始化
+     * 数据初始化后,简单地进行其他的初始化操作
      */
-    protected void init() {
+    protected void initSimply() {
 
     }
 

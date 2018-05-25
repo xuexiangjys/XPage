@@ -46,7 +46,7 @@ public class CoreConfig {
 	public final static String ACTION_EXIT_APP = "com.xuexiang.xpage.corepage.core.exit";
 	// 本地广播退出
 
-	private static LocalBroadcastManager mLocalBroadcatManager;
+	private static LocalBroadcastManager mLocalBroadcastManager;
 	private static Context mContext;
 
 	/**
@@ -105,7 +105,7 @@ public class CoreConfig {
 		intent.addCategory(Intent.CATEGORY_DEFAULT);
 		getLocalBroadcastManager().sendBroadcast(intent);
 		XPageActivity.unInit();
-		mLocalBroadcatManager = null;
+		mLocalBroadcastManager = null;
 	}
 
 	public static void readConfig(String pageJson) {
@@ -115,7 +115,7 @@ public class CoreConfig {
 	/**
 	 * 发送本地广播退出程序
 	 */
-	public void exitApp() {
+	public static void exitApp() {
 		Intent intent = new Intent();
 		intent.setAction(CoreConfig.ACTION_EXIT_APP);
 		intent.addCategory(Intent.CATEGORY_DEFAULT);
@@ -129,9 +129,9 @@ public class CoreConfig {
 	 * @return LocalBroadcastManager对象
 	 */
 	public static LocalBroadcastManager getLocalBroadcastManager() {
-		if (mLocalBroadcatManager == null) {
-			mLocalBroadcatManager = LocalBroadcastManager.getInstance(mContext);
+		if (mLocalBroadcastManager == null) {
+			mLocalBroadcastManager = LocalBroadcastManager.getInstance(mContext);
 		}
-		return mLocalBroadcatManager;
+		return mLocalBroadcastManager;
 	}
 }

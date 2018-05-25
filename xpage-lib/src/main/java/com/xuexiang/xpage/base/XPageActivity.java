@@ -65,7 +65,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      */
     private WeakReference<XPageActivity> mCurrentInstance = null;
     /**
-     * forresult 的fragment
+     * ForResult 的fragment
      */
     private XPageFragment mFragmentForResult = null;
     /**
@@ -77,7 +77,6 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      * 仅用于接受应用退出广播，程序退出时有机会做一些必要的清理工作
      */
     private BroadcastReceiver mExitReceiver = new BroadcastReceiver() {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -182,16 +181,19 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
         if (activity != null) {
             activity.finish();
             //从activity列表中移除当前实例
-            mActivities.remove(mCurrentInstance);
-        }
-        if (showAnimation) {
-            //动画
-            int[] animations = null;
-            if (activity.mFirstCoreSwitchBean != null && activity.mFirstCoreSwitchBean.getAnim() != null) {
-                animations = activity.mFirstCoreSwitchBean.getAnim();
+            if (getIsAddActivityToStack()) {
+                mActivities.remove(mCurrentInstance);
             }
-            if (animations != null && animations.length >= 4) {
-                overridePendingTransition(animations[2], animations[3]);
+
+            if (showAnimation) {
+                //动画
+                int[] animations = null;
+                if (activity.mFirstCoreSwitchBean != null && activity.mFirstCoreSwitchBean.getAnim() != null) {
+                    animations = activity.mFirstCoreSwitchBean.getAnim();
+                }
+                if (animations != null && animations.length >= 4) {
+                    overridePendingTransition(animations[2], animations[3]);
+                }
             }
         }
     }
@@ -216,9 +218,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
                     int count = manager.getBackStackEntryCount();
                     if (count >= 1) {
                         FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(count - 1);
-                        if (entry.getName().equalsIgnoreCase(fragmentTag)) {
-                            return true;
-                        }
+                        return entry.getName().equalsIgnoreCase(fragmentTag);
                     }
                 }
             }
@@ -639,27 +639,48 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
         setContentView(getBaseLayout());
         //处理新开activity的情况
         Intent newIntent = getIntent();
-        if (null != savedInstanceState) {
-            //恢复数据
-            //需要用注解SaveWithActivity
+        if (savedInstanceState != null) {
+            //恢复数据，需要用注解SaveWithActivity
             loadActivitySavedData(savedInstanceState);
         }
         //获得主线程handler
         mHandler = new Handler(getMainLooper());
-        //当前activity弱引用
-        mCurrentInstance = new WeakReference<>(this);
-        //当前activity增加到activity列表中
-        mActivities.add(mCurrentInstance);
-        //打印所有activity情况
-        printAllActivities();
+
+        if (getIsAddActivityToStack()) {
+            //当前activity弱引用
+            mCurrentInstance = new WeakReference<>(this);
+            //当前activity增加到activity列表中
+            mActivities.add(mCurrentInstance);
+            //打印所有activity情况
+            printAllActivities();
+        }
+
         //处理新开activity跳转
         init(newIntent);
-        //注册本地广播，接收程序退出广播
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(CoreConfig.ACTION_EXIT_APP);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
-        CoreConfig.getLocalBroadcastManager().registerReceiver(mExitReceiver, filter);
 
+        //注册本地广播，接收程序退出广播
+        if (getIsRegisterExitBroadcast()) {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(CoreConfig.ACTION_EXIT_APP);
+            filter.addCategory(Intent.CATEGORY_DEFAULT);
+            CoreConfig.getLocalBroadcastManager().registerReceiver(mExitReceiver, filter);
+        }
+    }
+
+    /**
+     * 获取是否将activity添加到堆栈中
+     * @return {@code true} :添加<br> {@code false} : 不添加
+     */
+    protected boolean getIsAddActivityToStack() {
+        return true;
+    }
+
+    /**
+     * 获取是否注册页面结束的广播
+     * @return {@code true} :注册<br> {@code false} : 不注册
+     */
+    protected boolean getIsRegisterExitBroadcast() {
+        return true;
     }
 
     /**
@@ -678,7 +699,9 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     @Override
     protected void onDestroy() {
         //解决内存泄露
-        CoreConfig.getLocalBroadcastManager().unregisterReceiver(mExitReceiver);
+        if (getIsRegisterExitBroadcast()) {
+            CoreConfig.getLocalBroadcastManager().unregisterReceiver(mExitReceiver);
+        }
         super.onDestroy();
     }
 
@@ -756,7 +779,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     /**
      * 打印，调试用
      */
-    private void printAllActivities() {
+    protected void printAllActivities() {
         PageLog.d("------------XPageActivity print all------------activities size:" + mActivities.size());
         for (WeakReference<XPageActivity> ref : mActivities) {
             if (ref != null) {
@@ -942,6 +965,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.FIELD)
     public @interface SaveWithActivity {
+
     }
 
     /**
