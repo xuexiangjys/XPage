@@ -46,8 +46,8 @@ allprojects {
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.1.9'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.1.9'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.2.0'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.2.0'
   //butterknife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -136,6 +136,8 @@ PageConfig.getInstance()
 
 ### 2.3、页面跳转
 
+> 使用XPage，Activity必须要继承`XPageActivity`,Fragment必须要继承`XPageFragment`，否则将无法调用页面跳转的`openPage`方法。
+
 #### 2.3.1、携带数据
 
 ```
@@ -217,7 +219,7 @@ https://github.com/lizhangqu/CorePage/
 
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/qq_group.jpg)
 
-[xpsvg]: https://img.shields.io/badge/XPage-v2.1.9-brightgreen.svg
+[xpsvg]: https://img.shields.io/badge/XPage-v2.2.0-brightgreen.svg
 [xp]: https://github.com/xuexiangjys/XPage
 [apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
 [api]: https://android-arsenal.com/api?level=14
