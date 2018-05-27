@@ -210,6 +210,18 @@ switch(position) {
 </style>
 ```
 
+## 混淆配置
+
+```
+# fastjson
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.** { *; }
+-keepattributes Signature
+
+# xpage
+-keep class com.xuexiang.xpage.annotation.** { *; }
+```
+
 ## 特别感谢
 https://github.com/lizhangqu/CorePage/
 
