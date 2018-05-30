@@ -24,7 +24,8 @@ public class MainFragment extends XPageContainerListFragment {
     protected Class[] getPagesClasses() {
         return new Class[]{
                 DataTransmitFragment.class,
-                AnimationFragment.class
+                AnimationFragment.class,
+                ComplexPageFragment.class
         };
     }
 

@@ -598,6 +598,42 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     }
 
     /**
+     * 切换fragment[直接替换，不增加到返回堆栈]
+     *
+     * @param pageName 页面名
+     * @return 切换的fragment对象
+     */
+    public Fragment changePage(String pageName) {
+        CoreSwitchBean page = new CoreSwitchBean(pageName, null, CoreAnim.none).setAddToBackStack(false);
+        return openPage(page);
+    }
+
+    /**
+     * 切换fragment[直接替换，不增加到返回堆栈]
+     *
+     * @param pageName 页面名
+     * @param bundle   参数
+     * @return 切换的fragment对象
+     */
+    public Fragment changePage(String pageName, Bundle bundle) {
+        CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, CoreAnim.none).setAddToBackStack(false);
+        return openPage(page);
+    }
+
+    /**
+     * 切换fragment[直接替换，不增加到返回堆栈]
+     *
+     * @param pageName 页面名
+     * @param bundle   参数
+     * @param coreAnim 动画
+     * @return 切换的fragment对象
+     */
+    public Fragment changePage(String pageName, Bundle bundle, CoreAnim coreAnim) {
+        CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, coreAnim).setAddToBackStack(false);
+        return openPage(page);
+    }
+
+    /**
      * 打开fragment
      *
      * @return 打开的fragment对象
@@ -636,7 +672,8 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getBaseLayout());
+        setContentView();
+
         //处理新开activity的情况
         Intent newIntent = getIntent();
         if (savedInstanceState != null) {
@@ -669,6 +706,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
 
     /**
      * 获取是否将activity添加到堆栈中
+     *
      * @return {@code true} :添加<br> {@code false} : 不添加
      */
     protected boolean getIsAddActivityToStack() {
@@ -677,10 +715,31 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
 
     /**
      * 获取是否注册页面结束的广播
+     *
      * @return {@code true} :注册<br> {@code false} : 不注册
      */
     protected boolean getIsRegisterExitBroadcast() {
         return true;
+    }
+
+
+    /**
+     * 设置根布局
+     */
+    protected void setContentView() {
+        int layoutId = getLayoutId();
+        if (layoutId != -1) {
+            setContentView(layoutId);
+        } else {
+            setContentView(getBaseLayout());
+        }
+    }
+
+    /**
+     * @return 获取布局的id
+     */
+    protected int getLayoutId() {
+        return -1;
     }
 
     /**
@@ -688,7 +747,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      *
      * @return
      */
-    protected FrameLayout getBaseLayout() {
+    protected View getBaseLayout() {
         FrameLayout baseLayout = new FrameLayout(this);
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         baseLayout.setId(R.id.fragment_container);
