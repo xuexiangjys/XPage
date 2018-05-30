@@ -46,8 +46,8 @@ allprojects {
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.2.0'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.2.0'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.2.1'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.2.1'
   //butterknife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -210,6 +210,35 @@ switch(position) {
 </style>
 ```
 
+### 2.5、复杂Activity界面容器的自定义
+
+详细可参见[ComplexActivity](https://github.com/xuexiangjys/XPage/blob/master/app/src/main/java/com/xuexiang/xpagedemo/ComplexActivity.java)
+
+1.自定义页面容器的布局，在布局中一定要包含id`fragment_container`。
+
+```
+<FrameLayout
+    android:id="@id/fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="400dp">
+</FrameLayout>
+```
+
+2.在XPageActivity中设置页面容器的布局ID
+```
+@Override
+protected int getLayoutId() {
+    return R.layout.activity_complex;
+}
+```
+
+3.使用`changePage`方法切换Fragment。
+
+```
+changePage(TestFragment.PAGE_NAME, null, CoreAnim.none);
+```
+
+
 ## 混淆配置
 
 ```
@@ -231,7 +260,7 @@ https://github.com/lizhangqu/CorePage/
 
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/qq_group.jpg)
 
-[xpsvg]: https://img.shields.io/badge/XPage-v2.2.0-brightgreen.svg
+[xpsvg]: https://img.shields.io/badge/XPage-v2.2.1-brightgreen.svg
 [xp]: https://github.com/xuexiangjys/XPage
 [apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
 [api]: https://android-arsenal.com/api?level=14
