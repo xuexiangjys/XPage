@@ -21,9 +21,17 @@
 * 支持导航栏通过注解的方式自动添加及设置。
 * 支持进行内存泄露监测。
 * 支持自定义TitleBar全局主题属性。
+* 支持自定义Fragment页面容器。
+* 支持Fragment之间、activity和fragment之间的数据交互。
 
 ## 1、演示（请star支持）
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/1.gif)
+
+### Demo下载
+
+[![downloads][download-svg]][download-url]
+
+![][download-img]
 
 ## 2、如何使用
 目前支持主流开发工具AndroidStudio的使用，直接配置build.gradle，增加依赖即可.
@@ -275,3 +283,7 @@ https://github.com/lizhangqu/CorePage/
 [xp]: https://github.com/xuexiangjys/XPage
 [apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
 [api]: https://android-arsenal.com/api?level=14
+
+[download-svg]: https://img.shields.io/badge/downloads-1M-blue.svg
+[download-url]: https://github.com/xuexiangjys/XPage/blob/master/apk/xpage_demo.apk?raw=true
+[download-img]: https://github.com/xuexiangjys/XPage/blob/master/img/download.png
