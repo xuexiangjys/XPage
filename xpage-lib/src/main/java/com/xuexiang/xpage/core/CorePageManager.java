@@ -199,7 +199,7 @@ public class CorePageManager {
 
     /**
      * 页面跳转核心函数之一
-     * 打开一个Fragement,如果返回栈中有则出栈，否则新建
+     * 打开一个Fragment,如果返回栈中有则出栈，否则新建
      *
      * @param fragmentManager FragmentManager管理类
      * @param pageName        页面别名
@@ -233,7 +233,7 @@ public class CorePageManager {
      * @param addToBackStack  是否添加到返回栈
      * @return 打开的Fragment对象
      */
-    public Fragment openPageWithNewFragmentManager(FragmentManager fragmentManager, String pageName, Bundle bundle, int[] animations, boolean addToBackStack) {
+    public XPageFragment openPageWithNewFragmentManager(FragmentManager fragmentManager, String pageName, Bundle bundle, int[] animations, boolean addToBackStack) {
         XPageFragment fragment = null;
         try {
             CorePage corePage = mPageMap.get(pageName);

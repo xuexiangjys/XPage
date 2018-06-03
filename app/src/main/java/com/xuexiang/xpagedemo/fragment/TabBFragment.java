@@ -4,19 +4,26 @@ import android.widget.TextView;
 
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageFragment;
+import com.xuexiang.xpage.enums.CoreAnim;
+import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpagedemo.R;
 
 import butterknife.BindView;
 
 /**
  * @author xuexiang
- * @date 2018/1/7 下午11:27
+ * @since 2018/6/3 下午10:22
  */
-@Page(name = TestFragment.PAGE_NAME)
-public class TestFragment extends XPageFragment {
-    public final static String PAGE_NAME = "测试页面";
+@Page(name = "TabB", anim = CoreAnim.none)
+public class TabBFragment extends XPageFragment {
+
     @BindView(R.id.tv_content)
     TextView tvContent;
+
+    @Override
+    protected TitleBar initTitleBar() {
+        return null;
+    }
 
     /**
      * 布局的资源id
@@ -33,7 +40,7 @@ public class TestFragment extends XPageFragment {
      */
     @Override
     protected void initViews() {
-        tvContent.setText(getPageName());
+        tvContent.setText("这里是 " + getPageName() + " 页面");
     }
 
     /**
@@ -44,4 +51,7 @@ public class TestFragment extends XPageFragment {
 
     }
 
+    public String getData() {
+        return "这是TabB的数据";
+    }
 }

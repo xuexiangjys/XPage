@@ -397,9 +397,9 @@ public abstract class XPageFragment extends Fragment {
 
     /**
      * 新建或跳转到一个页面（Fragment）。找不到pageName Fragment时，就新建Fragment。找到pageName
-     * Fragment时,则弹出该Fragement到栈顶上的所有actvity和fragment
+     * Fragment时,则弹出该Fragment到栈顶上的所有activity和fragment
      *
-     * @param pageName    Fragemnt 名，在在page.json中配置。
+     * @param pageName    Fragment 名，在在page.json中配置。
      * @param bundle      页面跳转时传递的参数
      * @param coreAnim    指定的动画理性 none/slide(左右平移)/present(由下向上)/fade(fade 动画)
      * @param newActivity 该页面是否新建一个Activity

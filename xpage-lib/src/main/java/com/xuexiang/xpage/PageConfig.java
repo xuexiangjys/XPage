@@ -168,6 +168,6 @@ public class PageConfig {
      * @return
      */
     public static Page getPage(Class<?> clazz) {
-        return Utils.checkNotNull(clazz.getAnnotation(Page.class), "Page == null");
+        return Utils.checkNotNull(clazz.getAnnotation(Page.class), "Page == null，请检测页面是否漏加 @Page 进行修饰！");
     }
 }

@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,15 +42,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 页面跳转都通过BaseActivity 嵌套Fragment来实现,动态替换fragment只需要指定相应的参数。 避免Activity 需要再manifest中注册的问题。
- * 1.管理应用中所有BaseActivity 实例。 2.管理BaseActivity 实例和fragment的跳转
+ * 页面跳转都通过XPageActivity 嵌套Fragment来实现,动态替换fragment只需要指定相应的参数。 避免Activity 需要再manifest中注册的问题。
+ * 1.管理应用中所有XPageActivity 实例。 2.管理XPageActivity 实例和fragment的跳转
  *
  * @author xuexiang
  * @since 2018/5/24 下午3:36
  */
 public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     /**
-     * 应用中所有BaseActivity的引用
+     * 应用中所有XPageActivity的引用
      */
     private static List<WeakReference<XPageActivity>> mActivities = new ArrayList<WeakReference<XPageActivity>>();
     /**
@@ -174,7 +175,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     /**
      * 结束activity，设置是否显示动画
      *
-     * @param activity      BaseActivity对象
+     * @param activity      XPageActivity对象
      * @param showAnimation 是否显示动画
      */
     private void finishActivity(XPageActivity activity, boolean showAnimation) {
@@ -504,6 +505,67 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
         }
     }
 
+    //========================= 简单地打开fragment ==============================//
+
+    /**
+     * 打开fragment
+     *
+     * @param pageName 页面名
+     * @return 打开的fragment对象
+     */
+    public Fragment openPage(String pageName) {
+        CoreSwitchBean page = new CoreSwitchBean(pageName, null, CoreAnim.slide);
+        return openPage(page);
+    }
+
+    /**
+     * 打开fragment
+     *
+     * @param pageName 页面名
+     * @return 打开的fragment对象
+     */
+    public Fragment openPage(String pageName, Bundle bundle) {
+        CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, CoreAnim.slide);
+        return openPage(page);
+    }
+
+    /**
+     * 打开fragment
+     *
+     * @param pageName 页面名
+     * @param bundle   参数
+     * @param coreAnim 动画
+     * @return 打开的fragment对象
+     */
+    public Fragment openPage(String pageName, Bundle bundle, CoreAnim coreAnim) {
+        CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, coreAnim);
+        return openPage(page);
+    }
+
+    /**
+     * 打开fragment
+     *
+     * @return 打开的fragment对象
+     */
+    public <T extends XPageFragment> T openPage(Class<T> clazz) {
+        CoreSwitchBean page = new CoreSwitchBean(PageConfig.getPageInfo(clazz).getName(), null, PageConfig.getPageInfo(clazz).getAnim());
+        return (T) openPage(page);
+    }
+
+    /**
+     * 打开fragment
+     *
+     * @param clazz  页面类
+     * @param bundle 参数
+     * @return 打开的fragment对象
+     */
+    public <T extends XPageFragment> T openPage(Class<T> clazz, Bundle bundle) {
+        CoreSwitchBean page = new CoreSwitchBean(PageConfig.getPageInfo(clazz).getName(), bundle, PageConfig.getPageInfo(clazz).getAnim());
+        return (T) openPage(page);
+    }
+
+    //==================== 打开fragment的高级操作 ============================//
+
     /**
      * 打开fragment，并设置是否新开activity，设置是否添加到返回栈
      *
@@ -562,39 +624,42 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
         return openPage(page);
     }
 
-    /**
-     * 打开fragment
-     *
-     * @param pageName 页面名
-     * @return 打开的fragment对象
-     */
-    public Fragment openPage(String pageName) {
-        CoreSwitchBean page = new CoreSwitchBean(pageName, null, CoreAnim.slide);
-        return openPage(page);
-    }
-
-    /**
-     * 打开fragment
-     *
-     * @param pageName 页面名
-     * @return 打开的fragment对象
-     */
-    public Fragment openPage(String pageName, Bundle bundle) {
-        CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, CoreAnim.slide);
-        return openPage(page);
-    }
 
     /**
      * 打开fragment
      *
      * @param pageName 页面名
      * @param bundle   参数
-     * @param coreAnim 动画
+     * @param anim     动画
      * @return 打开的fragment对象
      */
-    public Fragment openPage(String pageName, Bundle bundle, CoreAnim coreAnim) {
-        CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, coreAnim);
+    public Fragment openPage(String pageName, Bundle bundle, int[] anim) {
+        CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, anim);
         return openPage(page);
+    }
+
+    //========================= 切换fragment[直接替换，不增加到返回堆栈]==============================//
+
+    /**
+     * 切换fragment[直接替换，不增加到返回堆栈]
+     *
+     * @return 打开的fragment对象
+     */
+    public <T extends XPageFragment> T changePage(Class<T> clazz) {
+        CoreSwitchBean page = new CoreSwitchBean(PageConfig.getPageInfo(clazz).getName(), null, PageConfig.getPageInfo(clazz).getAnim()).setAddToBackStack(false);
+        return (T) openPage(page);
+    }
+
+    /**
+     * 切换fragment[直接替换，不增加到返回堆栈]
+     *
+     * @param clazz  页面类
+     * @param bundle 参数
+     * @return 打开的fragment对象
+     */
+    public <T extends XPageFragment> T changePage(Class<T> clazz, Bundle bundle) {
+        CoreSwitchBean page = new CoreSwitchBean(PageConfig.getPageInfo(clazz).getName(), bundle, PageConfig.getPageInfo(clazz).getAnim()).setAddToBackStack(false);
+        return (T) openPage(page);
     }
 
     /**
@@ -630,41 +695,6 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      */
     public Fragment changePage(String pageName, Bundle bundle, CoreAnim coreAnim) {
         CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, coreAnim).setAddToBackStack(false);
-        return openPage(page);
-    }
-
-    /**
-     * 打开fragment
-     *
-     * @return 打开的fragment对象
-     */
-    public Fragment openPage(Class<?> clazz) {
-        CoreSwitchBean page = new CoreSwitchBean(PageConfig.getPageInfo(clazz).getName(), null, PageConfig.getPageInfo(clazz).getAnim());
-        return openPage(page);
-    }
-
-    /**
-     * 打开fragment
-     *
-     * @param clazz  页面类
-     * @param bundle 参数
-     * @return 打开的fragment对象
-     */
-    public Fragment openPage(Class<?> clazz, Bundle bundle) {
-        CoreSwitchBean page = new CoreSwitchBean(PageConfig.getPageInfo(clazz).getName(), bundle, PageConfig.getPageInfo(clazz).getAnim());
-        return openPage(page);
-    }
-
-    /**
-     * 打开fragment
-     *
-     * @param pageName 页面名
-     * @param bundle   参数
-     * @param anim     动画
-     * @return 打开的fragment对象
-     */
-    public Fragment openPage(String pageName, Bundle bundle, int[] anim) {
-        CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, anim);
         return openPage(page);
     }
 
@@ -794,7 +824,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        PageLog.d("onActivityResult from baseActivity" + requestCode + " " + resultCode);
+        PageLog.d("onActivityResult from XPageActivity" + requestCode + " " + resultCode);
         if (mFragmentRequestCode == requestCode && mFragmentForResult != null) {
             mFragmentForResult.onFragmentResult(mFragmentRequestCode, resultCode, data);
 
@@ -836,6 +866,37 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     }
 
     /**
+     * 根据页面的类获取XPageFragment
+     *
+     * @return 获取的页面
+     */
+    public <T extends XPageFragment> T getPage(Class<T> clazz) {
+        String pageName = PageConfig.getPageInfo(clazz).getName();
+        XPageFragment fragment = getPageByName(pageName);
+        if (fragment != null) {
+            return (T) fragment;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 根据页面的名称获取XPageFragment
+     *
+     * @return 获取的页面
+     */
+    public XPageFragment getPageByName(String pageName) {
+        if (this.isFinishing() || TextUtils.isEmpty(pageName)) {
+            return null;
+        }
+        FragmentManager manager = this.getSupportFragmentManager();
+        if (manager != null) {
+            return (XPageFragment) manager.findFragmentByTag(pageName);
+        }
+        return null;
+    }
+
+    /**
      * 打印，调试用
      */
     protected void printAllActivities() {
@@ -865,7 +926,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
                 boolean addToBackStack = page.isAddToBackStack();
                 String pageName = page.getPageName();
                 Bundle bundle = page.getBundle();
-                fragment = (XPageFragment) CorePageManager.getInstance().openPageWithNewFragmentManager(getSupportFragmentManager(), pageName, bundle, null, addToBackStack);
+                fragment = CorePageManager.getInstance().openPageWithNewFragmentManager(getSupportFragmentManager(), pageName, bundle, null, addToBackStack);
                 if (fragment != null) {
                     if (startActivityForResult) {
                         fragment.setRequestCode(page.getRequestCode());

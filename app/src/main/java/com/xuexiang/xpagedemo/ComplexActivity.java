@@ -5,9 +5,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.xuexiang.xpage.base.XPageActivity;
-import com.xuexiang.xpage.enums.CoreAnim;
-import com.xuexiang.xpagedemo.fragment.DateReceiveFragment;
-import com.xuexiang.xpagedemo.fragment.TestFragment;
+import com.xuexiang.xpagedemo.fragment.TabAFragment;
+import com.xuexiang.xpagedemo.fragment.TabBFragment;
+import com.xuexiang.xutil.tip.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,23 +33,33 @@ public class ComplexActivity extends XPageActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        openPage(TestFragment.PAGE_NAME, null, CoreAnim.none);
+        openPage(TabAFragment.class, null);
     }
 
-
-    @OnClick({R.id.btn_1, R.id.btn_2})
+    @OnClick({R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_1:
-                changePage(TestFragment.PAGE_NAME, null, CoreAnim.none);
+                changePage(TabAFragment.class, null);
                 break;
             case R.id.btn_2:
-                Bundle params = new Bundle();
-                params.putBoolean(DateReceiveFragment.KEY_IS_NEED_BACK, false);
-                int id = (int) (Math.random() * 100);
-                params.putString(DateReceiveFragment.KEY_EVENT_NAME, "事件" + id);
-                params.putString(DateReceiveFragment.KEY_EVENT_DATA, "事件" + id + "携带的数据");
-                changePage("数据接收", params, CoreAnim.none);
+                changePage(TabBFragment.class, null);
+                break;
+            case R.id.btn_3:
+                TabAFragment tabAFragment = getPage(TabAFragment.class);
+                if (tabAFragment != null) {
+                    ToastUtils.toast(tabAFragment.getData());
+                } else {
+                    ToastUtils.toast("页面还未加载！");
+                }
+                break;
+            case R.id.btn_4:
+                TabBFragment tabBFragment = getPage(TabBFragment.class);
+                if (tabBFragment != null) {
+                    ToastUtils.toast(tabBFragment.getData());
+                } else {
+                    ToastUtils.toast("页面还未加载！");
+                }
                 break;
         }
     }
