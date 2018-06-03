@@ -11,16 +11,36 @@ android {
         versionCode 1
         versionName "1.0"
 
-//        javaCompileOptions {
-//            annotationProcessorOptions {
-//                arguments = [ moduleName : project.getName() ]
-//            }
-//        }
     }
+
+    if (isNeedPackage.toBoolean()) {
+        signingConfigs {
+            release {
+                storeFile file(app_release.storeFile)
+                storePassword app_release.storePassword
+                keyAlias app_release.keyAlias
+                keyPassword app_release.keyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (isNeedPackage.toBoolean()) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    if (isNeedPackage.toBoolean()) {
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                if (variant.buildType.name.equals('release')) {
+                    outputFileName = "xpage_demo.apk"
+                }
+            }
         }
     }
 
