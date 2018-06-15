@@ -42,10 +42,6 @@ dependencies {
   //butterknife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-  //leak
-  debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-  releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-  testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
 ```
 

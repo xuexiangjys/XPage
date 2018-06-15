@@ -59,11 +59,6 @@ dependencies {
   //butterknife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-
-  //如果开启了内存泄漏监测leak,就需要加上这个依赖
-  debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-  releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-  testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
 ```
 
