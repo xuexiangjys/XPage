@@ -374,6 +374,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Adds a list of {@link Action}s.
+     *
      * @param actionList the actions to add
      */
     public TitleBar addActions(ActionList actionList) {
@@ -386,6 +387,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Adds a new {@link Action}.
+     *
      * @param action the action to add
      */
     public View addAction(Action action) {
@@ -395,8 +397,9 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Adds a new {@link Action} at the specified index.
+     *
      * @param action the action to add
-     * @param index the position at which to add the action
+     * @param index  the position at which to add the action
      */
     public View addAction(Action action, int index) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -415,6 +418,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Remove a action from the action bar.
+     *
      * @param index position of action to remove
      */
     public void removeActionAt(int index) {
@@ -423,6 +427,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Remove a action from the action bar.
+     *
      * @param action The action to remove
      */
     public void removeAction(Action action) {
@@ -440,6 +445,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Returns the number of actions currently registered with the action bar.
+     *
      * @return action count
      */
     public int getActionCount() {
@@ -448,10 +454,11 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Inflates a {@link View} with the given {@link Action}.
+     *
      * @param action the action to inflate
      * @return a view
      */
-    private View inflateAction(Action action) {
+    protected View inflateAction(Action action) {
         View view = null;
         if (TextUtils.isEmpty(action.getText())) {
             ImageView img = new ImageView(getContext());
@@ -468,7 +475,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
             view = text;
         }
 
-        view.setPadding(mActionPadding, 0, mActionPadding, 0);
+        view.setPadding(action.leftPadding() != -1 ? action.leftPadding() : mActionPadding, 0, action.rightPadding() != -1 ? action.rightPadding() : mActionPadding, 0);
         view.setTag(action);
         view.setOnClickListener(this);
         return view;
@@ -523,6 +530,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     /**
      * 计算状态栏高度高度
      * getStatusBarHeight
+     *
      * @return
      */
     public static int getStatusBarHeight() {
@@ -552,10 +560,19 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
      */
     public interface Action {
         String getText();
+
         int getDrawable();
+
         void performAction(View view);
+
+        int leftPadding();
+
+        int rightPadding();
     }
 
+    /**
+     * 图片按钮
+     */
     public static abstract class ImageAction implements Action {
         private int mDrawable;
 
@@ -572,8 +589,21 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         public String getText() {
             return null;
         }
+
+        @Override
+        public int leftPadding() {
+            return -1;
+        }
+
+        @Override
+        public int rightPadding() {
+            return -1;
+        }
     }
 
+    /**
+     * 文字按钮
+     */
     public static abstract class TextAction implements Action {
         final private String mText;
 
@@ -589,6 +619,16 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         @Override
         public String getText() {
             return mText;
+        }
+
+        @Override
+        public int leftPadding() {
+            return -1;
+        }
+
+        @Override
+        public int rightPadding() {
+            return -1;
         }
     }
 
