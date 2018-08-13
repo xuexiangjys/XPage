@@ -344,7 +344,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     public void startActivity(CoreSwitchBean page) {
         try {
             Intent intent = new Intent(this, XPageActivity.class);
-            intent.putExtra(CoreSwitchBean.KEY_SWITCHBEAN, page);
+            intent.putExtra(CoreSwitchBean.KEY_SWITCH_BEAN, page);
 
             this.startActivity(intent);
             int[] animations = page.getAnim();
@@ -422,7 +422,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     public void startActivityForResult(CoreSwitchBean page) {
         try {
             Intent intent = new Intent(this, XPageActivity.class);
-            intent.putExtra(CoreSwitchBean.KEY_SWITCHBEAN, page);
+            intent.putExtra(CoreSwitchBean.KEY_SWITCH_BEAN, page);
             intent.putExtra(CoreSwitchBean.KEY_START_ACTIVITY_FOR_RESULT, true);
             this.startActivityForResult(intent, page.getRequestCode());
 
@@ -456,7 +456,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     //==================openPage 打开页面=======================//
 
     /**
-     * 根据SwitchBean打开fragment
+     * 根据SwitchBean打开一个新的fragment
      *
      * @param page CoreSwitchBean对象
      * @return 打开的Fragment对象
@@ -475,7 +475,28 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
             String pageName = page.getPageName();
             return CorePageManager.getInstance().openPageWithNewFragmentManager(getSupportFragmentManager(), pageName, bundle, animations, addToBackStack);
         }
+    }
 
+    /**
+     * 根据SwitchBean切换fragment
+     *
+     * @param page CoreSwitchBean对象
+     * @return 打开的Fragment对象
+     */
+    @Override
+    public Fragment changePage(CoreSwitchBean page) {
+        boolean addToBackStack = page.isAddToBackStack();
+        boolean newActivity = page.isNewActivity();
+        Bundle bundle = page.getBundle();
+
+        int[] animations = page.getAnim();
+        if (newActivity) {
+            startActivity(page);
+            return null;
+        } else {
+            String pageName = page.getPageName();
+            return CorePageManager.getInstance().changePageWithNewFragmentManager(getSupportFragmentManager(), pageName, bundle, animations, addToBackStack);
+        }
     }
 
     /**
@@ -647,7 +668,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      */
     public <T extends XPageFragment> T changePage(Class<T> clazz) {
         CoreSwitchBean page = new CoreSwitchBean(PageConfig.getPageInfo(clazz).getName(), null, PageConfig.getPageInfo(clazz).getAnim()).setAddToBackStack(false);
-        return (T) openPage(page);
+        return (T) changePage(page);
     }
 
     /**
@@ -659,7 +680,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      */
     public <T extends XPageFragment> T changePage(Class<T> clazz, Bundle bundle) {
         CoreSwitchBean page = new CoreSwitchBean(PageConfig.getPageInfo(clazz).getName(), bundle, PageConfig.getPageInfo(clazz).getAnim()).setAddToBackStack(false);
-        return (T) openPage(page);
+        return (T) changePage(page);
     }
 
     /**
@@ -670,7 +691,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      */
     public Fragment changePage(String pageName) {
         CoreSwitchBean page = new CoreSwitchBean(pageName, null, CoreAnim.none).setAddToBackStack(false);
-        return openPage(page);
+        return changePage(page);
     }
 
     /**
@@ -682,7 +703,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      */
     public Fragment changePage(String pageName, Bundle bundle) {
         CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, CoreAnim.none).setAddToBackStack(false);
-        return openPage(page);
+        return changePage(page);
     }
 
     /**
@@ -695,7 +716,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      */
     public Fragment changePage(String pageName, Bundle bundle, CoreAnim coreAnim) {
         CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, coreAnim).setAddToBackStack(false);
-        return openPage(page);
+        return changePage(page);
     }
 
     //==================生命周期=======================//
@@ -918,7 +939,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      */
     private void init(Intent newIntent) {
         try {
-            CoreSwitchBean page = newIntent.getParcelableExtra(CoreSwitchBean.KEY_SWITCHBEAN);
+            CoreSwitchBean page = newIntent.getParcelableExtra(CoreSwitchBean.KEY_SWITCH_BEAN);
             boolean startActivityForResult = newIntent.getBooleanExtra(CoreSwitchBean.KEY_START_ACTIVITY_FOR_RESULT, false);
             mFirstCoreSwitchBean = page;
             if (page != null) {

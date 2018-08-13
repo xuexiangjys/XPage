@@ -5,6 +5,7 @@ import android.widget.TextView;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.enums.CoreAnim;
+import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpagedemo.R;
 
@@ -19,6 +20,8 @@ public class TabBFragment extends XPageFragment {
 
     @BindView(R.id.tv_content)
     TextView tvContent;
+
+    private int mData;
 
     @Override
     protected TitleBar initTitleBar() {
@@ -41,6 +44,8 @@ public class TabBFragment extends XPageFragment {
     @Override
     protected void initViews() {
         tvContent.setText("这里是 " + getPageName() + " 页面");
+
+        mData = (int) (Math.random() * 1000);
     }
 
     /**
@@ -51,7 +56,26 @@ public class TabBFragment extends XPageFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        PageLog.d("TabBFragment:onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        PageLog.d("TabBFragment:onPause");
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        PageLog.d("TabBFragment:onHiddenChanged:" + hidden);
+    }
+
+
     public String getData() {
-        return "这是TabB的数据";
+        return "这是TabB的数据:" + mData;
     }
 }

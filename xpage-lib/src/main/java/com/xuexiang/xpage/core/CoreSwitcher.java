@@ -52,7 +52,15 @@ public interface CoreSwitcher {
     Fragment openPage(CoreSwitchBean bean);
 
     /**
-     * 移除当前Acitivity不需要的fragment
+     * 切换页面（不重新加载一个新的fragment）
+     *
+     * @param bean  CoreSwitchBean对象
+     * @return 打开的页面Fragment对象
+     */
+    Fragment changePage(CoreSwitchBean bean);
+
+    /**
+     * 移除当前Activity不需要的fragment
      *
      * @param fragmentLists 无用fragment列表
      */

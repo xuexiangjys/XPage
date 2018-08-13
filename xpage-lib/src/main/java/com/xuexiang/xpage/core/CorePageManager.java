@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -224,7 +225,7 @@ public class CorePageManager {
 
     /**
      * 页面跳转核心函数之一
-     * 打开一个fragemnt
+     * 添加并打开一个Fragment
      *
      * @param fragmentManager FragmentManager管理类
      * @param pageName        页面名
@@ -241,29 +242,8 @@ public class CorePageManager {
                 PageLog.d("Page:" + pageName + " is null");
                 return null;
             }
-            /**
-             * Atlas的支持 start
-             */
-            if (CoreConfig.isOpenAtlas()) {
-                ClassLoader bundleClassLoader = CoreConfig.getBundleClassLoader();
-                if (bundleClassLoader == null) {
-                    PageLog.d("OpenAtlas bundle ClassLoader is null!");
-                    return null;
-                }
-                fragment = (XPageFragment) CoreConfig.getBundleClassLoader().loadClass(corePage.getClazz()).newInstance();
-            } else {
-                fragment = (XPageFragment) Class.forName(corePage.getClazz()).newInstance();
-            }
-            /**
-             * Atlas的支持 end
-             */
 
-            Bundle pageBundle = buildBundle(corePage);
-            if (bundle != null) {
-                pageBundle.putAll(bundle);
-            }
-            fragment.setArguments(pageBundle);
-            fragment.setPageName(pageName);
+            fragment = loadXPageFragmentByCorePage(corePage, pageName, bundle);
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if (animations != null && animations.length >= 4) {
@@ -287,6 +267,97 @@ public class CorePageManager {
             PageLog.d("Fragment.error:" + e.getMessage());
             return null;
         }
+        return fragment;
+    }
+
+
+    /**
+     * 页面跳转核心函数之一
+     * 切换一个Fragment
+     *
+     * @param fragmentManager FragmentManager管理类
+     * @param pageName        页面名
+     * @param bundle          参数
+     * @param animations      动画类型
+     * @param addToBackStack  是否添加到返回栈
+     * @return 打开的Fragment对象
+     */
+    public XPageFragment changePageWithNewFragmentManager(FragmentManager fragmentManager, String pageName, Bundle bundle, int[] animations, boolean addToBackStack) {
+        XPageFragment xPageFragment = null;
+        try {
+            CorePage corePage = mPageMap.get(pageName);
+            if (corePage == null) {
+                PageLog.d("Page:" + pageName + " is null");
+                return null;
+            }
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            if (animations != null && animations.length >= 4) {
+                fragmentTransaction.setCustomAnimations(animations[0], animations[1], animations[2], animations[3]);
+            }
+
+            List<Fragment> fragments = fragmentManager.getFragments();
+            if (fragments != null && !fragments.isEmpty()) {
+                for (Fragment fragment: fragments) {
+                    fragmentTransaction.hide(fragment);
+                }
+            }
+
+            xPageFragment = (XPageFragment) fragmentManager.findFragmentByTag(pageName);
+
+            if (xPageFragment == null) {
+                xPageFragment = loadXPageFragmentByCorePage(corePage, pageName, bundle);
+                fragmentTransaction.add(R.id.fragment_container, xPageFragment, pageName);
+            } else {
+                fragmentTransaction.show(xPageFragment);
+            }
+
+            if (addToBackStack) {
+                fragmentTransaction.addToBackStack(pageName);
+            }
+
+            fragmentTransaction.commitAllowingStateLoss();
+            //fragmentTransaction.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            PageLog.d("Fragment.error:" + e.getMessage());
+            return null;
+        }
+        return xPageFragment;
+    }
+
+
+    /**
+     * 根据CorePage加载XPageFragment
+     * @param corePage
+     * @return
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
+    private XPageFragment loadXPageFragmentByCorePage(CorePage corePage, String pageName, Bundle bundle) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        XPageFragment fragment;
+
+        //====Atlas的支持 start====/
+        if (CoreConfig.isOpenAtlas()) {
+            ClassLoader bundleClassLoader = CoreConfig.getBundleClassLoader();
+            if (bundleClassLoader == null) {
+                PageLog.d("OpenAtlas bundle ClassLoader is null!");
+                return null;
+            }
+            fragment = (XPageFragment) CoreConfig.getBundleClassLoader().loadClass(corePage.getClazz()).newInstance();
+        } else {
+            fragment = (XPageFragment) Class.forName(corePage.getClazz()).newInstance();
+        }
+        //====Atlas的支持 end====/
+
+        Bundle pageBundle = buildBundle(corePage);
+        if (bundle != null) {
+            pageBundle.putAll(bundle);
+        }
+        fragment.setArguments(pageBundle);
+        fragment.setPageName(pageName);
         return fragment;
     }
 

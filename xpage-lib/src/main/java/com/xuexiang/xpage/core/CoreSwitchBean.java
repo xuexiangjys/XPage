@@ -17,7 +17,7 @@ import java.util.Arrays;
  * @since 2018/5/24 下午3:47
  */
 public class CoreSwitchBean implements Parcelable {
-    public static final String KEY_SWITCHBEAN = "SwitchBean";
+    public static final String KEY_SWITCH_BEAN = "SwitchBean";
     public static final String KEY_START_ACTIVITY_FOR_RESULT = "startActivityForResult";
 
     public static final Creator<CoreSwitchBean> CREATOR = new Creator<CoreSwitchBean>() {
