@@ -54,9 +54,9 @@ allprojects {
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.2.2'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.2.2'
-  //butterknife的sdk
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.2.3'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.2.3'
+  //ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
@@ -241,6 +241,8 @@ protected int getLayoutId() {
 changePage(TestFragment.PAGE_NAME, null, CoreAnim.none);
 ```
 
+【注意】在切换Fragment的时候，fragment并不会走onResume和onPause生命周期，建议使用onHiddenChanged代替。
+
 4.使用`getPage`方法获取指定的Fragment，就可以获取该fragment页面中的数据。
 
 ```
@@ -274,7 +276,7 @@ https://github.com/lizhangqu/CorePage/
 
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/qq_group.jpg)
 
-[xpsvg]: https://img.shields.io/badge/XPage-v2.2.2-brightgreen.svg
+[xpsvg]: https://img.shields.io/badge/XPage-v2.2.3-brightgreen.svg
 [xp]: https://github.com/xuexiangjys/XPage
 [apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
 [api]: https://android-arsenal.com/api?level=14
