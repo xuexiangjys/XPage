@@ -198,17 +198,17 @@ switch(position) {
 
     <!--标题栏的背景颜色-->
     <item name="xpage_actionbar_color">@color/bar_color</item>
-    <!--标题栏的高度-->
+    <!--标题栏的高度, 默认52dp-->
     <item name="xpage_actionbar_height">60dp</item>
-    <!--标题栏标题文字的大小-->
+    <!--标题栏标题文字的大小，默认18sp-->
     <item name="xpage_actionbar_title_text_size">21sp</item>
-    <!--标题栏副标题文字的大小-->
+    <!--标题栏副标题文字的大小，默认12sp-->
     <item name="xpage_actionbar_sub_text_size">14sp</item>
-    <!--标题栏动作文字的大小-->
+    <!--标题栏动作文字的大小，默认15sp-->
     <item name="xpage_actionbar_action_text_size">18sp</item>
-    <!--标题栏动作图片的padding-->
+    <!--标题栏动作图片的padding，默认5dp-->
     <item name="xpage_actionbar_action_padding">6dp</item>
-    <!--标题栏两侧文字的padding-->
+    <!--标题栏两侧文字的padding，默认14dp-->
     <item name="xpage_actionbar_sidetext_padding">16dp</item>
 </style>
 ```
