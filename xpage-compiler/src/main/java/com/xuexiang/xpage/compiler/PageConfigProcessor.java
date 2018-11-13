@@ -50,12 +50,21 @@ import static com.xuexiang.xpage.util.Consts.KEY_MODULE_NAME;
 @AutoService(Processor.class)
 @SupportedOptions(KEY_MODULE_NAME)
 public class PageConfigProcessor extends AbstractProcessor {
-    private Filer mFiler; //文件相关的辅助类
+    /**
+     * 文件相关的辅助类
+     */
+    private Filer mFiler;
     private Types mTypes;
     private Elements mElements;
-    private Logger mLogger; //日志相关的辅助类
+    /**
+     * 日志相关的辅助类
+     */
+    private Logger mLogger;
 
-    private String moduleName = null;   // Module name, maybe its 'app' or others
+    /**
+     * Module name, maybe its 'app' or others
+     */
+    private String moduleName = null;
     /**
      * 页面配置所在的包名
      */
@@ -89,7 +98,8 @@ public class PageConfigProcessor extends AbstractProcessor {
                     "        arguments = [ moduleName : project.getName() ]\n" +
                     "    }\n" +
                     "}\n");
-            moduleName = "app"; //默认是app
+            //默认是app
+            moduleName = "app";
 //            throw new RuntimeException("XPage::Compiler >>> No module name, for more information, look at gradle log.");
         }
 
@@ -159,20 +169,21 @@ public class PageConfigProcessor extends AbstractProcessor {
             String name;
             for (Element element : pageElements) {
                 tm = element.asType();
-
-                if (mTypes.isSubtype(tm, mFragment)) {                 // Fragment
+                // Fragment
+                if (mTypes.isSubtype(tm, mFragment)) {
                     mLogger.info(">>> Found Fragment Page: " + tm.toString() + " <<<");
 
                     Page page = element.getAnnotation(Page.class);
                     name = StringUtils.isEmpty(page.name()) ? element.getSimpleName().toString() : page.name();
 
-                    constructorBuilder.addStatement("mPages.add(new $T($S, $S, $S, $T.$L))",
+                    constructorBuilder.addStatement("mPages.add(new $T($S, $S, $S, $T.$L, $L))",
                             PageInfo.class,
                             name,
                             tm.toString(),
                             PageInfo.getParams(page.params()),
                             ClassName.get(CoreAnim.class),
-                            page.anim());
+                            page.anim(),
+                            page.extra());
                 }
             }
 

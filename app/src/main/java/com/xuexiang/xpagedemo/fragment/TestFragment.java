@@ -12,7 +12,7 @@ import butterknife.BindView;
  * @author xuexiang
  * @date 2018/1/7 下午11:27
  */
-@Page(name = TestFragment.PAGE_NAME)
+@Page(name = TestFragment.PAGE_NAME, extra = 123)
 public class TestFragment extends XPageFragment {
     public final static String PAGE_NAME = "测试页面";
     @BindView(R.id.tv_content)

@@ -15,20 +15,23 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Page {
     /**
-     * 页面的名称
-     * @return
+     * @return 页面的名称
      */
     String name() default "";
 
     /**
-     * 界面传递的参数Key
-     * @return
+     * @return 界面传递的参数Key
      */
     String[] params() default {""};
 
     /**
-     * 页面切换的动画
-     * @return
+     * @return 页面切换的动画
      */
     CoreAnim anim() default CoreAnim.slide;
+
+    /**
+     *
+     * @return 拓展字段
+     */
+    int extra() default -1;
 }

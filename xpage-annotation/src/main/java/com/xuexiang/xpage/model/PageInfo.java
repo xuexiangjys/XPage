@@ -33,6 +33,11 @@ public class PageInfo implements Serializable {
      */
     private CoreAnim anim;
 
+    /**
+     * 拓展字段
+     */
+    private int extra;
+
     public PageInfo() {
 
     }
@@ -65,16 +70,18 @@ public class PageInfo implements Serializable {
 
     /**
      * 自动编译生成需要使用的构造函数
+     *
      * @param name
      * @param classPath
      * @param params
      * @param anim
      */
-    public PageInfo(String name, String classPath, String params, CoreAnim anim) {
+    public PageInfo(String name, String classPath, String params, CoreAnim anim, int extra) {
         this.name = name;
         this.classPath = classPath;
         this.params = params;
         this.anim = anim;
+        this.extra = extra;
     }
 
     public static String getParams(String[] params) {
@@ -145,9 +152,23 @@ public class PageInfo implements Serializable {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
+    public int getExtra() {
+        return extra;
     }
 
+    public PageInfo setExtra(int extra) {
+        this.extra = extra;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "PageInfo{" +
+                "name='" + name + '\'' +
+                ", classPath='" + classPath + '\'' +
+                ", params='" + params + '\'' +
+                ", anim=" + anim +
+                ", extra=" + extra +
+                '}';
+    }
 }
