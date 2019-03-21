@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.R;
+import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.enums.CoreAnim;
+import com.xuexiang.xpage.model.PageInfo;
 
 import java.util.Arrays;
 
@@ -72,10 +75,6 @@ public class CoreSwitchBean implements Parcelable {
         setAnim(coreAnim);
     }
 
-    public void setAnim(CoreAnim anim) {
-        mAnim = convertAnimations(anim);
-    }
-
     /**
      * 动画转化，根据枚举类返回int数组
      *
@@ -84,19 +83,28 @@ public class CoreSwitchBean implements Parcelable {
      */
     public static int[] convertAnimations(CoreAnim coreAnim) {
         if (coreAnim == CoreAnim.present) {
-            int[] animations = {R.anim.xpage_push_in_down, R.anim.xpage_push_no_ani, R.anim.xpage_push_no_ani, R.anim.xpage_push_out_down};
-            return animations;
+            return new int[]{R.anim.xpage_push_in_down, R.anim.xpage_push_no_ani, R.anim.xpage_push_no_ani, R.anim.xpage_push_out_down};
         } else if (coreAnim == CoreAnim.fade) {
-            int[] animations = {R.anim.xpage_alpha_in, R.anim.xpage_alpha_out, R.anim.xpage_alpha_in, R.anim.xpage_alpha_out};
-            return animations;
+            return new int[]{R.anim.xpage_alpha_in, R.anim.xpage_alpha_out, R.anim.xpage_alpha_in, R.anim.xpage_alpha_out};
         } else if (coreAnim == CoreAnim.slide) {
-            int[] animations = {R.anim.xpage_slide_in_right, R.anim.xpage_slide_out_left, R.anim.xpage_slide_in_left, R.anim.xpage_slide_out_right};
-            return animations;
+            return new int[]{R.anim.xpage_slide_in_right, R.anim.xpage_slide_out_left, R.anim.xpage_slide_in_left, R.anim.xpage_slide_out_right};
         } else if (coreAnim == CoreAnim.zoom) {
-            int[] animations = {R.anim.xpage_zoom_in, R.anim.xpage_zoom_out, R.anim.xpage_zoom_in, R.anim.xpage_zoom_out};
-            return animations;
+            return new int[]{R.anim.xpage_zoom_in, R.anim.xpage_zoom_out, R.anim.xpage_zoom_in, R.anim.xpage_zoom_out};
         }
         return null;
+    }
+
+    public <T extends XPageFragment> CoreSwitchBean(Class<T> clazz, Bundle bundle) {
+        PageInfo pageInfo = PageConfig.getPageInfo(clazz);
+        mPageName = pageInfo.getName();
+        mBundle = bundle;
+        setAnim(pageInfo.getAnim());
+    }
+
+    public <T extends XPageFragment> CoreSwitchBean(Class<T> clazz) {
+        PageInfo pageInfo = PageConfig.getPageInfo(clazz);
+        mPageName = pageInfo.getName();
+        setAnim(pageInfo.getAnim());
     }
 
     public CoreSwitchBean(String pageName, Bundle bundle, int[] anim) {
@@ -147,11 +155,10 @@ public class CoreSwitchBean implements Parcelable {
 
     protected CoreSwitchBean(Parcel in) {
         mPageName = in.readString();
-        mBundle = in.readBundle();
-        int[] a = {in.readInt(), in.readInt(), in.readInt(), in.readInt()};
-        mAnim = a;
-        mAddToBackStack = in.readInt() == 1 ? true : false;
-        mNewActivity = in.readInt() == 1 ? true : false;
+        mBundle = in.readBundle(getClass().getClassLoader());
+        mAnim = new int[]{in.readInt(), in.readInt(), in.readInt(), in.readInt()};
+        mAddToBackStack = in.readInt() == 1;
+        mNewActivity = in.readInt() == 1;
         mRequestCode = in.readInt();
     }
 
@@ -184,6 +191,11 @@ public class CoreSwitchBean implements Parcelable {
 
     public int[] getAnim() {
         return mAnim;
+    }
+
+    public CoreSwitchBean setAnim(CoreAnim anim) {
+        mAnim = convertAnimations(anim);
+        return this;
     }
 
     public CoreSwitchBean setAnim(int[] anim) {

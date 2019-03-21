@@ -261,7 +261,6 @@ public class CorePageManager {
 
             fragmentTransaction.commitAllowingStateLoss();
             //fragmentTransaction.commit();
-
         } catch (Exception e) {
             e.printStackTrace();
             PageLog.d("Fragment.error:" + e.getMessage());

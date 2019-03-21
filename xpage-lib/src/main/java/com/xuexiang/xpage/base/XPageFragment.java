@@ -15,6 +15,7 @@ import com.squareup.leakcanary.RefWatcher;
 import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.core.CoreSwitchBean;
 import com.xuexiang.xpage.core.CoreSwitcher;
+import com.xuexiang.xpage.core.PageOption;
 import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.utils.TitleBar;
@@ -104,6 +105,7 @@ public abstract class XPageFragment extends Fragment {
 
 
     //================页面返回===================//
+
     /**
      * 数据设置，回调
      *
@@ -129,7 +131,7 @@ public abstract class XPageFragment extends Fragment {
     }
 
     /**
-     * 弹出栈顶的Fragment。如果Activity中只有一个Fragemnt时，Acitivity也退出。
+     * 弹出栈顶的Fragment。如果Activity中只有一个Fragment时，Activity也退出。
      */
     public void popToBack() {
         popToBack(null, null);
@@ -247,8 +249,19 @@ public abstract class XPageFragment extends Fragment {
      *
      * @return 打开的fragment对象
      */
-    public Fragment openPage(Class<?> clazz) {
-        return openPage(PageConfig.getPageInfo(clazz).getName(), null, PageConfig.getPageInfo(clazz).getAnim());
+    public <T extends XPageFragment> T openPage(Class<T> clazz) {
+        return (T) openPage(PageConfig.getPageInfo(clazz).getName(), null, PageConfig.getPageInfo(clazz).getAnim());
+    }
+
+    /**
+     * 打开fragment[使用注解反射]
+     *
+     * @param clazz          页面类
+     * @param addToBackStack 是否添加到用户操作栈中
+     * @return 打开的fragment对象
+     */
+    public <T extends XPageFragment> T openPage(Class<T> clazz, boolean addToBackStack) {
+        return (T) openPage(PageConfig.getPageInfo(clazz).getName(), null, PageConfig.getPageInfo(clazz).getAnim(), addToBackStack);
     }
 
     /**
@@ -258,8 +271,8 @@ public abstract class XPageFragment extends Fragment {
      * @param bundle 页面跳转时传递的参数
      * @return 打开的fragment对象
      */
-    public Fragment openPage(Class<?> clazz, Bundle bundle) {
-        return openPage(PageConfig.getPageInfo(clazz).getName(), bundle, PageConfig.getPageInfo(clazz).getAnim());
+    public <T extends XPageFragment> T openPage(Class<T> clazz, Bundle bundle) {
+        return (T) openPage(PageConfig.getPageInfo(clazz).getName(), bundle, PageConfig.getPageInfo(clazz).getAnim());
     }
 
     /**
@@ -269,8 +282,8 @@ public abstract class XPageFragment extends Fragment {
      * @param bundle 页面跳转时传递的参数
      * @return 打开的fragment对象
      */
-    public Fragment openPage(Class<?> clazz, Bundle bundle, CoreAnim coreAnim) {
-        return openPage(PageConfig.getPageInfo(clazz).getName(), bundle, coreAnim);
+    public <T extends XPageFragment> T openPage(Class<T> clazz, Bundle bundle, CoreAnim coreAnim) {
+        return (T) openPage(PageConfig.getPageInfo(clazz).getName(), bundle, coreAnim);
     }
 
     /**
@@ -323,7 +336,7 @@ public abstract class XPageFragment extends Fragment {
     /**
      * 打开一个fragment并设置是否新开activity，设置是否添加返回栈
      *
-     * @param pageName       Fragemnt 名，在page.json中配置。
+     * @param pageName       Fragment 名，在page.json中配置。
      * @param bundle         页面跳转时传递的参数
      * @param anim           指定的动画理性 none/slide(左右平移)/present(由下向上)/fade(fade 动画)
      * @param addToBackStack 是否添加到用户操作栈中
@@ -424,8 +437,8 @@ public abstract class XPageFragment extends Fragment {
      * @param requestCode 请求码
      * @return 打开的fragment对象
      */
-    public final Fragment openPageForResult(Class<?> clazz, Bundle bundle, int requestCode) {
-        return openPageForResult(false, PageConfig.getPageInfo(clazz).getName(), bundle, PageConfig.getPageInfo(clazz).getAnim(), requestCode);
+    public final <T extends XPageFragment> T openPageForResult(Class<T> clazz, Bundle bundle, int requestCode) {
+        return (T) openPageForResult(false, PageConfig.getPageInfo(clazz).getName(), bundle, PageConfig.getPageInfo(clazz).getAnim(), requestCode);
     }
 
     /**
@@ -452,6 +465,20 @@ public abstract class XPageFragment extends Fragment {
      * @return 打开的fragment对象
      */
     public final Fragment openPageForResult(boolean newActivity, String pageName, Bundle bundle, CoreAnim coreAnim, int requestCode) {
+        return openPageForResult(newActivity, pageName, bundle, CoreSwitchBean.convertAnimations(coreAnim), requestCode);
+    }
+
+    /**
+     * 打开fragment并请求获得返回值,并设置是否在新activity中打开
+     *
+     * @param newActivity 是否新开activity
+     * @param pageName    页面名
+     * @param bundle      参数
+     * @param coreAnim    动画
+     * @param requestCode 请求码
+     * @return 打开的fragment对象
+     */
+    public final Fragment openPageForResult(boolean newActivity, String pageName, Bundle bundle, int[] coreAnim, int requestCode) {
         CoreSwitcher pageCoreSwitcher = this.getSwitcher();
         if (pageCoreSwitcher != null) {
             CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, coreAnim, true, newActivity);
@@ -461,6 +488,20 @@ public abstract class XPageFragment extends Fragment {
         } else {
             PageLog.d("pageSwitcher is null");
             return null;
+        }
+    }
+
+    /**
+     * 打开fragment并请求获得返回值
+     *
+     * @param pageOption 页面选项
+     * @return 打开的fragment对象
+     */
+    public final Fragment openPage(PageOption pageOption) {
+        if (pageOption.isOpenForResult()) {
+            return openPageForResult(pageOption.isNewActivity(), pageOption.getPageName(), pageOption.getBundle(), pageOption.getAnim(), pageOption.getRequestCode());
+        } else {
+            return openPage(pageOption.getPageName(), pageOption.getBundle(), pageOption.getAnim(), pageOption.isAddToBackStack(), pageOption.isNewActivity());
         }
     }
 
@@ -605,8 +646,9 @@ public abstract class XPageFragment extends Fragment {
     public interface OnFragmentFinishListener {
         /**
          * 页面跳转返回的回调接口
+         *
          * @param requestCode 请求码
-         * @param resultCode 结果码
+         * @param resultCode  结果码
          * @param intent
          */
         void onFragmentResult(int requestCode, int resultCode, Intent intent);
