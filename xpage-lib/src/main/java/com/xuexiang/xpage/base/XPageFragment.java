@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
@@ -492,16 +493,25 @@ public abstract class XPageFragment extends Fragment {
     }
 
     /**
-     * 打开fragment并请求获得返回值
+     * 打开fragment并请求获得返回值【PageOption调用的核心方法】
      *
      * @param pageOption 页面选项
      * @return 打开的fragment对象
      */
-    public final Fragment openPage(PageOption pageOption) {
-        if (pageOption.isOpenForResult()) {
-            return openPageForResult(pageOption.isNewActivity(), pageOption.getPageName(), pageOption.getBundle(), pageOption.getAnim(), pageOption.getRequestCode());
+    public final Fragment openPage(@NonNull PageOption pageOption) {
+        CoreSwitcher switcher = this.getSwitcher();
+        if (switcher != null) {
+            CoreSwitchBean page = pageOption.toSwitch();
+            if (pageOption.isOpenForResult()) {
+                //openPageForResult一定要加入到堆栈中
+                page.setAddToBackStack(true);
+                return switcher.openPageForResult(page, this);
+            } else {
+                return switcher.openPage(page);
+            }
         } else {
-            return openPage(pageOption.getPageName(), pageOption.getBundle(), pageOption.getAnim(), pageOption.isAddToBackStack(), pageOption.isNewActivity());
+            PageLog.d("pageSwitcher is null");
+            return null;
         }
     }
 

@@ -6,6 +6,7 @@ import android.content.Context;
 import com.xuexiang.xpage.AppPageConfig;
 import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.PageConfiguration;
+import com.xuexiang.xpage.base.XPageActivity;
 import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xpage.model.PageInfo;
 import com.xuexiang.xrouter.launcher.XRouter;
@@ -35,6 +36,7 @@ public class MyApplication extends Application {
                 })
                 .debug("PageLog")       //开启调试
                 .enableWatcher(false)   //设置是否开启内存泄露监测
+                .setContainActivityClazz(XPageActivity.class) //设置默认的容器Activity
                 .init(this);   //初始化页面配置
 
         initRouter();

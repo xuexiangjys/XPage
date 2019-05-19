@@ -1,3 +1,4 @@
+#=========================================基础不变的混淆配置=========================================##
 #指定代码的压缩级别
 -optimizationpasses 5
 #包名不混合大小写
@@ -16,8 +17,6 @@
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
 #保护注解
 -keepattributes *Annotation*
-# 并保留源文件名为"Proguard"字符串，而非原始的类名 并保留行号
--keepattributes SourceFile,LineNumberTable
 #忽略警告
 -ignorewarning
 
@@ -30,6 +29,8 @@
 -printusage unused.txt
 #混淆前后的映射
 -printmapping mapping.txt
+# 并保留源文件名为"Proguard"字符串，而非原始的类名 并保留行号
+-keepattributes SourceFile,LineNumberTable
 ########记录生成的日志数据，gradle build时 在本项目根目录输出-end#####
 
 #需要保留的东西
@@ -116,15 +117,61 @@
 #如果引用了v4或者v7包
 -dontwarn android.support.**
 
+# zxing
+-dontwarn com.google.zxing.**
+-keep class com.google.zxing.**{*;}
+
+#SignalR推送
+-keep class microsoft.aspnet.signalr.** { *; }
+
+# 极光推送混淆
+-dontoptimize
+-dontpreverify
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+-dontwarn cn.jiguang.**
+-keep class cn.jiguang.** { *; }
+
+# 数据库框架OrmLite
+-keepattributes *DatabaseField*
+-keepattributes *DatabaseTable*
+-keepattributes *SerializedName*
+-keep class com.j256.**
+-keepclassmembers class com.j256.** { *; }
+-keep enum com.j256.**
+-keepclassmembers enum com.j256.** { *; }
+-keep interface com.j256.**
+-keepclassmembers interface com.j256.** { *; }
+
+#XHttp2
+-keep class com.xuexiang.xhttp2.model.** { *; }
+-keep class com.xuexiang.xhttp2.cache.model.** { *; }
+-keep class com.xuexiang.xhttp2.cache.stategy.**{*;}
+-keep class com.xuexiang.xhttp2.annotation.** { *; }
+
+#okhttp
+-dontwarn com.squareup.okhttp3.**
+-keep class com.squareup.okhttp3.** { *;}
+-dontwarn okio.**
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn javax.annotation.**
+
 #如果用到Gson解析包的，直接添加下面这几行就能成功混淆，不然会报错
-#gson
 -keepattributes Signature
-# Gson specific classes
+-keep class com.google.gson.stream.** { *; }
+-keepattributes EnclosingMethod
+-keep class org.xz_sale.entity.**{*;}
+-keep class com.google.gson.** {*;}
+-keep class com.google.**{*;}
 -keep class sun.misc.Unsafe { *; }
--keep class com.google.gson.** { *; }
-# Application classes that will be serialized/deserialized over Gson
+-keep class com.google.gson.stream.** { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
 
+# Retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Exceptions#XHt
 
 # RxJava RxAndroid
 -dontwarn sun.misc.**
@@ -139,6 +186,11 @@
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 
+-dontwarn okio.**
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn javax.annotation.**
+
 # fastjson
 -dontwarn com.alibaba.fastjson.**
 -keep class com.alibaba.fastjson.** { *; }
@@ -146,3 +198,67 @@
 
 # xpage
 -keep class com.xuexiang.xpage.annotation.** { *; }
+
+# xaop
+-keep @com.xuexiang.xaop.annotation.* class * {*;}
+-keep class * {
+    @com.xuexiang.xaop.annotation.* <fields>;
+}
+-keepclassmembers class * {
+    @com.xuexiang.xaop.annotation.* <methods>;
+}
+
+# xrouter
+-keep public class com.xuexiang.xrouter.routes.**{*;}
+-keep class * implements com.xuexiang.xrouter.facade.template.ISyringe{*;}
+# 如果使用了 byType 的方式获取 Service，需添加下面规则，保护接口
+-keep interface * implements com.xuexiang.xrouter.facade.template.IProvider
+# 如果使用了 单类注入，即不定义接口实现 IProvider，需添加下面规则，保护实现
+-keep class * implements com.xuexiang.xrouter.facade.template.IProvider
+
+# xupdate
+-keep class com.xuexiang.xupdate.entity.** { *; }
+
+# xvideo
+-keep class com.xuexiang.xvideo.jniinterface.** { *; }
+
+# xipc
+-keep @com.xuexiang.xipc.annotation.* class * {*;}
+-keep class * {
+    @com.xuexiang.xipc.annotation.* <fields>;
+}
+-keepclassmembers class * {
+    @com.xuexiang.xipc.annotation.* <methods>;
+}
+
+-keep public class com.xuexiang.xuidemo.fragment.components.pickerview.**{*;}
+
+# agentweb
+-keep class com.just.agentweb.** {
+    *;
+}
+-dontwarn com.just.agentweb.**
+-keepclassmembers class com.just.agentweb.sample.common.AndroidInterface{ *; }
+-keepclassmembers class com.just.agentweb.sample.common.SonicJavaScriptInterface{ *; }
+
+#-libraryjars
+
+-keep class com.alipay.android.app.IAlixPay{*;}
+-keep class com.alipay.android.app.IAlixPay$Stub{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
+-keep class com.alipay.sdk.app.PayTask{ public *;}
+-keep class com.alipay.sdk.app.AuthTask{ public *;}
+-keep class com.alipay.sdk.app.H5PayCallback {
+    <fields>;
+    <methods>;
+}
+-keep class com.alipay.android.phone.mrpc.core.** { *; }
+-keep class com.alipay.apmobilesecuritysdk.** { *; }
+-keep class com.alipay.mobile.framework.service.annotation.** { *; }
+-keep class com.alipay.mobilesecuritysdk.face.** { *; }
+-keep class com.alipay.tscenter.biz.rpc.** { *; }
+-keep class org.json.alipay.** { *; }
+-keep class com.alipay.tscenter.** { *; }
+-keep class com.ta.utdid2.** { *;}
+-keep class com.ut.device.** { *;}

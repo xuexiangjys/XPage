@@ -25,11 +25,21 @@
         <item name="xpage_actionbar_side_text_padding">16dp</item>
 
         <item name="XPageTitleBarStyle">@style/XPageTitleBar.Custom</item>
+
+        <item name="android:windowAnimationStyle">@style/WindowAnimStyle</item>
     </style>
 
     <style name="XPageTitleBar.Custom">
         <item name="tb_immersive">false</item>
         <item name="tb_centerGravity">center</item>
+    </style>
+
+
+    <style name="WindowAnimStyle" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/xpage_slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/xpage_slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/xpage_slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/xpage_slide_out_right</item>
     </style>
 
 </resources>

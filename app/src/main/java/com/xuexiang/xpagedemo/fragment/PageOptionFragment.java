@@ -7,6 +7,7 @@ import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xpage.core.PageOption;
 import com.xuexiang.xpage.enums.CoreAnim;
+import com.xuexiang.xpagedemo.activity.ContainActivity;
 import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.List;
@@ -29,6 +30,8 @@ public class PageOptionFragment extends XPageSimpleListFragment {
         lists.add("普通打开");
         lists.add("设置动画");
         lists.add("是否支持数据返回");
+        lists.add("打开新的Activity");
+        lists.add("使用自定义的容器打开新的Activity");
         return lists;
     }
 
@@ -49,6 +52,12 @@ public class PageOptionFragment extends XPageSimpleListFragment {
             case 2:
                 pageOption.setRequestCode(100)
                         .putBoolean(DateReceiveFragment.KEY_IS_NEED_BACK, true);
+                break;
+            case 3:
+                pageOption.setNewActivity(true);
+                break;
+            case 4:
+                pageOption.setNewActivity(true, ContainActivity.class);
                 break;
             default:
                 break;

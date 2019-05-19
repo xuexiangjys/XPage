@@ -2,11 +2,13 @@ package com.xuexiang.xpage;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.xuexiang.xpage.annotation.Page;
+import com.xuexiang.xpage.base.XPageActivity;
 import com.xuexiang.xpage.core.CoreConfig;
 import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.model.PageInfo;
@@ -34,6 +36,11 @@ public class PageConfig {
 
     private List<PageInfo> mPages = new ArrayList<>();
 
+    /**
+     * XPageFragment的容器Activity类名
+     */
+    private String mContainActivityClassName = XPageActivity.class.getCanonicalName();
+
     private static PageConfig gInstance;
 
     public static PageConfig getInstance() {
@@ -54,6 +61,7 @@ public class PageConfig {
 
     /**
      * 是否监控内存泄露
+     *
      * @param enableWatcher
      * @return
      */
@@ -68,6 +76,7 @@ public class PageConfig {
 
     /**
      * 初始化页面配置
+     *
      * @param application
      */
     public void init(Application application) {
@@ -80,6 +89,7 @@ public class PageConfig {
 
     /**
      * 设置调试模式
+     *
      * @param tag
      * @return
      */
@@ -90,6 +100,7 @@ public class PageConfig {
 
     /**
      * 初始化页面信息
+     *
      * @param context
      */
     private void initPages(Context context) {
@@ -100,6 +111,7 @@ public class PageConfig {
 
     /**
      * 内存泄漏监听
+     *
      * @param application
      */
     private void initCanary(Application application) {
@@ -113,8 +125,25 @@ public class PageConfig {
         return mRefWatcher;
     }
 
+
+    /**
+     * 设置XPageFragment的容器Activity类名
+     *
+     * @param containActivityClazz
+     * @return
+     */
+    public PageConfig setContainActivityClazz(@NonNull Class<? extends XPageActivity> containActivityClazz) {
+        mContainActivityClassName = containActivityClazz.getCanonicalName();
+        return this;
+    }
+
+    public static String getContainActivityClassName() {
+        return getInstance().mContainActivityClassName;
+    }
+
     /**
      * 注册页面信息
+     *
      * @param clazz
      * @return
      */
@@ -125,11 +154,12 @@ public class PageConfig {
 
     /**
      * 注册多个页面信息
+     *
      * @param clazz
      * @return
      */
     public PageConfig registerPageInfos(Class... clazz) {
-        for (int i = 0; i < clazz.length; i ++) {
+        for (int i = 0; i < clazz.length; i++) {
             registerPageInfo(clazz[i]);
         }
         return this;
@@ -137,6 +167,7 @@ public class PageConfig {
 
     /**
      * 注册多个页面信息
+     *
      * @param pageInfos
      * @return
      */
@@ -164,6 +195,7 @@ public class PageConfig {
 
     /**
      * 获取页面信息
+     *
      * @param clazz
      * @return
      */

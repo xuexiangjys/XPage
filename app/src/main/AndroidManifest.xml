@@ -23,6 +23,12 @@
         </activity>
 
         <activity android:name=".ComplexActivity" />
+        <!--自定义的容器Activity-->
+        <activity android:name=".activity.ContainActivity" />
+        <!--默认的容器Activity-->
+        <activity android:name="com.xuexiang.xpage.base.XPageActivity" />
+
+
     </application>
 
 </manifest>

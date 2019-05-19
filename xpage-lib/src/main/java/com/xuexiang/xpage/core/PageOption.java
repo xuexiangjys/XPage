@@ -46,6 +46,10 @@ public class PageOption {
      */
     private boolean mNewActivity = false;
     /**
+     * 新起Activity的容器类名
+     */
+    private String mContainActivityClassName = PageConfig.getContainActivityClassName();
+    /**
      * 请求code码
      */
     private int mRequestCode = -1;
@@ -155,6 +159,31 @@ public class PageOption {
     public PageOption setNewActivity(boolean newActivity) {
         mNewActivity = newActivity;
         return this;
+    }
+
+    /**
+     * 设置XPageFragment的容器Activity类名
+     *
+     * @param containActivityClazz
+     * @return
+     */
+    public PageOption setContainActivityClazz(@NonNull Class<? extends XPageActivity> containActivityClazz) {
+        mContainActivityClassName = containActivityClazz.getCanonicalName();
+        return this;
+    }
+
+    public Class<?> getContainActivityClazz() throws ClassNotFoundException {
+        return Class.forName(mContainActivityClassName);
+    }
+
+    public PageOption setNewActivity(boolean newActivity, @NonNull Class<? extends XPageActivity> containActivityClazz) {
+        mNewActivity = newActivity;
+        mContainActivityClassName = containActivityClazz.getCanonicalName();
+        return this;
+    }
+
+    public String getContainActivityClassName() {
+        return mContainActivityClassName;
     }
 
     public int getRequestCode() {

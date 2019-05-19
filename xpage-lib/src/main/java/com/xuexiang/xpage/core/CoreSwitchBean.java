@@ -3,9 +3,11 @@ package com.xuexiang.xpage.core;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.R;
+import com.xuexiang.xpage.base.XPageActivity;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xpage.model.PageInfo;
@@ -54,6 +56,10 @@ public class CoreSwitchBean implements Parcelable {
      * 是否起新的Activity
      */
     private boolean mNewActivity = false;
+    /**
+     * XPageFragment的容器Activity类名
+     */
+    private String mContainActivityClassName = PageConfig.getContainActivityClassName();
     /**
      * 请求code码
      */
@@ -159,6 +165,7 @@ public class CoreSwitchBean implements Parcelable {
         mAnim = new int[]{in.readInt(), in.readInt(), in.readInt(), in.readInt()};
         mAddToBackStack = in.readInt() == 1;
         mNewActivity = in.readInt() == 1;
+        mContainActivityClassName = in.readString();
         mRequestCode = in.readInt();
     }
 
@@ -178,6 +185,32 @@ public class CoreSwitchBean implements Parcelable {
     public CoreSwitchBean setNewActivity(boolean newActivity) {
         mNewActivity = newActivity;
         return this;
+    }
+
+    /**
+     * 设置XPageFragment的容器Activity类名
+     *
+     * @param containActivityClazz
+     * @return
+     */
+    public CoreSwitchBean setContainActivityClazz(@NonNull Class<? extends XPageActivity> containActivityClazz) {
+        mContainActivityClassName = containActivityClazz.getCanonicalName();
+        return this;
+    }
+
+    public CoreSwitchBean setContainActivityClassName(@NonNull String containActivityClassName) {
+        mContainActivityClassName = containActivityClassName;
+        return this;
+    }
+
+    public CoreSwitchBean setNewActivity(boolean newActivity, @NonNull Class<? extends XPageActivity> containActivityClazz) {
+        mNewActivity = newActivity;
+        mContainActivityClassName = containActivityClazz.getCanonicalName();
+        return this;
+    }
+
+    public Class<?> getContainActivityClazz() throws ClassNotFoundException {
+        return Class.forName(mContainActivityClassName);
     }
 
     public boolean isAddToBackStack() {
@@ -223,12 +256,13 @@ public class CoreSwitchBean implements Parcelable {
 
     @Override
     public String toString() {
-        return "SwitchBean{" +
+        return "CoreSwitchBean{" +
                 "mPageName='" + mPageName + '\'' +
                 ", mBundle=" + mBundle +
                 ", mAnim=" + Arrays.toString(mAnim) +
                 ", mAddToBackStack=" + mAddToBackStack +
                 ", mNewActivity=" + mNewActivity +
+                ", mContainActivityClassName='" + mContainActivityClassName + '\'' +
                 ", mRequestCode=" + mRequestCode +
                 '}';
     }
@@ -265,6 +299,7 @@ public class CoreSwitchBean implements Parcelable {
         }
         out.writeInt(mAddToBackStack ? 1 : 0);
         out.writeInt(mNewActivity ? 1 : 0);
+        out.writeString(mContainActivityClassName);
         out.writeInt(mRequestCode);
     }
 

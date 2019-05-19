@@ -9,6 +9,8 @@ import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpagedemo.R;
+import com.xuexiang.xrouter.annotation.AutoWired;
+import com.xuexiang.xrouter.launcher.XRouter;
 
 import butterknife.BindView;
 
@@ -26,6 +28,7 @@ public class TestFragment extends XPageFragment {
     @BindView(R.id.tv_content)
     TextView tvContent;
 
+    @AutoWired(name = KEY_IS_NEED_BACK)
     boolean isNeedBack;
     /**
      * 布局的资源id
@@ -54,10 +57,7 @@ public class TestFragment extends XPageFragment {
 
     @Override
     protected void initArgs() {
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            isNeedBack = arguments.getBoolean(KEY_IS_NEED_BACK);
-        }
+        XRouter.getInstance().inject(this);
     }
 
     /**

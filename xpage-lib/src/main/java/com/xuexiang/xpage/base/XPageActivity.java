@@ -343,7 +343,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      */
     public void startActivity(CoreSwitchBean page) {
         try {
-            Intent intent = new Intent(this, XPageActivity.class);
+            Intent intent = new Intent(this, page.getContainActivityClazz());
             intent.putExtra(CoreSwitchBean.KEY_SWITCH_BEAN, page);
 
             this.startActivity(intent);
@@ -421,7 +421,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      */
     public void startActivityForResult(CoreSwitchBean page) {
         try {
-            Intent intent = new Intent(this, XPageActivity.class);
+            Intent intent = new Intent(this, page.getContainActivityClazz());
             intent.putExtra(CoreSwitchBean.KEY_SWITCH_BEAN, page);
             intent.putExtra(CoreSwitchBean.KEY_START_ACTIVITY_FOR_RESULT, true);
             this.startActivityForResult(intent, page.getRequestCode());

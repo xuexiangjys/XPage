@@ -116,6 +116,7 @@ public final class Utils {
     public static CoreSwitchBean toSwitch(@NonNull PageOption pageOption) {
         CoreSwitchBean page = new CoreSwitchBean(pageOption.getPageName(), pageOption.getBundle(), pageOption.getAnim(), pageOption.isAddToBackStack(), pageOption.isNewActivity());
         page.setRequestCode(pageOption.getRequestCode());
+        page.setContainActivityClassName(pageOption.getContainActivityClassName());
         return page;
     }
 
