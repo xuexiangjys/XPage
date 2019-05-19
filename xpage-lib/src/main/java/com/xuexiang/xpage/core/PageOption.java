@@ -1,15 +1,19 @@
 package com.xuexiang.xpage.core;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.xuexiang.xpage.PageConfig;
+import com.xuexiang.xpage.base.XPageActivity;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xpage.model.PageInfo;
+import com.xuexiang.xpage.utils.Utils;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import static com.xuexiang.xpage.core.CoreSwitchBean.convertAnimations;
@@ -110,57 +114,14 @@ public class PageOption {
         return mPageName;
     }
 
+    /**
+     * 设置跳转fragment页面地名称
+     *
+     * @param pageName
+     * @return
+     */
     public PageOption setPageName(String pageName) {
         mPageName = pageName;
-        return this;
-    }
-
-    public Bundle getBundle() {
-        return mBundle;
-    }
-
-    public PageOption setBundle(Bundle bundle) {
-        mBundle = bundle;
-        return this;
-    }
-
-    public PageOption putString(@Nullable String key, @Nullable String value) {
-        if (mBundle == null) {
-            mBundle = new Bundle();
-        }
-        mBundle.putString(key, value);
-        return this;
-    }
-
-    public PageOption putBoolean(@Nullable String key, boolean value) {
-        if (mBundle == null) {
-            mBundle = new Bundle();
-        }
-        mBundle.putBoolean(key, value);
-        return this;
-    }
-
-    public PageOption putInt(@Nullable String key, int value) {
-        if (mBundle == null) {
-            mBundle = new Bundle();
-        }
-        mBundle.putInt(key, value);
-        return this;
-    }
-
-    public PageOption putFloat(@Nullable String key, float value) {
-        if (mBundle == null) {
-            mBundle = new Bundle();
-        }
-        mBundle.putFloat(key, value);
-        return this;
-    }
-
-    public PageOption putDouble(@Nullable String key, double value) {
-        if (mBundle == null) {
-            mBundle = new Bundle();
-        }
-        mBundle.putDouble(key, value);
         return this;
     }
 
@@ -212,16 +173,152 @@ public class PageOption {
      */
     public PageOption setRequestCode(int requestCode) {
         mRequestCode = requestCode;
+        //设置了请求码之后，必须加入到堆栈中去
+        mAddToBackStack = true;
         return this;
     }
 
+    /**
+     * 在XPageFragment中使用
+     *
+     * @param fragment
+     * @return
+     */
     public Fragment open(@NonNull XPageFragment fragment) {
         return fragment.openPage(this);
     }
 
+    /**
+     * 在XPageFragment中使用，有返回值
+     *
+     * @param fragment
+     * @param requestCode
+     * @return
+     */
     public Fragment openForResult(@NonNull XPageFragment fragment, int requestCode) {
         setRequestCode(requestCode);
         return fragment.openPage(this);
+    }
+
+    /**
+     * 在XPageActivity中使用
+     *
+     * @param activity
+     * @return
+     */
+    public Fragment open(@NonNull XPageActivity activity) {
+        return activity.openPage(toSwitch());
+    }
+
+    public CoreSwitchBean toSwitch() {
+        return Utils.toSwitch(this);
+    }
+
+    //=================参数传递=======================//
+
+    public Bundle getBundle() {
+        return mBundle;
+    }
+
+    public PageOption setBundle(Bundle bundle) {
+        mBundle = bundle;
+        return this;
+    }
+
+    public PageOption putString(@Nullable String key, @Nullable String value) {
+        if (mBundle == null) {
+            mBundle = new Bundle();
+        }
+        mBundle.putString(key, value);
+        return this;
+    }
+
+    public PageOption putBoolean(@Nullable String key, boolean value) {
+        if (mBundle == null) {
+            mBundle = new Bundle();
+        }
+        mBundle.putBoolean(key, value);
+        return this;
+    }
+
+    public PageOption putInt(@Nullable String key, int value) {
+        if (mBundle == null) {
+            mBundle = new Bundle();
+        }
+        mBundle.putInt(key, value);
+        return this;
+    }
+
+    public PageOption putShort(@Nullable String key, short value) {
+        if (mBundle == null) {
+            mBundle = new Bundle();
+        }
+        mBundle.putShort(key, value);
+        return this;
+    }
+
+    public PageOption putLong(@Nullable String key, long value) {
+        if (mBundle == null) {
+            mBundle = new Bundle();
+        }
+        mBundle.putLong(key, value);
+        return this;
+    }
+
+    public PageOption putFloat(@Nullable String key, float value) {
+        if (mBundle == null) {
+            mBundle = new Bundle();
+        }
+        mBundle.putFloat(key, value);
+        return this;
+    }
+
+    public PageOption putDouble(@Nullable String key, double value) {
+        if (mBundle == null) {
+            mBundle = new Bundle();
+        }
+        mBundle.putDouble(key, value);
+        return this;
+    }
+
+    public PageOption putParcelable(@Nullable String key, @Nullable Parcelable value) {
+        if (mBundle == null) {
+            mBundle = new Bundle();
+        }
+        mBundle.putParcelable(key, value);
+        return this;
+    }
+
+    public PageOption putParcelableArray(@Nullable String key, @Nullable Parcelable[] value) {
+        if (mBundle == null) {
+            mBundle = new Bundle();
+        }
+        mBundle.putParcelableArray(key, value);
+        return this;
+    }
+
+    public PageOption putSerializable(@Nullable String key, @Nullable Serializable value) {
+        if (mBundle == null) {
+            mBundle = new Bundle();
+        }
+        mBundle.putSerializable(key, value);
+        return this;
+    }
+
+    public PageOption putByte(@Nullable String key, byte value) {
+        if (mBundle == null) {
+            mBundle = new Bundle();
+        }
+        mBundle.putByte(key, value);
+        return this;
+    }
+
+    public PageOption putAll(Bundle bundle) {
+        if (mBundle == null) {
+            mBundle = new Bundle();
+        }
+        mBundle.putAll(bundle);
+        return this;
     }
 
     @Override

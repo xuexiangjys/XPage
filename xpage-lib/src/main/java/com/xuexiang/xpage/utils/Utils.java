@@ -9,10 +9,14 @@ import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import com.xuexiang.xpage.core.CoreSwitchBean;
+import com.xuexiang.xpage.core.PageOption;
 
 /**
  * 工具类
@@ -107,6 +111,12 @@ public final class Utils {
             return context.getDrawable(resId);
         }
         return context.getResources().getDrawable(resId);
+    }
+
+    public static CoreSwitchBean toSwitch(@NonNull PageOption pageOption) {
+        CoreSwitchBean page = new CoreSwitchBean(pageOption.getPageName(), pageOption.getBundle(), pageOption.getAnim(), pageOption.isAddToBackStack(), pageOption.isNewActivity());
+        page.setRequestCode(pageOption.getRequestCode());
+        return page;
     }
 
     /**
