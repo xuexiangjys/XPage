@@ -17,6 +17,9 @@
 * 支持导航栏通过注解的方式自动添加及设置。
 * 支持进行内存泄露监测。
 * 支持自定义TitleBar全局主题属性。
+* 支持自定义Fragment页面容器。
+* 支持自定义Activity页面容器。
+* 支持Fragment之间、activity和fragment之间的数据交互。
 
 
 ## 如何使用
@@ -37,8 +40,8 @@ allprojects {
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.2.5'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.2.5'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.2.6'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.2.6'
   //ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -65,7 +68,7 @@ defaultConfig {
  [![](https://img.shields.io/badge/点我一键加入QQ群-602082750-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=9922861ef85c19f1575aecea0e8680f60d9386080a97ed310c971ae074998887)
 
 
-[xpsvg]: https://img.shields.io/badge/XPage-v2.2.5-brightgreen.svg
+[xpsvg]: https://img.shields.io/badge/XPage-v2.2.6-brightgreen.svg
 [xp]: https://github.com/xuexiangjys/XPage
 [apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
 [api]: https://android-arsenal.com/api?level=14

@@ -62,7 +62,7 @@ public class PageOptionFragment extends XPageSimpleListFragment {
             default:
                 break;
         }
-        openPage(pageOption);
+        pageOption.open(this);
     }
 
     @Override

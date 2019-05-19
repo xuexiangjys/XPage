@@ -22,6 +22,7 @@
 * 支持进行内存泄露监测。
 * 支持自定义TitleBar全局主题属性。
 * 支持自定义Fragment页面容器。
+* 支持自定义Activity页面容器。
 * 支持Fragment之间、activity和fragment之间的数据交互。
 
 ## 1、演示（请star支持）
@@ -34,6 +35,7 @@
 ![][download-img]
 
 ## 2、如何使用
+
 目前支持主流开发工具AndroidStudio的使用，直接配置build.gradle，增加依赖即可.
 
 ### 2.1、Android Studio导入方法，添加Gradle依赖
@@ -54,8 +56,8 @@ allprojects {
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.2.5'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.2.5'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.2.6'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.2.6'
   //ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -79,7 +81,7 @@ defaultConfig {
 
 ### 2.2、页面注册
 
-#### 2.2.1、assets中注册
+#### 2.2.1、assets中静态注册
 
 在assets文件夹中新建“corepage.json“，然后进行如下配置：
 ```
@@ -100,9 +102,27 @@ defaultConfig {
 ]
 ```
 
-#### 2.2.2、Application中注册
+#### 2.2.2、Application中动态注册【推荐】
 
-1.手动动态进行页面注册
+1.自动进行页面注册【推荐】
+
+使用apt自动生成的页面注册配置类 "moduleName"+PageConfig 的getPages()进行注册。
+
+```
+PageConfig.getInstance()
+        .setPageConfiguration(new PageConfiguration() { //页面注册
+            @Override
+            public List<PageInfo> registerPages(Context context) {
+                return AppPageConfig.getInstance().getPages(); //自动注册页面
+            }
+        })
+        .debug("PageLog")       //开启调试
+        .setContainActivityClazz(XPageActivity.class) //设置默认的容器Activity
+        .enableWatcher(false)   //设置是否开启内存泄露监测
+        .init(this);            //初始化页面配置
+```
+
+2.手动动态进行页面注册
 
 ```
 PageConfig.getInstance()
@@ -120,28 +140,25 @@ PageConfig.getInstance()
         .init(this);            //初始化页面配置
 ```
 
-2.自动进行页面注册
+### 2.3、使用PageOption进行页面操作【推荐】
 
-使用apt自动生成的页面注册配置类 "moduleName"+PageConfig 的getPages()进行注册。
+使用`PageOption.to`进行页面选项构建。
 
 ```
-PageConfig.getInstance()
-        .setPageConfiguration(new PageConfiguration() { //页面注册
-            @Override
-            public List<PageInfo> registerPages(Context context) {
-                return AppPageConfig.getInstance().getPages(); //自动注册页面
-            }
-        })
-        .debug("PageLog")       //开启调试
-        .enableWatcher(false)   //设置是否开启内存泄露监测
-        .init(this);            //初始化页面配置
+PageOption.to(TestFragment.class) //跳转的fragment
+    .setAnim(CoreAnim.zoom) //页面跳转动画
+    .setRequestCode(100) //请求码，用于返回结果
+    .setAddToBackStack(true) //是否加入堆栈
+    .setNewActivity(true, ContainActivity.class) //是否使用新的Activity打开
+    .putBoolean(DateReceiveFragment.KEY_IS_NEED_BACK, true) //传递的参数
+    .open(this); //打开页面进行跳转
 ```
 
-### 2.3、页面跳转
+### 2.4、页面跳转
 
 > 使用XPage，Activity必须要继承`XPageActivity`,Fragment必须要继承`XPageFragment`，否则将无法调用页面跳转的`openPage`方法。
 
-#### 2.3.1、携带数据
+#### 2.4.1、携带数据
 
 ```
 Bundle params = new Bundle();
@@ -162,7 +179,7 @@ switch(position) {
 }
 ```
 
-#### 2.3.2、页面切换动画
+#### 2.4.2、页面切换动画
 
 ```
 switch(position) {
@@ -186,7 +203,7 @@ switch(position) {
 }
 ```
 
-### 2.4、TitleBar样式自定义
+### 2.5、TitleBar样式自定义
 
 可以设置`XPageTitleBarStyle`主题样式来自定义标题栏的默认样式。
 
@@ -222,7 +239,7 @@ switch(position) {
 </style>
 ```
 
-### 2.5、复杂Activity界面容器的自定义
+### 2.6、复杂Activity界面容器的自定义
 
 详细可参见[ComplexActivity](https://github.com/xuexiangjys/XPage/blob/master/app/src/main/java/com/xuexiang/xpagedemo/ComplexActivity.java)
 
@@ -285,7 +302,7 @@ https://github.com/lizhangqu/CorePage/
 
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/qq_group.jpg)
 
-[xpsvg]: https://img.shields.io/badge/XPage-v2.2.5-brightgreen.svg
+[xpsvg]: https://img.shields.io/badge/XPage-v2.2.6-brightgreen.svg
 [xp]: https://github.com/xuexiangjys/XPage
 [apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
 [api]: https://android-arsenal.com/api?level=14
