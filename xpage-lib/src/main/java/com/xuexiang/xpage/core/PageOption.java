@@ -46,6 +46,27 @@ public class PageOption {
      */
     private int mRequestCode = -1;
 
+    /**
+     * 获取页面选项
+     *
+     * @param pageName 页面名
+     * @return
+     */
+    public static PageOption to(String pageName) {
+        return new PageOption(pageName);
+    }
+
+    /**
+     * 获取页面选项
+     *
+     * @param clazz 页面所在类
+     * @param <T>
+     * @return
+     */
+    public static <T extends XPageFragment> PageOption to(Class<T> clazz) {
+        return new PageOption(clazz);
+    }
+
     public PageOption(String pageName) {
         mPageName = pageName;
     }

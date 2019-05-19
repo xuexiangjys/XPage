@@ -14,11 +14,12 @@
     <!--标题栏动作图片的padding-->
     <attr name="xpage_actionbar_action_padding" format="dimension"/>
     <!--标题栏两侧文字的padding-->
-    <attr name="xpage_actionbar_sidetext_padding" format="dimension"/>
+    <attr name="xpage_actionbar_side_text_padding" format="dimension"/>
+    <!--标题栏文字的颜色-->
+    <attr name="xpage_actionbar_text_color" format="color"/>
 
-    <!--ActionBar  TitleBar-->
     <declare-styleable name="TitleBar">
-        <!--标题栏的高度， 默认52dp-->
+        <!--标题栏的高度，默认52dp-->
         <attr name="tb_barHeight" format="dimension" />
         <!--是否是沉浸式标题栏，默认是false-->
         <attr name="tb_immersive" format="boolean" />
@@ -30,6 +31,12 @@
         <attr name="tb_titleTextColor" format="color" />
         <attr name="tb_subTitleTextColor" format="color" />
         <attr name="tb_actionTextColor" format="color" />
+        <!--中间title的对齐方式-->
+        <attr name="tb_centerGravity" format="enum">
+            <enum name="center" value="0" />
+            <enum name="left" value="1" />
+            <enum name="right" value="2" />
+        </attr>
         <!--文字的大小-->
         <attr name="tb_sideTextSize" format="dimension" />
         <attr name="tb_titleTextSize" format="dimension" />
@@ -41,7 +48,7 @@
         <attr name="tb_titleText" format="string" />
         <attr name="tb_subTitleText" format="string" />
         <attr name="tb_dividerColor" format="color" />
-
     </declare-styleable>
+    <attr name="XPageTitleBarStyle" format="reference" />
 
 </resources>

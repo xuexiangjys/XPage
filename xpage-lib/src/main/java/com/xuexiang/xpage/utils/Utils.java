@@ -80,9 +80,20 @@ public final class Utils {
      * @param dpValue 尺寸dip
      * @return 像素值
      */
-    public static int dip2px(Context context, float dpValue) {
+    public static int dp2px(Context context, float dpValue) {
         final float scale = getResources(context).getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
+    }
+
+    /**
+     * 根据手机的分辨率从 px(像素) 的单位 转成为 sp
+     *
+     * @param pxValue 尺寸像素
+     * @return SP值
+     */
+    public static int px2sp(Context context, float pxValue) {
+        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (pxValue / fontScale + 0.5f);
     }
 
     /**
@@ -125,10 +136,14 @@ public final class Utils {
      * @param view 视图
      */
     public static void hideSoftInput(final View view) {
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
         InputMethodManager imm =
                 (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm == null) return;
+        if (imm == null) {
+            return;
+        }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 

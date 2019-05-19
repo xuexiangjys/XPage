@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- TitleBar-->
-    <dimen name="xpage_default_titlebar_height">52dp</dimen>
+    <dimen name="xpage_default_actionbar_height">52dp</dimen>
 
     <dimen name="xpage_default_title_text_size">18sp</dimen>
     <dimen name="xpage_default_sub_text_size">12sp</dimen>

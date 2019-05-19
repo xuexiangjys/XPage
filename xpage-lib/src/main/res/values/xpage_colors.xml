@@ -2,4 +2,7 @@
 <resources>
 
     <color name="xpage_default_actionbar_color">#299EE3</color>
+    <color name="xpage_default_actionbar_text_color">#FFFFFF</color>
+    <color name="xpage_config_color_transparent">#00000000</color>
+
 </resources>

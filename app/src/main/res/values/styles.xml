@@ -22,7 +22,14 @@
         <!--标题栏动作图片的padding-->
         <item name="xpage_actionbar_action_padding">6dp</item>
         <!--标题栏两侧文字的padding-->
-        <item name="xpage_actionbar_sidetext_padding">16dp</item>
+        <item name="xpage_actionbar_side_text_padding">16dp</item>
+
+        <item name="XPageTitleBarStyle">@style/XPageTitleBar.Custom</item>
+    </style>
+
+    <style name="XPageTitleBar.Custom">
+        <item name="tb_immersive">false</item>
+        <item name="tb_centerGravity">center</item>
     </style>
 
 </resources>

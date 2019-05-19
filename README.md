@@ -188,6 +188,8 @@ switch(position) {
 
 ### 2.4、TitleBar样式自定义
 
+可以设置`XPageTitleBarStyle`主题样式来自定义标题栏的默认样式。
+
 ```
 <!-- Base application theme. -->
 <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -209,7 +211,14 @@ switch(position) {
     <!--标题栏动作图片的padding，默认5dp-->
     <item name="xpage_actionbar_action_padding">6dp</item>
     <!--标题栏两侧文字的padding，默认14dp-->
-    <item name="xpage_actionbar_sidetext_padding">16dp</item>
+    <item name="xpage_actionbar_side_text_padding">16dp</item>
+    
+    <item name="XPageTitleBarStyle">@style/XPageTitleBar.Custom</item>
+</style>
+
+<style name="XPageTitleBar.Custom">
+    <item name="tb_immersive">false</item>
+    <item name="tb_centerGravity">center</item>
 </style>
 ```
 

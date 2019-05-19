@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="XPageTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="XPageTitleBarStyle">@style/XPageTitleBar</item>
+    </style>
+
+    <style name="XPageTitleBar">
+        <item name="tb_barHeight">?attr/xpage_actionbar_height</item>
+        <item name="tb_immersive">false</item>
+        <item name="tb_actionPadding">?attr/xpage_actionbar_action_padding</item>
+        <item name="tb_sideTextPadding">?attr/xpage_actionbar_side_text_padding</item>
+        <item name="tb_sideTextColor">@color/xpage_default_actionbar_text_color</item>
+        <item name="tb_titleTextColor">@color/xpage_default_actionbar_text_color</item>
+        <item name="tb_subTitleTextColor">@color/xpage_default_actionbar_text_color</item>
+        <item name="tb_actionTextColor">@color/xpage_default_actionbar_text_color</item>
+        <item name="tb_sideTextSize">?attr/xpage_actionbar_action_text_size</item>
+        <item name="tb_titleTextSize">?attr/xpage_actionbar_title_text_size</item>
+        <item name="tb_subTitleTextSize">?attr/xpage_actionbar_sub_text_size</item>
+        <item name="tb_actionTextSize">?attr/xpage_actionbar_action_text_size</item>
+        <item name="tb_dividerColor">@color/xpage_config_color_transparent</item>
+    </style>
+
+</resources>

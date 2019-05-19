@@ -83,7 +83,7 @@ public class CoreSwitchBean implements Parcelable {
      */
     public static int[] convertAnimations(CoreAnim coreAnim) {
         if (coreAnim == CoreAnim.present) {
-            return new int[]{R.anim.xpage_push_in_down, R.anim.xpage_push_no_ani, R.anim.xpage_push_no_ani, R.anim.xpage_push_out_down};
+            return new int[]{R.anim.xpage_push_in_down, R.anim.xpage_push_no_anim, R.anim.xpage_push_no_anim, R.anim.xpage_push_out_down};
         } else if (coreAnim == CoreAnim.fade) {
             return new int[]{R.anim.xpage_alpha_in, R.anim.xpage_alpha_out, R.anim.xpage_alpha_in, R.anim.xpage_alpha_out};
         } else if (coreAnim == CoreAnim.slide) {

@@ -16,4 +16,17 @@
     <public name="xpage_default_action_text_size" type="dimen"/>
     <public name="xpage_default_action_padding" type="dimen"/>
     <public name="xpage_default_sidetext_padding" type="dimen"/>
+
+    <public name="xpage_alpha_in" type="anim"/>
+    <public name="xpage_alpha_out" type="anim"/>
+    <public name="xpage_push_in_down" type="anim"/>
+    <public name="xpage_push_no_anim" type="anim"/>
+    <public name="xpage_push_out_down" type="anim"/>
+    <public name="xpage_slide_in_left" type="anim"/>
+    <public name="xpage_slide_in_right" type="anim"/>
+    <public name="xpage_slide_out_left" type="anim"/>
+    <public name="xpage_slide_out_right" type="anim"/>
+    <public name="xpage_zoom_in" type="anim"/>
+    <public name="xpage_zoom_out" type="anim"/>
+
 </resources>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageSimpleListFragment;
+import com.xuexiang.xpage.core.PageOption;
 import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.List;
@@ -45,8 +46,10 @@ public class DataTransmitFragment extends XPageSimpleListFragment {
                 openPage(DateReceiveFragment.class, params);
                 break;
             case 1:
-                params.putBoolean(DateReceiveFragment.KEY_IS_NEED_BACK, true);
-                openPageForResult(DateReceiveFragment.class, params, 100);
+                PageOption.to(DateReceiveFragment.class)
+                        .putBoolean(DateReceiveFragment.KEY_IS_NEED_BACK, true)
+                        .setRequestCode(100)
+                        .open(this);
                 break;
             default:
                 break;
