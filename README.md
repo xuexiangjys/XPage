@@ -26,7 +26,7 @@
 * 支持Fragment之间、activity和fragment之间的数据交互。
 
 ## 1、演示（请star支持）
-![](https://github.com/xuexiangjys/XPage/blob/master/img/1.gif)
+![](./img/1.gif)
 
 ### Demo下载
 
