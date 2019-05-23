@@ -31,6 +31,7 @@ public class MyApplication extends Application {
                 .setPageConfiguration(new PageConfiguration() { //页面注册
                     @Override
                     public List<PageInfo> registerPages(Context context) {
+                        //自动注册页面,是编译时自动生成的，build一下就出来了
                         return AppPageConfig.getInstance().getPages();
                     }
                 })

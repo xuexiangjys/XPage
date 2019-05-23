@@ -106,13 +106,14 @@ defaultConfig {
 
 1.自动进行页面注册【推荐】
 
-使用apt自动生成的页面注册配置类 "moduleName"+PageConfig 的getPages()进行注册。
+使用apt编译时自动生成的页面注册配置类 "moduleName"+PageConfig 的getPages()进行注册。
 
 ```
 PageConfig.getInstance()
         .setPageConfiguration(new PageConfiguration() { //页面注册
             @Override
             public List<PageInfo> registerPages(Context context) {
+                //自动注册页面,是编译时自动生成的，build一下就出来了
                 return AppPageConfig.getInstance().getPages(); //自动注册页面
             }
         })
@@ -309,4 +310,4 @@ https://github.com/lizhangqu/CorePage/
 
 [download-svg]: https://img.shields.io/badge/downloads-1M-blue.svg
 [download-url]: https://github.com/xuexiangjys/XPage/blob/master/apk/xpage_demo.apk?raw=true
-[download-img]: https://github.com/xuexiangjys/XPage/blob/master/img/download.png
+[download-img]: ./img/download.png
