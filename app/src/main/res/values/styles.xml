@@ -42,4 +42,7 @@
         <item name="android:activityCloseExitAnimation">@anim/xpage_slide_out_right</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

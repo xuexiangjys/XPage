@@ -22,7 +22,8 @@ public class ComplexPageFragment extends XPageSimpleListFragment  {
      */
     @Override
     protected List<String> initSimpleData(List<String> lists) {
-        lists.add("复杂页面使用");
+        lists.add("复杂页面使用（非ViewPager）");
+        lists.add("Tab主页使用（ViewPager）");
         return lists;
     }
 
@@ -36,6 +37,9 @@ public class ComplexPageFragment extends XPageSimpleListFragment  {
         switch(position) {
             case 0:
                 startActivity(new Intent(getContext(), ComplexActivity.class));
+                break;
+            case 1:
+                openPage(BottomNavigationViewFragment.class);
                 break;
             default:
                 break;

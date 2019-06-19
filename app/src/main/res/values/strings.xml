@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">XPageDemo</string>
+
+
+    <string name="nav_movie">电影</string>
+    <string name="nav_music">音乐</string>
+    <string name="nav_photo">照片</string>
+    <string name="nav_dashboard">资讯</string>
 </resources>
