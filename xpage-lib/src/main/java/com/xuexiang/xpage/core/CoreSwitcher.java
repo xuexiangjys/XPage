@@ -19,6 +19,11 @@ public interface CoreSwitcher {
     void popPage();
 
     /**
+     * 适用于在一个页面中如果有多个fragment回退的情况
+     */
+    void popPageInActivity();
+
+    /**
      * fragmentTag 是否在当前顶上activity上的最顶上的fragment
      *
      * @param fragmentTag fragment的tag

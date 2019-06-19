@@ -162,6 +162,15 @@ public abstract class XPageFragment extends Fragment {
         }
     }
 
+    public void popToBackInActivity() {
+        CoreSwitcher coreSwitcher = getSwitcher();
+        if (coreSwitcher != null) {
+            coreSwitcher.popPageInActivity();
+        } else {
+            PageLog.d("pageSwitcher null");
+        }
+    }
+
     /**
      * 得到页面切换Switcher
      *

@@ -164,6 +164,57 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     }
 
     /**
+     * 在同一个页面弹出fragment
+     */
+    @Override
+    public void popPageInActivity() {
+        if (isFinishing()) {
+            return;
+        }
+        final FragmentManager manager = getSupportFragmentManager();
+        final FragmentTransaction transaction = manager.beginTransaction();
+
+        if (manager.getBackStackEntryCount() > 1) {
+            if (isMainThread()) {
+                manager.popBackStackImmediate();
+                updateFragmentStatus(manager, transaction);
+            } else {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        manager.popBackStackImmediate();
+                        updateFragmentStatus(manager, transaction);
+                    }
+                });
+            }
+        } else {
+            finishActivity(this, true);
+        }
+    }
+
+    /**
+     * 解决多个fragment重叠问题。
+     * 问题：当pop最上面一个fragment时，栈内其它fragment会被强制执行show方法，导致页面重叠。
+     * 解决：循环遍历剩余fragment，使最后一个show，其它为hide
+     * @param manager
+     * @param transaction
+     * @author lreal
+     */
+    private void updateFragmentStatus(FragmentManager manager, FragmentTransaction transaction) {
+        List<Fragment> fragments = manager.getFragments();
+        if (fragments != null && fragments.size() >= 2) {
+            for (int i = 0; i < fragments.size(); i++) {
+                if (i == fragments.size() - 1) {
+                    transaction.show(fragments.get(i));
+                } else {
+                    transaction.hide(fragments.get(i));
+                }
+            }
+            transaction.commit();
+        }
+    }
+
+    /**
      * 是否是主线程
      *
      * @return 是否是主线程
@@ -684,6 +735,18 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
     }
 
     /**
+     * 切换fragment[直接替换，增加到返回堆栈]
+     *
+     * @param clazz  页面类
+     * @param bundle 参数
+     * @return 打开的fragment对象
+     */
+    public <T extends XPageFragment> T changePage(Class<T> clazz, Bundle bundle, boolean addToBackStack) {
+        CoreSwitchBean page = new CoreSwitchBean(PageConfig.getPageInfo(clazz).getName(), bundle, PageConfig.getPageInfo(clazz).getAnim()).setAddToBackStack(addToBackStack);
+        return (T) changePage(page);
+    }
+
+    /**
      * 切换fragment[直接替换，不增加到返回堆栈]
      *
      * @param pageName 页面名
@@ -703,6 +766,18 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
      */
     public Fragment changePage(String pageName, Bundle bundle) {
         CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, CoreAnim.none).setAddToBackStack(false);
+        return changePage(page);
+    }
+
+    /**
+     * 切换fragment[直接替换，增加到返回堆栈]
+     *
+     * @param pageName 页面名
+     * @param bundle   参数
+     * @return 切换的fragment对象
+     */
+    public Fragment changePage(String pageName, Bundle bundle, boolean addToBackStack) {
+        CoreSwitchBean page = new CoreSwitchBean(pageName, bundle, CoreAnim.none).setAddToBackStack(addToBackStack);
         return changePage(page);
     }
 

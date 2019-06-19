@@ -1,5 +1,6 @@
 package com.xuexiang.xpagedemo.fragment;
 
+import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.xuexiang.xpage.annotation.Page;
@@ -15,7 +16,7 @@ import butterknife.BindView;
  * @author xuexiang
  * @since 2018/6/3 下午10:13
  */
-@Page(name = "TabA", anim = CoreAnim.none)
+@Page(name = "TabA", anim = CoreAnim.slide)
 public class TabAFragment extends XPageFragment {
 
     @BindView(R.id.tv_content)
@@ -76,5 +77,13 @@ public class TabAFragment extends XPageFragment {
 
     public String getData() {
         return "这是TabA的数据:" + mData;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            popToBack();
+        }
+        return true;
     }
 }

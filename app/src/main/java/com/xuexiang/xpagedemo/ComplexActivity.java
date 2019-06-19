@@ -7,6 +7,7 @@ import android.widget.Button;
 import com.xuexiang.xpage.base.XPageActivity;
 import com.xuexiang.xpagedemo.fragment.TabAFragment;
 import com.xuexiang.xpagedemo.fragment.TabBFragment;
+import com.xuexiang.xpagedemo.fragment.TabCFragment;
 import com.xuexiang.xutil.tip.ToastUtils;
 
 import butterknife.BindView;
@@ -23,6 +24,8 @@ public class ComplexActivity extends XPageActivity {
     Button btn1;
     @BindView(R.id.btn_2)
     Button btn2;
+    @BindView(R.id.btn_22)
+    Button btn22;
 
     @Override
     protected int getLayoutId() {
@@ -36,14 +39,17 @@ public class ComplexActivity extends XPageActivity {
         openPage(TabAFragment.class, null);
     }
 
-    @OnClick({R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4})
+    @OnClick({R.id.btn_1, R.id.btn_2, R.id.btn_22, R.id.btn_3, R.id.btn_4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_1:
                 changePage(TabAFragment.class, null);
                 break;
             case R.id.btn_2:
-                changePage(TabBFragment.class, null);
+                changePage(TabBFragment.class, null, true);
+                break;
+            case R.id.btn_22:
+                changePage(TabCFragment.class, null, true);
                 break;
             case R.id.btn_3:
                 TabAFragment tabAFragment = getPage(TabAFragment.class);

@@ -10,14 +10,15 @@ import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpagedemo.R;
 
+
 import butterknife.BindView;
 
 /**
  * @author xuexiang
  * @since 2018/6/3 下午10:22
  */
-@Page(name = "TabB", anim = CoreAnim.slide)
-public class TabBFragment extends XPageFragment {
+@Page(name = "TabC", anim = CoreAnim.slide)
+public class TabCFragment extends XPageFragment {
 
     @BindView(R.id.tv_content)
     TextView tvContent;
@@ -60,26 +61,26 @@ public class TabBFragment extends XPageFragment {
     @Override
     public void onResume() {
         super.onResume();
-        PageLog.d("TabBFragment:onResume");
+        PageLog.d("TabCFragment:onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        PageLog.d("TabBFragment:onPause");
+        PageLog.d("TabCFragment:onPause");
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        PageLog.d("TabBFragment:onHiddenChanged:" + hidden);
+
+        PageLog.d("TabCFragment:onHiddenChanged:" + hidden);
     }
 
 
     public String getData() {
-        return "这是TabB的数据:" + mData;
+        return "这是TabC的数据:" + mData;
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -87,5 +88,11 @@ public class TabBFragment extends XPageFragment {
             popToBackInActivity();
         }
         return true;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        PageLog.d("TabCFragment:onDestroyView:");
     }
 }
