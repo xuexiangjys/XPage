@@ -240,7 +240,32 @@ switch(position) {
 </style>
 ```
 
-### 2.6、复杂Activity界面容器的自定义
+### 2.6、利用XPage来写程序的Tab主页
+
+详细可参见[BottomNavigationViewFragment](https://github.com/xuexiangjys/XPage/blob/master/app/src/main/java/com/xuexiang/xpagedemo/fragment/BottomNavigationViewFragment.java)
+
+就像正常使用ViewPager加载Fragment那样。但是这里需要注意的两点是：
+
+* 由于使用ViewPager进行加载，而非XPage,因此Fragment的initTitleBar方法需要被覆盖。
+
+```
+@Override
+protected TitleBar initTitleBar() {
+    //不使用@Page标注的一定要注意覆盖这个方法
+    return null;
+}
+```
+
+* 由于为了新开页面不影响Tab主页当前容器的状态，需要在打开新页面的使用设置使用新容器。
+
+```
+PageOption.to(TestFragment.class)
+        //新建一个容器，以不影响当前容器
+        .setNewActivity(true)
+        .open(this);
+```
+
+### 2.7、复杂Activity界面容器的自定义
 
 详细可参见[ComplexActivity](https://github.com/xuexiangjys/XPage/blob/master/app/src/main/java/com/xuexiang/xpagedemo/ComplexActivity.java)
 
