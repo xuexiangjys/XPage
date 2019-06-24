@@ -113,7 +113,7 @@ PageConfig.getInstance()
         .setPageConfiguration(new PageConfiguration() { //页面注册
             @Override
             public List<PageInfo> registerPages(Context context) {
-                //自动注册页面,是编译时自动生成的，build一下就出来了
+                //自动注册页面,是编译时自动生成的，build一下就出来了。如果你还没使用@Page的话，暂时是不会生成的。
                 return AppPageConfig.getInstance().getPages(); //自动注册页面
             }
         })
@@ -122,6 +122,8 @@ PageConfig.getInstance()
         .enableWatcher(false)   //设置是否开启内存泄露监测
         .init(this);            //初始化页面配置
 ```
+
+【注意】：如果你的项目中只是增加了依赖，还没有使用@Page注解XPageFragment页面的话，在编译时是不会自动生成注册页面的！！
 
 2.手动动态进行页面注册
 
