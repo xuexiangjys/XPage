@@ -1,5 +1,8 @@
 # XPage
-[![xp][xpsvg]][xp]  [![api][apisvg]][api]
+[![](https://jitpack.io/v/xuexiangjys/XPage.svg)](https://jitpack.io/#xuexiangjys/XPage)
+[![api][apisvg]][api]
+[![I](https://img.shields.io/github/issues/xuexiangjys/XPage.svg)](https://github.com/xuexiangjys/XPage/issues)
+[![Star](https://img.shields.io/github/stars/xuexiangjys/XPage.svg)](https://github.com/xuexiangjys/XPage)
 
 一个非常方便的fragment页面框架
 
