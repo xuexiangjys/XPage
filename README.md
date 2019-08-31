@@ -221,9 +221,15 @@ switch(position) {
     <item name="colorPrimaryDark">@color/xpage_default_actionbar_color</item>
     <item name="colorAccent">@color/xpage_default_actionbar_color</item>
 
+    <!--标题栏的背景图片，优先使用背景图片，没有背景图片才使用背景颜色，可选-->
+    <item name="xpage_actionbar_background">@null</item>
     <!--标题栏的背景颜色-->
-    <item name="xpage_actionbar_color">@color/bar_color</item>
-    <!--标题栏的高度, 默认52dp-->
+    <item name="xpage_actionbar_color">@color/xpage_default_actionbar_color</item>
+    <!--是否支持沉浸式标题栏, 默认false-->
+    <item name="xpage_actionbar_immersive">false</item>
+    <!--标题栏返回箭头, 默认R.drawable.xpage_ic_navigation_back_white-->
+    <item name="xpage_actionbar_navigation_back">@drawable/xpage_ic_navigation_back_white</item>
+    <!--标题栏的高度，默认52dp-->
     <item name="xpage_actionbar_height">60dp</item>
     <!--标题栏标题文字的大小，默认18sp-->
     <item name="xpage_actionbar_title_text_size">21sp</item>

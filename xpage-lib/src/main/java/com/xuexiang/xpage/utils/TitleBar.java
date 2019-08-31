@@ -230,7 +230,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
                     setBackgroundDrawable(backgroundDrawable);
                 }
             } else {
-                setBackgroundColor(Utils.resolveColor(context, R.attr.xpage_actionbar_color, Color.parseColor("#299EE3")));
+                setBackgroundColor(Utils.resolveColor(context, R.attr.xpage_actionbar_color, getResources().getColor(R.color.xpage_default_actionbar_color)));
             }
         }
 
