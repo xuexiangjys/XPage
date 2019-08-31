@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.xuexiang.xpagedemo"
-        minSdkVersion build_versions.min_sdk
+        minSdkVersion 17
         targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
@@ -17,7 +17,6 @@ android {
                 arguments = [ moduleName : project.getName() ]
             }
         }
-
     }
 
     if (isNeedPackage.toBoolean()) {
@@ -74,7 +73,7 @@ dependencies {
 //    implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.2.2'
 //    annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.2.2'
 
-    implementation 'com.github.xuexiangjys.XUtil:xutil-core:1.1.5'
+    implementation 'com.github.xuexiangjys.XUtil:xutil-core:1.1.6'
 
     implementation 'com.github.githubwing:ByeBurger:1.2.3'
 

@@ -371,7 +371,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
                 PageLog.e(e);
             }
         } else {
-            PageLog.e("[resolveActivity failed]: " + intent.getComponent().getClassName() + " do not register in manifest");
+            PageLog.e("[resolveActivity failed]: " + (intent.getComponent() != null ? intent.getComponent() : intent.getAction()) + " do not register in manifest");
         }
     }
 
@@ -449,7 +449,7 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
                 PageLog.e(e);
             }
         } else {
-            PageLog.e("[resolveActivity failed]: " + intent.getComponent().getClassName() + " do not register in manifest");
+            PageLog.e("[resolveActivity failed]: " + (intent.getComponent() != null ? intent.getComponent() : intent.getAction()) + " do not register in manifest");
         }
     }
 

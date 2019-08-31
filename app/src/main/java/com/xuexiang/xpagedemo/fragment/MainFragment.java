@@ -5,6 +5,8 @@ import android.view.View;
 
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageContainerListFragment;
+import com.xuexiang.xpage.core.PageOption;
+import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xutil.common.ClickUtils;
 
@@ -12,7 +14,7 @@ import com.xuexiang.xutil.common.ClickUtils;
  * @author xuexiang
  * @date 2018/1/7 下午6:47
  */
-@Page(name = "XPage")
+@Page(name = "XPage", anim = CoreAnim.none)
 public class MainFragment extends XPageContainerListFragment {
 
     /**
@@ -41,6 +43,18 @@ public class MainFragment extends XPageContainerListFragment {
         });
     }
 
+    @Override
+    protected void onItemClick(int position) {
+        if (position == 3) {
+            PageOption.to(getSimpleDataItem(position))
+                    .setNewActivity(true)
+                    .setAnim(CoreAnim.slide)
+                    .open(this);
+        } else {
+            super.onItemClick(position);
+        }
+    }
+
     /**
      * 菜单、返回键响应
      */
@@ -51,7 +65,6 @@ public class MainFragment extends XPageContainerListFragment {
         }
         return true;
     }
-
 
 
 }

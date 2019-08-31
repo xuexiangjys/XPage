@@ -23,6 +23,7 @@ public final class TitleUtils {
     }
 
     //=================================静态添加=======================================//
+
     /**
      * 利用TitleBar初始化ActionBar
      */
@@ -46,8 +47,10 @@ public final class TitleUtils {
         return titleBar;
     }
     //=================================动态添加=======================================//
+
     /**
      * 动态添加TitleBar
+     *
      * @param activity
      * @param title
      */
@@ -64,6 +67,7 @@ public final class TitleUtils {
 
     /**
      * 动态添加TitleBar
+     *
      * @param viewGroup
      * @param title
      * @param listener
@@ -76,6 +80,7 @@ public final class TitleUtils {
 
     /**
      * 动态生成TitleBar
+     *
      * @param fragment
      * @param title
      * @return
@@ -92,6 +97,7 @@ public final class TitleUtils {
 
     /**
      * 动态添加TitleBar
+     *
      * @param fragment
      * @param viewGroup
      * @param title
@@ -104,8 +110,9 @@ public final class TitleUtils {
 
     /**
      * 动态生成TitleBar
+     *
      * @param context
-     * @param title 标题
+     * @param title    标题
      * @param listener 左侧监听
      * @return
      */
@@ -132,17 +139,16 @@ public final class TitleUtils {
 
     /**
      * 初始化title的样式
+     *
      * @param titleBar
      * @param title
      * @param listener
      * @return
      */
     public static TitleBar initTitleBarStyle(TitleBar titleBar, String title, View.OnClickListener listener) {
-        titleBar.setImmersive(false)
-                .setBackImageResource(R.drawable.xpage_ic_return_back)
+        titleBar.setLeftImageDrawable(Utils.resolveDrawable(titleBar.getContext(), R.attr.xpage_actionbar_navigation_back, Utils.getVectorDrawable(titleBar.getContext(), R.drawable.xpage_ic_navigation_back_white)))
                 .setLeftClickListener(listener)
-                .setTitle(title)
-                .setBackgroundColor(Utils.resolveColor(titleBar.getContext(), R.attr.xpage_actionbar_color, Color.parseColor("#299EE3")));
+                .setTitle(title);
         return titleBar;
     }
 }

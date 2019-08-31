@@ -2,6 +2,7 @@ package com.xuexiang.xpage.base;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.squareup.leakcanary.RefWatcher;
 import com.xuexiang.xpage.PageConfig;
+import com.xuexiang.xpage.core.CoreConfig;
 import com.xuexiang.xpage.core.CoreSwitchBean;
 import com.xuexiang.xpage.core.CoreSwitcher;
 import com.xuexiang.xpage.core.PageOption;
@@ -168,10 +170,11 @@ public abstract class XPageFragment extends Fragment {
      * @return 页面切换Switcher
      */
     public CoreSwitcher getSwitcher() {
-        synchronized (XPageFragment.this) {// 加强保护，保证pageSwitcher 不为null
+        synchronized (XPageFragment.this) {
+            // 加强保护，保证pageSwitcher 不为null
             if (mPageCoreSwitcher == null) {
-                if (this.mActivity != null && this.mActivity instanceof CoreSwitcher) {
-                    mPageCoreSwitcher = (CoreSwitcher) this.mActivity;
+                if (mActivity != null && mActivity instanceof CoreSwitcher) {
+                    mPageCoreSwitcher = (CoreSwitcher) mActivity;
                 }
                 if (mPageCoreSwitcher == null) {
                     XPageActivity topActivity = XPageActivity.getTopActivity();
@@ -648,6 +651,42 @@ public abstract class XPageFragment extends Fragment {
 
     protected <T extends View> T findViewById(int id) {
         return mRootView.findViewById(id);
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        if (intent == null) {
+            PageLog.e("[startActivity failed]: intent == null");
+            return;
+        }
+        if (CoreConfig.getContext().getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+            try {
+                super.startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+                PageLog.e(e);
+            }
+        } else {
+            PageLog.e("[resolveActivity failed]: " + (intent.getComponent() != null ? intent.getComponent() : intent.getAction()) + " do not register in manifest");
+        }
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        if (intent == null) {
+            PageLog.e("[startActivityForResult failed]: intent == null");
+            return;
+        }
+        if (CoreConfig.getContext().getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+            try {
+                super.startActivityForResult(intent, requestCode);
+            } catch (Exception e) {
+                e.printStackTrace();
+                PageLog.e(e);
+            }
+        } else {
+            PageLog.e("[resolveActivity failed]: " + (intent.getComponent() != null ? intent.getComponent() : intent.getAction()) + " do not register in manifest");
+        }
     }
 
     /**

@@ -36,13 +36,12 @@ public class CorePageManager {
      * 页面信息
      */
     private static final String PAGE_INFO_JSON = "corepage.json";
-    //日志TAG
-    private volatile static CorePageManager mInstance = null;
-    //单例
-    private Context mContext;
-    //Context上下文
+
+    private volatile static CorePageManager sInstance = null;
+    /**
+     * 保存page的map
+     */
     private Map<String, CorePage> mPageMap = new HashMap<>();
-    //保存page的map
 
     /**
      * 构造函数私有化
@@ -57,14 +56,14 @@ public class CorePageManager {
      * @return PageManager 单例
      */
     public static CorePageManager getInstance() {
-        if (mInstance == null) {
+        if (sInstance == null) {
             synchronized (CorePageManager.class) {
-                if (mInstance == null) {
-                    mInstance = new CorePageManager();
+                if (sInstance == null) {
+                    sInstance = new CorePageManager();
                 }
             }
         }
-        return mInstance;
+        return sInstance;
     }
 
     /**
@@ -74,8 +73,7 @@ public class CorePageManager {
      */
     public void init(Context context) {
         try {
-            mContext = context.getApplicationContext();
-            String content = readFileFromAssets(mContext, PAGE_INFO_JSON);
+            String content = readFileFromAssets(context, PAGE_INFO_JSON);
             readConfig(content);
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,7 +92,9 @@ public class CorePageManager {
      */
 
     public void readConfig(String content) {
-        if (TextUtils.isEmpty(content)) return;
+        if (TextUtils.isEmpty(content)) {
+            return;
+        }
 
         PageLog.d("readConfig from json");
         JSONArray jsonArray = JSON.parseArray(content);
@@ -149,7 +149,9 @@ public class CorePageManager {
      * @param closeables closeables
      */
     static void closeIO(final Closeable... closeables) {
-        if (closeables == null) return;
+        if (closeables == null) {
+            return;
+        }
         for (Closeable closeable : closeables) {
             if (closeable != null) {
                 try {
@@ -297,7 +299,7 @@ public class CorePageManager {
 
             List<Fragment> fragments = fragmentManager.getFragments();
             if (fragments != null && !fragments.isEmpty()) {
-                for (Fragment fragment: fragments) {
+                for (Fragment fragment : fragments) {
                     fragmentTransaction.hide(fragment);
                 }
             }
@@ -329,6 +331,7 @@ public class CorePageManager {
 
     /**
      * 根据CorePage加载XPageFragment
+     *
      * @param corePage
      * @return
      * @throws ClassNotFoundException
@@ -379,7 +382,7 @@ public class CorePageManager {
                     while (ite.hasNext()) {
                         key = ite.next();
                         value = j.get(key);
-                        bundle.putString(key, value.toString());
+                        bundle.putString(key, String.valueOf(value));
                     }
                 }
             }

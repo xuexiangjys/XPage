@@ -22,6 +22,8 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -103,6 +105,8 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     private String mTitleTextString;
     private String mSubTextString;
     private int mDividerColor;
+    private int mDivideHeight;
+    private boolean mIsUseThemeColor;
 
     public TitleBar(Context context) {
         this(context, null);
@@ -125,7 +129,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TitleBar, defStyleAttr, 0);
         if (typedArray != null) {
             mBarHeight = typedArray.getDimensionPixelSize(R.styleable.TitleBar_tb_barHeight, Utils.resolveDimension(context, R.attr.xpage_actionbar_height, Utils.getDimensionPixelSize(getContext(), R.dimen.xpage_default_actionbar_height)));
-            mImmersive = typedArray.getBoolean(R.styleable.TitleBar_tb_immersive, false);
+            mImmersive = typedArray.getBoolean(R.styleable.TitleBar_tb_immersive, Utils.resolveBoolean(context, R.attr.xpage_actionbar_immersive));
 
             mActionPadding = typedArray.getDimensionPixelSize(R.styleable.TitleBar_tb_actionPadding, Utils.resolveDimension(context, R.attr.xpage_actionbar_action_padding, Utils.getDimensionPixelSize(getContext(), R.dimen.xpage_default_action_padding)));
             mSideTextPadding = typedArray.getDimensionPixelSize(R.styleable.TitleBar_tb_sideTextPadding, Utils.resolveDimension(context, R.attr.xpage_actionbar_side_text_padding, Utils.getDimensionPixelSize(getContext(), R.dimen.xpage_default_sidetext_padding)));
@@ -141,11 +145,13 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
             mSubTitleTextColor = typedArray.getColor(R.styleable.TitleBar_tb_subTitleTextColor, Utils.resolveColor(getContext(), R.attr.xpage_actionbar_text_color, DEFAULT_TEXT_COLOR));
             mActionTextColor = typedArray.getColor(R.styleable.TitleBar_tb_actionTextColor, Utils.resolveColor(getContext(), R.attr.xpage_actionbar_text_color, DEFAULT_TEXT_COLOR));
 
-            mLeftImageResource = typedArray.getDrawable(R.styleable.TitleBar_tb_leftImageResource);
+            mLeftImageResource = Utils.getDrawableAttrRes(getContext(), typedArray, R.styleable.TitleBar_tb_leftImageResource);
             mLeftTextString = typedArray.getString(R.styleable.TitleBar_tb_leftText);
             mTitleTextString = typedArray.getString(R.styleable.TitleBar_tb_titleText);
             mSubTextString = typedArray.getString(R.styleable.TitleBar_tb_subTitleText);
             mDividerColor = typedArray.getColor(R.styleable.TitleBar_tb_dividerColor, Color.TRANSPARENT);
+            mDivideHeight = typedArray.getDimensionPixelSize(R.styleable.TitleBar_tb_dividerHeight, Utils.dp2px(getContext(), 1));
+            mIsUseThemeColor = typedArray.getBoolean(R.styleable.TitleBar_tb_useThemeColor, true);
 
             typedArray.recycle();
         }
@@ -213,7 +219,21 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         addView(mLeftText, layoutParams);
         addView(mCenterLayout);
         addView(mRightLayout, layoutParams);
-        addView(mDividerView, new LayoutParams(LayoutParams.MATCH_PARENT, 1));
+        addView(mDividerView, new LayoutParams(LayoutParams.MATCH_PARENT, mDivideHeight));
+
+        if (mIsUseThemeColor) {
+            Drawable backgroundDrawable = Utils.resolveDrawable(getContext(), R.attr.xpage_actionbar_background);
+            if (backgroundDrawable != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    setBackground(backgroundDrawable);
+                } else {
+                    setBackgroundDrawable(backgroundDrawable);
+                }
+            } else {
+                setBackgroundColor(Utils.resolveColor(context, R.attr.xpage_actionbar_color, Color.parseColor("#299EE3")));
+            }
+        }
+
     }
 
     public TitleBar setImmersive(boolean immersive) {
@@ -239,7 +259,9 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     }
 
     public TitleBar setLeftImageResource(int resId) {
-        mLeftText.setCompoundDrawablesWithIntrinsicBounds(resId, 0, 0, 0);
+        if (mLeftText != null) {
+            mLeftText.setCompoundDrawablesWithIntrinsicBounds(resId, 0, 0, 0);
+        }
         return this;
     }
 
@@ -249,6 +271,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
      * @param resId
      * @return
      */
+    @Deprecated
     public TitleBar setBackImageResource(int resId) {
         if (resId != 0) {
             mLeftImageResource = Utils.getDrawable(getContext(), resId);
@@ -257,6 +280,20 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         } else {
             mLeftImageResource = null;
             mLeftText.setCompoundDrawables(null, null, null, null);
+        }
+        return this;
+    }
+
+    /**
+     * 设置左侧图标
+     *
+     * @param leftImageDrawable
+     * @return
+     */
+    public TitleBar setLeftImageDrawable(Drawable leftImageDrawable) {
+        mLeftImageResource = leftImageDrawable;
+        if (mLeftText != null) {
+            mLeftText.setCompoundDrawablesWithIntrinsicBounds(mLeftImageResource, null, null, null);
         }
         return this;
     }
@@ -636,7 +673,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     protected View inflateAction(Action action) {
         View view = null;
         if (TextUtils.isEmpty(action.getText())) {
-            ImageView img = new ImageView(getContext());
+            ImageView img = new AppCompatImageView(getContext());
             img.setImageResource(action.getDrawable());
             view = img;
         } else {
