@@ -1,6 +1,6 @@
 # XPage
 [![](https://jitpack.io/v/xuexiangjys/XPage.svg)](https://jitpack.io/#xuexiangjys/XPage)
-[![api][apisvg]][api]
+[![api](https://img.shields.io/badge/API-14+-brightgreen.svg)](https://android-arsenal.com/api?level=14)
 [![I](https://img.shields.io/github/issues/xuexiangjys/XPage.svg)](https://github.com/xuexiangjys/XPage/issues)
 [![Star](https://img.shields.io/github/stars/xuexiangjys/XPage.svg)](https://github.com/xuexiangjys/XPage)
 
@@ -8,7 +8,13 @@
 
 ## 关于我
 
-[![github](https://img.shields.io/badge/GitHub-xuexiangjys-blue.svg)](https://github.com/xuexiangjys)   [![csdn](https://img.shields.io/badge/CSDN-xuexiangjys-green.svg)](http://blog.csdn.net/xuexiangjys)
+[![github](https://img.shields.io/badge/GitHub-xuexiangjys-blue.svg)](https://github.com/xuexiangjys)   [![csdn](https://img.shields.io/badge/CSDN-xuexiangjys-green.svg)](http://blog.csdn.net/xuexiangjys)   [![简书](https://img.shields.io/badge/简书-xuexiangjys-red.svg)](https://www.jianshu.com/u/6bf605575337)   [![掘金](https://img.shields.io/badge/掘金-xuexiangjys-brightgreen.svg)](https://juejin.im/user/598feef55188257d592e56ed)   [![知乎](https://img.shields.io/badge/知乎-xuexiangjys-violet.svg)](https://www.zhihu.com/people/xuexiangjys)
+
+## X系列库快速集成
+
+为了方便大家快速集成X系列框架库，我提供了一个空壳模版供大家参考使用: https://github.com/xuexiangjys/TemplateAppProject
+
+---
 
 ## 特征
 
@@ -37,9 +43,11 @@
 
 ![][download-img]
 
+---
+
 ## 2、如何使用
 
-目前支持主流开发工具AndroidStudio的使用，直接配置build.gradle，增加依赖即可.
+> 目前支持主流开发工具AndroidStudio的使用，直接配置build.gradle，增加依赖即可.
 
 ### 2.1、Android Studio导入方法，添加Gradle依赖
 
@@ -330,19 +338,23 @@ if (tabAFragment != null) {
 -keep class com.xuexiang.xpage.annotation.** { *; }
 ```
 
+---
+
 ## 特别感谢
 https://github.com/lizhangqu/CorePage/
 
+## 如果觉得项目还不错，可以考虑打赏一波
+
+> 你的打赏是我维护的动力，我将会列出所有打赏人员的清单在下方作为凭证，打赏前请留下打赏项目的备注！
+
+![](https://github.com/xuexiangjys/Resource/blob/master/img/pay/alipay.jpeg) &emsp; ![](https://github.com/xuexiangjys/Resource/blob/master/img/pay/weixinpay.jpeg)
+
 ## 联系方式
 
- [![](https://img.shields.io/badge/点击一键加入QQ交流群-602082750-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=9922861ef85c19f1575aecea0e8680f60d9386080a97ed310c971ae074998887)
+[![](https://img.shields.io/badge/点击一键加入QQ交流群-602082750-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=9922861ef85c19f1575aecea0e8680f60d9386080a97ed310c971ae074998887)
 
 ![](https://github.com/xuexiangjys/XPage/blob/master/img/qq_group.jpg)
 
-[xpsvg]: https://img.shields.io/badge/XPage-v2.2.6-brightgreen.svg
-[xp]: https://github.com/xuexiangjys/XPage
-[apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
-[api]: https://android-arsenal.com/api?level=14
 
 [download-svg]: https://img.shields.io/badge/downloads-1M-blue.svg
 [download-url]: https://github.com/xuexiangjys/XPage/blob/master/apk/xpage_demo.apk?raw=true

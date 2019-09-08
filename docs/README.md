@@ -1,6 +1,6 @@
 # XPage
 [![](https://jitpack.io/v/xuexiangjys/XPage.svg)](https://jitpack.io/#xuexiangjys/XPage)
-[![api][apisvg]][api]
+[![api](https://img.shields.io/badge/API-14+-brightgreen.svg)](https://android-arsenal.com/api?level=14)
 [![I](https://img.shields.io/github/issues/xuexiangjys/XPage.svg)](https://github.com/xuexiangjys/XPage/issues)
 [![Star](https://img.shields.io/github/stars/xuexiangjys/XPage.svg)](https://github.com/xuexiangjys/XPage)
 
@@ -68,10 +68,4 @@ defaultConfig {
 
 ## 联系方式
 
- [![](https://img.shields.io/badge/点我一键加入QQ群-602082750-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=9922861ef85c19f1575aecea0e8680f60d9386080a97ed310c971ae074998887)
-
-
-[xpsvg]: https://img.shields.io/badge/XPage-v2.2.6-brightgreen.svg
-[xp]: https://github.com/xuexiangjys/XPage
-[apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
-[api]: https://android-arsenal.com/api?level=14
+[![](https://img.shields.io/badge/点我一键加入QQ群-602082750-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=9922861ef85c19f1575aecea0e8680f60d9386080a97ed310c971ae074998887)
