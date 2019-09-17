@@ -33,6 +33,8 @@
 * 支持自定义Fragment页面容器。
 * 支持自定义Activity页面容器。
 * 支持Fragment之间、activity和fragment之间的数据交互。
+* 兼容kotlin和androidx。
+
 
 ## 1、演示（请star支持）
 ![](./img/1.gif)
@@ -72,6 +74,22 @@ dependencies {
   //ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+}
+```
+
+【注意】如果你使用的是kotlin，请使用如下配置:
+
+```
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+  ...
+  //XPage
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.2.6'
+  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:2.2.6'
+  //ButterKnife的sdk
+  implementation 'com.jakewharton:butterknife:8.4.0'
+  kapt 'com.jakewharton:butterknife-compiler:8.4.0'
 }
 ```
 
