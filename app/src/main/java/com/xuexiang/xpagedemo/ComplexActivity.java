@@ -33,7 +33,7 @@ public class ComplexActivity extends XPageActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        openPage(TabAFragment.class, null);
+        changePage(TabAFragment.class, null);
     }
 
     @OnClick({R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4})

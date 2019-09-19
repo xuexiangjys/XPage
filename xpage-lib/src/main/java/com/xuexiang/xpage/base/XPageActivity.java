@@ -10,9 +10,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -48,11 +48,11 @@ import java.util.List;
  * @author xuexiang
  * @since 2018/5/24 下午3:36
  */
-public class XPageActivity extends FragmentActivity implements CoreSwitcher {
+public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
     /**
      * 应用中所有XPageActivity的引用
      */
-    private static List<WeakReference<XPageActivity>> mActivities = new ArrayList<WeakReference<XPageActivity>>();
+    private static List<WeakReference<XPageActivity>> mActivities = new ArrayList<>();
     /**
      * 记录首个CoreSwitchBean，用于页面切换
      */
@@ -213,13 +213,12 @@ public class XPageActivity extends FragmentActivity implements CoreSwitcher {
             WeakReference<XPageActivity> ref = mActivities.get(size - 1);
             XPageActivity item = ref.get();
             if (item != null && item == this) {
-                FragmentActivity activity = item;
-                FragmentManager manager = activity.getSupportFragmentManager();
+                FragmentManager manager = item.getSupportFragmentManager();
                 if (manager != null) {
                     int count = manager.getBackStackEntryCount();
                     if (count >= 1) {
                         FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(count - 1);
-                        return entry.getName().equalsIgnoreCase(fragmentTag);
+                        return fragmentTag.equalsIgnoreCase(entry.getName());
                     }
                 }
             }
