@@ -93,6 +93,15 @@ dependencies {
 }
 ```
 
+【注意】如果你的项目使用的是`androidx`，请在项目根目录的`gradle.properties`做如下配置:
+
+```
+# 表示主工程使用AndroidX形式
+android.useAndroidX=true
+# 表示针对主工程中使用到的三方库，也会自动执行AndroidX的替换过程。
+android.enableJetifier=true
+```
+
 3.进行moduleName注册
 
 ```
