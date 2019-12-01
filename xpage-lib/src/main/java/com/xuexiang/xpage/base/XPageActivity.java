@@ -1,9 +1,6 @@
 package com.xuexiang.xpage.base;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,7 +19,6 @@ import android.widget.LinearLayout.LayoutParams;
 
 import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.R;
-import com.xuexiang.xpage.core.CoreConfig;
 import com.xuexiang.xpage.core.CorePageManager;
 import com.xuexiang.xpage.core.CoreSwitchBean;
 import com.xuexiang.xpage.core.CoreSwitcher;
@@ -52,7 +48,11 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
     /**
      * 应用中所有XPageActivity的引用
      */
-    private static List<WeakReference<XPageActivity>> mActivities = new ArrayList<>();
+    private static List<WeakReference<XPageActivity>> sActivities = new ArrayList<>();
+    /**
+     * 当前activity的引用
+     */
+    private WeakReference<XPageActivity> mCurrentActivity = null;
     /**
      * 记录首个CoreSwitchBean，用于页面切换
      */
@@ -61,10 +61,6 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
      * 主线程Handler
      */
     private Handler mHandler = null;
-    /**
-     * 当前activity的引用
-     */
-    private WeakReference<XPageActivity> mCurrentInstance = null;
     /**
      * ForResult 的fragment
      */
@@ -75,29 +71,15 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
     private int mFragmentRequestCode = -1;
 
     /**
-     * 仅用于接受应用退出广播，程序退出时有机会做一些必要的清理工作
-     */
-    private BroadcastReceiver mExitReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (CoreConfig.ACTION_EXIT_APP.equals(action)) {
-                PageLog.d("exit from broadcast");
-                finish();
-            }
-        }
-    };
-
-    /**
      * 返回最上层的activity
      *
      * @return 栈顶Activity
      */
     public static XPageActivity getTopActivity() {
-        if (mActivities != null) {
-            int size = mActivities.size();
+        if (sActivities != null) {
+            int size = sActivities.size();
             if (size >= 1) {
-                WeakReference<XPageActivity> ref = mActivities.get(size - 1);
+                WeakReference<XPageActivity> ref = sActivities.get(size - 1);
                 if (ref != null) {
                     return ref.get();
                 }
@@ -110,8 +92,8 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
      * 广播退出时清理activity列表
      */
     public static void unInit() {
-        if (mActivities != null) {
-            mActivities.clear();
+        if (sActivities != null) {
+            sActivities.clear();
         }
     }
 
@@ -183,7 +165,7 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
             activity.finish();
             //从activity列表中移除当前实例
             if (getIsAddActivityToStack()) {
-                mActivities.remove(mCurrentInstance);
+                sActivities.remove(mCurrentActivity);
             }
 
             if (showAnimation) {
@@ -208,9 +190,9 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
      */
     @Override
     public boolean isFragmentTop(String fragmentTag) {
-        int size = mActivities.size();
+        int size = sActivities.size();
         if (size > 0) {
-            WeakReference<XPageActivity> ref = mActivities.get(size - 1);
+            WeakReference<XPageActivity> ref = sActivities.get(size - 1);
             XPageActivity item = ref.get();
             if (item != null && item == this) {
                 FragmentManager manager = item.getSupportFragmentManager();
@@ -234,10 +216,10 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
      */
     @Override
     public boolean findPage(String pageName) {
-        int size = mActivities.size();
+        int size = sActivities.size();
         boolean hasFind = false;
         for (int j = size - 1; j >= 0; j--) {
-            WeakReference<XPageActivity> ref = mActivities.get(j);
+            WeakReference<XPageActivity> ref = sActivities.get(j);
             if (ref != null) {
                 XPageActivity item = ref.get();
                 if (item == null) {
@@ -279,9 +261,9 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
             return this.openPage(page);
         }
 
-        int size = mActivities.size();
+        int size = sActivities.size();
         for (int i = size - 1; i >= 0; i--) {
-            WeakReference<XPageActivity> ref = mActivities.get(i);
+            WeakReference<XPageActivity> ref = sActivities.get(i);
             if (ref != null) {
                 XPageActivity item = ref.get();
                 if (item == null) {
@@ -719,6 +701,7 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
     }
 
     //==================生命周期=======================//
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -735,23 +718,15 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
 
         if (getIsAddActivityToStack()) {
             //当前activity弱引用
-            mCurrentInstance = new WeakReference<>(this);
+            mCurrentActivity = new WeakReference<>(this);
             //当前activity增加到activity列表中
-            mActivities.add(mCurrentInstance);
+            sActivities.add(mCurrentActivity);
             //打印所有activity情况
             printAllActivities();
         }
 
         //处理新开activity跳转
         init(newIntent);
-
-        //注册本地广播，接收程序退出广播
-        if (getIsRegisterExitBroadcast()) {
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(CoreConfig.ACTION_EXIT_APP);
-            filter.addCategory(Intent.CATEGORY_DEFAULT);
-            CoreConfig.getLocalBroadcastManager().registerReceiver(mExitReceiver, filter);
-        }
     }
 
     /**
@@ -762,16 +737,6 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
     protected boolean getIsAddActivityToStack() {
         return true;
     }
-
-    /**
-     * 获取是否注册页面结束的广播
-     *
-     * @return {@code true} :注册<br> {@code false} : 不注册
-     */
-    protected boolean getIsRegisterExitBroadcast() {
-        return true;
-    }
-
 
     /**
      * 设置根布局
@@ -803,15 +768,6 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
         baseLayout.setId(R.id.fragment_container);
         baseLayout.setLayoutParams(params);
         return baseLayout;
-    }
-
-    @Override
-    protected void onDestroy() {
-        //解决内存泄露
-        if (getIsRegisterExitBroadcast()) {
-            CoreConfig.getLocalBroadcastManager().unregisterReceiver(mExitReceiver);
-        }
-        super.onDestroy();
     }
 
     /**
@@ -920,8 +876,8 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
      * 打印，调试用
      */
     protected void printAllActivities() {
-        PageLog.d("------------XPageActivity print all------------activities size:" + mActivities.size());
-        for (WeakReference<XPageActivity> ref : mActivities) {
+        PageLog.d("------------XPageActivity print all------------activities size:" + sActivities.size());
+        for (WeakReference<XPageActivity> ref : sActivities) {
             if (ref != null) {
                 XPageActivity item = ref.get();
                 if (item != null) {

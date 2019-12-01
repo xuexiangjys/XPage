@@ -1,11 +1,8 @@
 package com.xuexiang.xpage.core;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 
 import com.alibaba.fastjson.JSON;
-import com.xuexiang.xpage.base.XPageActivity;
 import com.xuexiang.xpage.model.PageInfo;
 
 import java.util.ArrayList;
@@ -44,9 +41,7 @@ public class CoreConfig {
      * Atlas支持 end
      */
     public final static String ACTION_EXIT_APP = "com.xuexiang.xpage.corepage.core.exit";
-    // 本地广播退出
 
-    private static LocalBroadcastManager mLocalBroadcastManager;
     private static Context sContext;
 
     /**
@@ -92,41 +87,10 @@ public class CoreConfig {
         CoreConfig.init(context, list);
     }
 
-    public static void unInit() {
-        Intent intent = new Intent();
-        intent.setAction(CoreConfig.ACTION_EXIT_APP);
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        getLocalBroadcastManager().sendBroadcast(intent);
-        XPageActivity.unInit();
-        mLocalBroadcastManager = null;
-    }
-
     public static void readConfig(String pageJson) {
         CorePageManager.getInstance().readConfig(pageJson);
     }
 
-    /**
-     * 发送本地广播退出程序
-     */
-    public static void exitApp() {
-        Intent intent = new Intent();
-        intent.setAction(CoreConfig.ACTION_EXIT_APP);
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        getLocalBroadcastManager().sendBroadcast(intent);
-        XPageActivity.unInit();
-    }
-
-    /**
-     * 获得LocalBroadcastManager对象
-     *
-     * @return LocalBroadcastManager对象
-     */
-    public static LocalBroadcastManager getLocalBroadcastManager() {
-        if (mLocalBroadcastManager == null) {
-            mLocalBroadcastManager = LocalBroadcastManager.getInstance(sContext);
-        }
-        return mLocalBroadcastManager;
-    }
 
     public static Context getContext() {
         testInitialize();
