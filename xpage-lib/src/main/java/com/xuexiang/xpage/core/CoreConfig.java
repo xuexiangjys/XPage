@@ -37,11 +37,6 @@ public class CoreConfig {
         mBundleClassLoader = classLoader;
     }
 
-    /**
-     * Atlas支持 end
-     */
-    public final static String ACTION_EXIT_APP = "com.xuexiang.xpage.corepage.core.exit";
-
     private static Context sContext;
 
     /**

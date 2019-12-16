@@ -118,7 +118,6 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
     @Override
     public void popPage() {
         popOrFinishActivity();
-
     }
 
     /**
@@ -130,19 +129,26 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
         }
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             if (isMainThread()) {
-                getSupportFragmentManager().popBackStackImmediate();
+                popBackStackImmediateSafety();
             } else {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        getSupportFragmentManager().popBackStackImmediate();
+                        popBackStackImmediateSafety();
                     }
                 });
             }
         } else {
             finishActivity(this, true);
         }
+    }
 
+    private void popBackStackImmediateSafety() {
+        try {
+            getSupportFragmentManager().popBackStackImmediate();
+        } catch (Exception e) {
+            PageLog.e(e);
+        }
     }
 
     /**
@@ -192,10 +198,10 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
     public boolean isFragmentTop(String fragmentTag) {
         int size = sActivities.size();
         if (size > 0) {
-            WeakReference<XPageActivity> ref = sActivities.get(size - 1);
-            XPageActivity item = ref.get();
-            if (item != null && item == this) {
-                FragmentManager manager = item.getSupportFragmentManager();
+            WeakReference<XPageActivity> reference = sActivities.get(size - 1);
+            XPageActivity activity = reference.get();
+            if (activity != null && activity == this) {
+                FragmentManager manager = activity.getSupportFragmentManager();
                 if (manager != null) {
                     int count = manager.getBackStackEntryCount();
                     if (count >= 1) {
@@ -219,18 +225,18 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
         int size = sActivities.size();
         boolean hasFind = false;
         for (int j = size - 1; j >= 0; j--) {
-            WeakReference<XPageActivity> ref = sActivities.get(j);
-            if (ref != null) {
-                XPageActivity item = ref.get();
-                if (item == null) {
+            WeakReference<XPageActivity> reference = sActivities.get(j);
+            if (reference != null) {
+                XPageActivity activity = reference.get();
+                if (activity == null) {
                     PageLog.d("item is null");
                     continue;
                 }
-                FragmentManager manager = item.getSupportFragmentManager();
+                FragmentManager manager = activity.getSupportFragmentManager();
                 int count = manager.getBackStackEntryCount();
                 for (int i = count - 1; i >= 0; i--) {
                     String name = manager.getBackStackEntryAt(i).getName();
-                    if (name.equalsIgnoreCase(pageName)) {
+                    if (name != null && name.equalsIgnoreCase(pageName)) {
                         hasFind = true;
                         break;
                     }
@@ -303,9 +309,13 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                fragmentManager.popBackStack(pageName, 0);
+                                try {
+                                    fragmentManager.popBackStack(pageName, 0);
+                                } catch (Exception e) {
+                                    PageLog.e(e);
+                                }
                             }
-                        }, 100);
+                        }, getPopBackDelay());
                     }
                     ((XPageFragment) frg).onFragmentDataReset(bundle);
                     return true;
@@ -313,6 +323,13 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
             }
         }
         return false;
+    }
+
+    /**
+     * @return 弹出延迟时间
+     */
+    protected int getPopBackDelay() {
+        return 100;
     }
 
     //==================startActivity=======================//

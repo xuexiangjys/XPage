@@ -23,6 +23,8 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -36,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xuexiang.xpage.R;
+import com.xuexiang.xpage.core.CoreConfig;
 
 import java.util.LinkedList;
 
@@ -261,6 +264,32 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     public TitleBar setLeftImageResource(int resId) {
         if (mLeftText != null) {
             mLeftText.setCompoundDrawablesWithIntrinsicBounds(resId, 0, 0, 0);
+        }
+        return this;
+    }
+
+    /**
+     * 设置左侧文字是否加粗
+     *
+     * @param isBold
+     * @return
+     */
+    public TitleBar setLeftTextBold(boolean isBold) {
+        if (mLeftText != null) {
+            mLeftText.getPaint().setFakeBoldText(isBold);
+        }
+        return this;
+    }
+
+    /**
+     * 设置中间文字是否加粗
+     *
+     * @param isBold
+     * @return
+     */
+    public TitleBar setCenterTextBold(boolean isBold) {
+        if (mCenterText != null) {
+            mCenterText.getPaint().setFakeBoldText(isBold);
         }
         return this;
     }
@@ -817,15 +846,15 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
      */
     public static abstract class ImageAction implements Action {
 
-        private int mDrawable;
+        private int mDrawableId;
 
-        public ImageAction(int drawable) {
-            mDrawable = drawable;
+        public ImageAction(@DrawableRes int drawableId) {
+            mDrawableId = drawableId;
         }
 
         @Override
         public int getDrawable() {
-            return mDrawable;
+            return mDrawableId;
         }
 
         @Override
@@ -853,6 +882,10 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
         public TextAction(String text) {
             mText = text;
+        }
+
+        public TextAction(@StringRes int resId) {
+            mText = CoreConfig.getContext().getString(resId);
         }
 
         @Override

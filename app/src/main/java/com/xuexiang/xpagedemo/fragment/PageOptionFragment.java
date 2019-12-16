@@ -12,6 +12,8 @@ import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.List;
 
+import static com.xuexiang.xpagedemo.fragment.TestFragment.KEY_POP_BACK_NAME;
+
 /**
  * @author XUE
  * @since 2019/3/21 10:56
@@ -32,6 +34,7 @@ public class PageOptionFragment extends XPageSimpleListFragment {
         lists.add("是否支持数据返回");
         lists.add("打开新的Activity");
         lists.add("使用自定义的容器打开新的Activity");
+        lists.add("返回至指定的页面");
         return lists;
     }
 
@@ -43,8 +46,9 @@ public class PageOptionFragment extends XPageSimpleListFragment {
     @Override
     protected void onItemClick(int position) {
         PageOption pageOption = new PageOption(TestFragment.class);
-        switch(position) {
+        switch (position) {
             case 0:
+                pageOption.setTargetPage(AnimationFragment.class);
                 break;
             case 1:
                 pageOption.setAnim(CoreAnim.zoom);
@@ -58,6 +62,10 @@ public class PageOptionFragment extends XPageSimpleListFragment {
                 break;
             case 4:
                 pageOption.setNewActivity(true, ContainActivity.class);
+                break;
+            case 5:
+                //下个页面点击返回后，直接返回至XPage主页面
+                pageOption.putString(KEY_POP_BACK_NAME, "XPage");
                 break;
             default:
                 break;

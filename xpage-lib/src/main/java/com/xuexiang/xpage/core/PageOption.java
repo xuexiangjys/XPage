@@ -80,9 +80,7 @@ public class PageOption {
     }
 
     public <T extends XPageFragment> PageOption(Class<T> clazz) {
-        PageInfo pageInfo = PageConfig.getPageInfo(clazz);
-        mPageName = pageInfo.getName();
-        setAnim(pageInfo.getAnim());
+        setTargetPage(clazz);
     }
 
     public PageOption(String pageName, Bundle bundle) {
@@ -112,6 +110,20 @@ public class PageOption {
         mAddToBackStack = addToBackStack;
         mNewActivity = newActivity;
         mRequestCode = requestCode;
+    }
+
+    /**
+     * 设置跳转目标页
+     *
+     * @param clazz 必须使用@Page进行修饰的类
+     * @param <T>
+     * @return
+     */
+    public <T extends XPageFragment> PageOption setTargetPage(Class<T> clazz) {
+        PageInfo pageInfo = PageConfig.getPageInfo(clazz);
+        mPageName = pageInfo.getName();
+        setAnim(pageInfo.getAnim());
+        return this;
     }
 
     public String getPageName() {

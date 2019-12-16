@@ -1,7 +1,6 @@
 package com.xuexiang.xpagedemo.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,21 +14,25 @@ import com.xuexiang.xrouter.launcher.XRouter;
 import butterknife.BindView;
 
 import static com.xuexiang.xpagedemo.fragment.DateReceiveFragment.KEY_BACK_DATA;
-import static com.xuexiang.xpagedemo.fragment.DateReceiveFragment.KEY_EVENT_NAME;
 import static com.xuexiang.xpagedemo.fragment.DateReceiveFragment.KEY_IS_NEED_BACK;
 
 /**
  * @author xuexiang
  * @date 2018/1/7 下午11:27
  */
-@Page(name = TestFragment.PAGE_NAME, extra = 123, params = {KEY_IS_NEED_BACK})
+@Page(name = TestFragment.PAGE_NAME, extra = 123)
 public class TestFragment extends XPageFragment {
     public final static String PAGE_NAME = "测试页面";
+    public final static String KEY_POP_BACK_NAME = "key_pop_back_name";
+
     @BindView(R.id.tv_content)
     TextView tvContent;
 
     @AutoWired(name = KEY_IS_NEED_BACK)
     boolean isNeedBack;
+    @AutoWired(name = KEY_POP_BACK_NAME)
+    String popBackName;
+
     /**
      * 布局的资源id
      *
@@ -50,7 +53,8 @@ public class TestFragment extends XPageFragment {
                             .putExtra(KEY_BACK_DATA, "==【返回的数据】==");
                     setFragmentResult(500, intent);
                 }
-                popToBack();
+                //回到指定的页面
+                popToBack(popBackName, null);
             }
         });
     }

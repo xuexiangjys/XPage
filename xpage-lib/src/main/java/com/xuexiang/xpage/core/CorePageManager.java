@@ -217,7 +217,11 @@ public class CorePageManager {
             fragment = fragmentManager.findFragmentByTag(pageName);
         }
         if (fragment != null) {
-            fragmentManager.popBackStackImmediate(pageName, 0);
+            try {
+                fragmentManager.popBackStackImmediate(pageName, 0);
+            } catch (Exception e) {
+                PageLog.e(e);
+            }
         } else {
             fragment = this.openPageWithNewFragmentManager(fragmentManager, pageName, bundle, animations, true);
         }

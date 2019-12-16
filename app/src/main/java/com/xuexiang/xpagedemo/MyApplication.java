@@ -43,32 +43,6 @@ public class MyApplication extends Application {
         initRouter();
     }
 
-    /**
-     * 增加组件信息和子演示页信息
-     *
-     * @param clazz 【继承了ListSimpleFragment的类】
-     */
-    private void addPageInfoAndSubPages(List<PageInfo> pageInfos, Class<? extends XPageSimpleListFragment> clazz) {
-        pageInfos.add(PageConfig.getPageInfo(clazz));
-        try {
-            registerPageInfos(pageInfos, clazz.newInstance().getSimplePageClasses());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 注册多个页面信息
-     *
-     * @param clazz
-     * @return
-     */
-    private void registerPageInfos(List<PageInfo> pageInfos, Class... clazz) {
-        for (Class aClazz : clazz) {
-            pageInfos.add(PageConfig.getPageInfo(aClazz));
-        }
-    }
-
     private void initRouter() {
         // 这两行必须写在init之前，否则这些配置在init过程中将无效
         if (BuildConfig.DEBUG) {
