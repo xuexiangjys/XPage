@@ -14,6 +14,7 @@ import java.util.List;
  * @since 2018/5/24 下午3:39
  */
 public abstract class XPageSimpleListFragment extends XPageListFragment {
+
     protected List<String> mSimpleData = new ArrayList<>();
 
     @Override

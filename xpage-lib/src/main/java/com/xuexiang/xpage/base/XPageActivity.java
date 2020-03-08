@@ -953,7 +953,8 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
      * 资源释放
      */
     protected void onRelease() {
-
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler = null;
     }
 
     //==============数据保存=================//

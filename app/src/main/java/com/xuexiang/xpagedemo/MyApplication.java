@@ -25,7 +25,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         XUtil.init(this);
-        XUtil.debug(true);
+        XUtil.debug(isDebug());
 
         PageConfig.getInstance()
                 .setPageConfiguration(new PageConfiguration() { //页面注册
@@ -36,7 +36,7 @@ public class MyApplication extends Application {
                     }
                 })
                 .debug("PageLog")       //开启调试
-                .enableWatcher(false)   //设置是否开启内存泄露监测
+                .enableWatcher(isDebug())   //设置是否开启内存泄露监测
                 .setContainActivityClazz(XPageActivity.class) //设置默认的容器Activity
                 .init(this);   //初始化页面配置
 
@@ -45,11 +45,18 @@ public class MyApplication extends Application {
 
     private void initRouter() {
         // 这两行必须写在init之前，否则这些配置在init过程中将无效
-        if (BuildConfig.DEBUG) {
+        if (isDebug()) {
             XRouter.openLog();     // 打印日志
             XRouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }
         XRouter.init(this);
     }
 
+
+    /**
+     * @return 当前app是否是调试开发模式
+     */
+    public static boolean isDebug() {
+        return BuildConfig.DEBUG;
+    }
 }

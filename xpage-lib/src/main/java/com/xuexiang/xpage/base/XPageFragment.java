@@ -1,6 +1,6 @@
 package com.xuexiang.xpage.base;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -24,6 +24,8 @@ import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpage.utils.TitleUtils;
 
+import java.lang.ref.WeakReference;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -37,7 +39,7 @@ public abstract class XPageFragment extends Fragment {
     /**
      * 所在activity
      */
-    protected Activity mActivity;
+    private WeakReference<Context> mAttachContext;
     /**
      * 页面名
      */
@@ -53,8 +55,11 @@ public abstract class XPageFragment extends Fragment {
 
     private OnFragmentFinishListener mFragmentFinishListener;
 
-    private View mRootView;
-    private Unbinder mUnbinder;
+    /**
+     * 根布局
+     */
+    protected View mRootView;
+    protected Unbinder mUnbinder;
 
     /**
      * 设置该接口用于返回结果
@@ -173,8 +178,9 @@ public abstract class XPageFragment extends Fragment {
         synchronized (XPageFragment.this) {
             // 加强保护，保证pageSwitcher 不为null
             if (mPageCoreSwitcher == null) {
-                if (mActivity != null && mActivity instanceof CoreSwitcher) {
-                    mPageCoreSwitcher = (CoreSwitcher) mActivity;
+                Context context = getAttachContext();
+                if (context != null && context instanceof CoreSwitcher) {
+                    mPageCoreSwitcher = (CoreSwitcher) context;
                 }
                 if (mPageCoreSwitcher == null) {
                     XPageActivity topActivity = XPageActivity.getTopActivity();
@@ -185,6 +191,14 @@ public abstract class XPageFragment extends Fragment {
             }
         }
         return mPageCoreSwitcher;
+    }
+
+    @Nullable
+    public Context getAttachContext() {
+        if (mAttachContext != null) {
+            return mAttachContext.get();
+        }
+        return null;
     }
 
     /**
@@ -519,10 +533,11 @@ public abstract class XPageFragment extends Fragment {
     }
 
     //======================生命周期=======================//
+
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mAttachContext = new WeakReference<>(context);
     }
 
 
@@ -569,12 +584,23 @@ public abstract class XPageFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(getLayoutId(), container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mRootView = inflateView(inflater, container);
         mUnbinder = ButterKnife.bind(this, mRootView);
         initArgs();
         initPage();
         return mRootView;
+    }
+
+    /**
+     * 加载控件
+     *
+     * @param inflater
+     * @param container
+     * @return
+     */
+    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(getLayoutId(), container, false);
     }
 
     /**
@@ -645,8 +671,8 @@ public abstract class XPageFragment extends Fragment {
 
     @Override
     public void onDetach() {
+        mAttachContext = null;
         super.onDetach();
-        mActivity = null;
     }
 
     protected <T extends View> T findViewById(int id) {

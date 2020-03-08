@@ -12,7 +12,9 @@ import com.xuexiang.xpage.R;
  * @since 2018/5/24 下午3:36
  */
 public abstract class XPageListFragment extends XPageFragment implements AdapterView.OnItemClickListener {
+
     ListView mListView;
+
     @Override
     protected int getLayoutId() {
         return R.layout.xpage_fragment_listview;
@@ -25,6 +27,9 @@ public abstract class XPageListFragment extends XPageFragment implements Adapter
         initData();
     }
 
+    /**
+     * 初始化集合数据
+     */
     protected abstract void initData();
 
     @Override
