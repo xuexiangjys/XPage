@@ -46,7 +46,7 @@ public abstract class XPageSimpleListFragment extends XPageListFragment {
     /**
      * 条目点击
      *
-     * @param position
+     * @param position 点击的条目索引
      */
     protected abstract void onItemClick(int position);
 
@@ -64,7 +64,8 @@ public abstract class XPageSimpleListFragment extends XPageListFragment {
 
     /**
      * 获取页面类的集合
-     * @return
+     *
+     * @return 页面类的集合
      */
     public Class[] getSimplePageClasses() {
         return new Class[0];

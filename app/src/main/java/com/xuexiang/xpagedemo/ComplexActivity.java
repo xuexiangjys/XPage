@@ -61,6 +61,8 @@ public class ComplexActivity extends XPageActivity {
                     ToastUtils.toast("页面还未加载！");
                 }
                 break;
+            default:
+                break;
         }
     }
 }

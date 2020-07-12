@@ -3,7 +3,7 @@ package com.xuexiang.xpage.core;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.R;

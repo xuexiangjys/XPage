@@ -18,12 +18,13 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    compileOnly deps.support.app_compat
+    compileOnly deps.androidx.appcompat
     //butterKnife的sdk
     implementation deps.butterknife.runtime
     annotationProcessor deps.butterknife.compiler
 
     api project(':xpage-annotation')
+    implementation 'com.alibaba:fastjson:1.2.41'
 
     //leak
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'

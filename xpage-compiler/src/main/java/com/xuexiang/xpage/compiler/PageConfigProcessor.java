@@ -76,9 +76,9 @@ public class PageConfigProcessor extends AbstractProcessor {
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
-        mFiler = processingEnv.getFiler();              // Generate class.
-        mTypes = processingEnv.getTypeUtils();            // Get type utils.
-        mElements = processingEnv.getElementUtils();      // Get class meta.
+        mFiler = processingEnv.getFiler();
+        mTypes = processingEnv.getTypeUtils();
+        mElements = processingEnv.getElementUtils();
         mLogger = new Logger(processingEnv.getMessager());
 
         // Attempt to get user configuration [moduleName]
@@ -253,7 +253,9 @@ public class PageConfigProcessor extends AbstractProcessor {
      * @return 首字母大写字符串
      */
     public static String upperFirstLetter(final String s) {
-        if (StringUtils.isEmpty(s) || !Character.isLowerCase(s.charAt(0))) return s;
-        return String.valueOf((char) (s.charAt(0) - 32)) + s.substring(1);
+        if (StringUtils.isEmpty(s) || !Character.isLowerCase(s.charAt(0))) {
+            return s;
+        }
+        return (char) (s.charAt(0) - 32) + s.substring(1);
     }
 }

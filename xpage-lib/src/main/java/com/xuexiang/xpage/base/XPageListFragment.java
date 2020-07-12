@@ -13,7 +13,7 @@ import com.xuexiang.xpage.R;
  */
 public abstract class XPageListFragment extends XPageFragment implements AdapterView.OnItemClickListener {
 
-    ListView mListView;
+    protected ListView mListView;
 
     @Override
     protected int getLayoutId() {

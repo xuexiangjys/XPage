@@ -10,7 +10,7 @@ public class Consts {
     public static final String PROJECT = "XPage";
     public static final String TAG = PROJECT + "::";
 
-    public static final String FRAGMENT = "android.support.v4.app.Fragment";
+    public static final String FRAGMENT = "androidx.fragment.app.Fragment";
 
     // Log
     static final String PREFIX_OF_LOGGER = PROJECT + "::Compiler ";
