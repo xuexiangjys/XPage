@@ -65,13 +65,31 @@ allprojects {
 
 2.然后在dependencies添加:
 
+以下是版本说明，选择一个即可。
+
+* androidx版本：3.0.0及以上
+
 ```
 dependencies {
   ...
-  //XPage
+  // XPage
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.0'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.0'
+  // ButterKnife的sdk
+  implementation 'com.jakewharton:butterknife:10.1.0'
+  annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+}
+```
+
+* support版本：2.3.0及以下
+
+```
+dependencies {
+  ...
+  // XPage
   implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.3.0'
   annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.3.0'
-  //ButterKnife的sdk
+  // ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
@@ -85,21 +103,12 @@ apply plugin: 'kotlin-kapt'
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.3.0'
-  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:2.3.0'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.0'
+  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.0'
   //ButterKnife的sdk
-  implementation 'com.jakewharton:butterknife:8.4.0'
-  kapt 'com.jakewharton:butterknife-compiler:8.4.0'
+  implementation 'com.jakewharton:butterknife:10.1.0'
+  kapt 'com.jakewharton:butterknife-compiler:10.1.0'
 }
-```
-
-【注意】如果你的项目使用的是`androidx`，请在项目根目录的`gradle.properties`做如下配置:
-
-```
-# 表示主工程使用AndroidX形式
-android.useAndroidX=true
-# 表示针对主工程中使用到的三方库，也会自动执行AndroidX的替换过程。
-android.enableJetifier=true
 ```
 
 3.进行moduleName注册

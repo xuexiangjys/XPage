@@ -39,17 +39,36 @@ allprojects {
 
 2.然后在dependencies添加:
 
+以下是版本说明，选择一个即可。
+
+* androidx版本：3.0.0及以上
+
 ```
 dependencies {
   ...
-  //XPage
+  // XPage
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.0'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.0'
+  // ButterKnife的sdk
+  implementation 'com.jakewharton:butterknife:10.1.0'
+  annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+}
+```
+
+* support版本：2.3.0及以下
+
+```
+dependencies {
+  ...
+  // XPage
   implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.3.0'
   annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:2.3.0'
-  //ButterKnife的sdk
+  // ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:8.4.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
 ```
+
 【注意】如果你使用的是kotlin，请使用如下配置:
 
 ```
@@ -58,11 +77,11 @@ apply plugin: 'kotlin-kapt'
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:2.3.0'
-  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:2.3.0'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.0'
+  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.0'
   //ButterKnife的sdk
-  implementation 'com.jakewharton:butterknife:8.4.0'
-  kapt 'com.jakewharton:butterknife-compiler:8.4.0'
+  implementation 'com.jakewharton:butterknife:10.1.0'
+  kapt 'com.jakewharton:butterknife-compiler:10.1.0'
 }
 ```
 
