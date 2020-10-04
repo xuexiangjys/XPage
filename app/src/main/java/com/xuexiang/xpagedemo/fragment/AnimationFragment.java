@@ -3,6 +3,7 @@ package com.xuexiang.xpagedemo.fragment;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xpage.enums.CoreAnim;
+import com.xuexiang.xpagedemo.R;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class AnimationFragment extends XPageSimpleListFragment {
         lists.add("从左到右动画");
         lists.add("渐变");
         lists.add("放大");
+        lists.add("自定义动画");
         return lists;
     }
 
@@ -36,21 +38,40 @@ public class AnimationFragment extends XPageSimpleListFragment {
      */
     @Override
     protected void onItemClick(int position) {
-        switch(position) {
+        switch (position) {
             case 0:
-                openPage(TestFragment.PAGE_NAME, null, CoreAnim.none);//没有动画
+                //没有动画
+                openPage(TestFragment.PAGE_NAME, null, CoreAnim.none);
                 break;
             case 1:
-                openPage(TestFragment.PAGE_NAME, null, CoreAnim.present);//由下到上动画
+                //由下到上动画
+                openPage(TestFragment.PAGE_NAME, null, CoreAnim.present);
                 break;
             case 2:
-                openPage(TestFragment.PAGE_NAME, null, CoreAnim.slide);//从左到右动画
+                //从左到右动画
+                openPage(TestFragment.PAGE_NAME, null, CoreAnim.slide);
                 break;
             case 3:
-                openPage(TestFragment.PAGE_NAME, null, CoreAnim.fade);//渐变
+                //渐变
+                openPage(TestFragment.PAGE_NAME, null, CoreAnim.fade);
                 break;
             case 4:
-                openPage(TestFragment.PAGE_NAME, null, CoreAnim.zoom);//放大
+                //放大
+                openPage(TestFragment.PAGE_NAME, null, CoreAnim.zoom);
+                break;
+            case 5:
+                //自定义动画
+                openPage(TestFragment.PAGE_NAME, null, new int[]{
+                        // OpenEnterAnimation, 页面打开进场动画
+                        R.anim.custom_open_enter,
+                        // OpenExitAnimation, 页面打开退场动画
+                        R.anim.custom_open_exit,
+
+                        // CloseEnterAnimation, 页面关闭进场动画
+                        R.anim.custom_close_enter,
+                        // CloseExitAnimation, 页面关闭退场动画
+                        R.anim.custom_close_exit
+                });
                 break;
             default:
                 break;

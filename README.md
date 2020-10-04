@@ -4,7 +4,7 @@
 [![I](https://img.shields.io/github/issues/xuexiangjys/XPage.svg)](https://github.com/xuexiangjys/XPage/issues)
 [![Star](https://img.shields.io/github/stars/xuexiangjys/XPage.svg)](https://github.com/xuexiangjys/XPage)
 
-一个非常方便的fragment页面框架
+一个非常方便的fragment页面框架！还不赶紧点击[使用说明文档](https://github.com/xuexiangjys/XPage/wiki)，体验一下吧！
 
 ## 关于我
 
