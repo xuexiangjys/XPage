@@ -37,7 +37,8 @@
 
 
 ## 1、演示（请star支持）
-![](./img/1.gif)
+
+![xpage.gif](https://img.rruu.net/image/5f7d926d8f059)
 
 ### Demo下载
 
@@ -389,9 +390,8 @@ https://github.com/lizhangqu/CorePage/
 
 [![](https://img.shields.io/badge/点击一键加入QQ交流群-602082750-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=9922861ef85c19f1575aecea0e8680f60d9386080a97ed310c971ae074998887)
 
-![](https://github.com/xuexiangjys/XPage/blob/master/img/qq_group.jpg)
-
+![qq_group.jpg](https://img.rruu.net/image/5f47eea68ed66)
 
 [download-svg]: https://img.shields.io/badge/downloads-1M-blue.svg
 [download-url]: https://github.com/xuexiangjys/XPage/blob/master/apk/xpage_demo.apk?raw=true
-[download-img]: ./img/download.png
+[download-img]: https://img.rruu.net/image/5f7d92e8c1943
