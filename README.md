@@ -6,6 +6,8 @@
 
 一个非常方便的fragment页面框架！还不赶紧点击[使用说明文档](https://github.com/xuexiangjys/XPage/wiki)，体验一下吧！
 
+另外，你还可以参见[XPage视频教程](https://space.bilibili.com/483850585/channel/detail?cid=150979)进行学习。
+
 ## 关于我
 
 [![github](https://img.shields.io/badge/GitHub-xuexiangjys-blue.svg)](https://github.com/xuexiangjys)   [![csdn](https://img.shields.io/badge/CSDN-xuexiangjys-green.svg)](http://blog.csdn.net/xuexiangjys)   [![简书](https://img.shields.io/badge/简书-xuexiangjys-red.svg)](https://www.jianshu.com/u/6bf605575337)   [![掘金](https://img.shields.io/badge/掘金-xuexiangjys-brightgreen.svg)](https://juejin.im/user/598feef55188257d592e56ed)   [![知乎](https://img.shields.io/badge/知乎-xuexiangjys-violet.svg)](https://www.zhihu.com/people/xuexiangjys)
@@ -13,6 +15,8 @@
 ## X系列库快速集成
 
 为了方便大家快速集成X系列框架库，我提供了一个空壳模版供大家参考使用: https://github.com/xuexiangjys/TemplateAppProject
+
+除此之外，我还特别制作了几期[X系列视频教程](https://space.bilibili.com/483850585/channel/detail?cid=104998)供大家学习参考.
 
 ---
 
