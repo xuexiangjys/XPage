@@ -28,17 +28,31 @@ public class MyApplication extends Application {
         XUtil.debug(isDebug());
 
         PageConfig.getInstance()
-                .setPageConfiguration(new PageConfiguration() { //页面注册
+                //页面注册
+                .setPageConfiguration(new PageConfiguration() {
                     @Override
                     public List<PageInfo> registerPages(Context context) {
-                        //自动注册页面,是编译时自动生成的，build一下就出来了
+                        /*
+                            自动注册页面,是编译时自动生成的，build一下就出来了。
+                            如果你还没使用 @Page 的话，暂时是不会生成的。
+                            另外注意注解编辑器在 build.gradle 中的引入方式：
+                            Java：
+                                annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.0'
+                            Kotlin：
+                                kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.0'
+                            引入方式不对应的话，编译时也不会自动生成的。
+                         */
                         return AppPageConfig.getInstance().getPages();
                     }
                 })
-                .debug("PageLog")       //开启调试
-                .enableWatcher(isDebug())   //设置是否开启内存泄露监测
-                .setContainActivityClazz(XPageActivity.class) //设置默认的容器Activity
-                .init(this);   //初始化页面配置
+                //开启调试
+                .debug("PageLog")
+                //设置是否开启内存泄露监测
+                .enableWatcher(isDebug())
+                //设置默认的容器Activity
+                .setContainActivityClazz(XPageActivity.class)
+                //初始化页面配置
+                .init(this);
 
         initRouter();
     }
