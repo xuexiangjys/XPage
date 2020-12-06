@@ -35,7 +35,7 @@ public class MyApplication extends Application {
                         /*
                             自动注册页面,是编译时自动生成的，build一下就出来了。
                             如果你还没使用 @Page 的话，暂时是不会生成的。
-                            另外注意注解编辑器在 build.gradle 中的引入方式：
+                            另外注意注解编译器在 build.gradle 中的引入方式：
                             Java：
                                 annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.0'
                             Kotlin：
