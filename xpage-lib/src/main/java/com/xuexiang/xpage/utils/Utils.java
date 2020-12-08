@@ -162,11 +162,12 @@ public final class Utils {
             if (!isTouchView) {
                 continue;
             }
-            // 判断点击的是否是 EditText
+            // 如果点击的是 EditText，就结束循环
             if (childView instanceof EditText) {
                 isConsume = true;
+                break;
             }
-            // 递归遍历当前 View 树
+            // 否则，递归遍历当前 View 树，继续寻找 EditText
             else if (childView instanceof ViewGroup) {
                 ViewGroup itemView = (ViewGroup) childView;
                 isConsume = childInterceptEvent(itemView, touchX, touchY);
