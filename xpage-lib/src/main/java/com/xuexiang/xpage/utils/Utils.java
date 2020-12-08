@@ -132,6 +132,11 @@ public final class Utils {
      */
     public static boolean isShouldHideInput(View v, MotionEvent event) {
         if (v != null && (v instanceof EditText)) {
+            // 如果点击事件落到了另一个　EditText 上, 则不隐藏键盘
+            if (childInterceptEvent((ViewGroup) v.getRootView(), (int) event.getX(), (int) event.getY())) {
+                return false;
+            }
+
             int[] leftTop = {0, 0};
             //获取输入框当前的location位置
             v.getLocationOnScreen(leftTop);
@@ -142,6 +147,42 @@ public final class Utils {
             return !(event.getRawX() > left) || !(event.getRawX() < right) || !(event.getRawY() > top) || !(event.getRawY() < bottom);
         }
         return false;
+    }
+
+    // 递归遍历当前 View 树
+    private static boolean childInterceptEvent(ViewGroup parentView, int touchX, int touchY) {
+        boolean isConsume = false;
+        for (int i = parentView.getChildCount() - 1; i >= 0; i--) {
+            View childView = parentView.getChildAt(i);
+            if (!childView.isShown()) {
+                continue;
+            }
+            // 判断 view 是否在触摸区域内
+            boolean isTouchView = isTouchView(touchX, touchY, childView);
+            if (!isTouchView) {
+                continue;
+            }
+            // 判断点击的是否是 EditText
+            if (childView instanceof EditText) {
+                isConsume = true;
+            }
+            // 递归遍历当前 View 树
+            else if (childView instanceof ViewGroup) {
+                ViewGroup itemView = (ViewGroup) childView;
+                isConsume = childInterceptEvent(itemView, touchX, touchY);
+                if (isConsume) {
+                    break;
+                }
+            }
+        }
+        return isConsume;
+    }
+
+    // 判断view是否在触摸区域内
+    private static boolean isTouchView(int touchX, int touchY, View view) {
+        Rect rect = new Rect();
+        view.getGlobalVisibleRect(rect);
+        return rect.contains(touchX, touchY);
     }
 
     /**
