@@ -214,8 +214,15 @@ public final class Utils {
         if (view == null) {
             return;
         }
-        hideSoftInput(view);
-        view.clearFocus();
+        InputMethodManager imm =
+                (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm == null) {
+            return;
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (view instanceof EditText) {
+            view.clearFocus();
+        }
     }
 
 
