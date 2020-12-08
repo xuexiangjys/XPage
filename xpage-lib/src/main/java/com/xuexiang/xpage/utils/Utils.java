@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -63,7 +65,7 @@ public final class Utils {
     }
 
     public static int resolveDimension(Context context, @AttrRes int attr, int fallback) {
-        TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {attr});
+        TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
             return a.getDimensionPixelSize(0, fallback);
         } finally {
@@ -73,7 +75,7 @@ public final class Utils {
 
     @ColorInt
     public static int resolveColor(Context context, @AttrRes int attr, int fallback) {
-        TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {attr});
+        TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
             return a.getColor(0, fallback);
         } finally {
@@ -124,24 +126,66 @@ public final class Utils {
     }
 
     /**
-     * 是否需要隐藏键盘
+     * 根据用户点击的坐标获取用户在窗口上触摸到的View，判断这个View是否是EditText来判断是否隐藏键盘
      *
-     * @param v
-     * @param event
-     * @return
+     * @param window 窗口
+     * @param event  用户点击事件
+     * @return 是否隐藏键盘
      */
-    public static boolean isShouldHideInput(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
-            int[] leftTop = {0, 0};
-            //获取输入框当前的location位置
-            v.getLocationOnScreen(leftTop);
-            int left = leftTop[0];
-            int top = leftTop[1];
-            int bottom = top + v.getHeight();
-            int right = left + v.getWidth();
-            return !(event.getRawX() > left) || !(event.getRawX() < right) || !(event.getRawY() > top) || !(event.getRawY() < bottom);
+    public static boolean isShouldHideInput(Window window, MotionEvent event) {
+        if (window == null || event == null) {
+            return false;
+        }
+        if (!(window.getCurrentFocus() instanceof EditText)) {
+            return false;
+        }
+        View decorView = window.getDecorView();
+        if (decorView instanceof ViewGroup) {
+            return findTouchEditText((ViewGroup) decorView, event) == null;
         }
         return false;
+    }
+
+    private static View findTouchEditText(ViewGroup viewGroup, MotionEvent event) {
+        if (viewGroup == null) {
+            return null;
+        }
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            View child = viewGroup.getChildAt(i);
+            if (child == null || !child.isShown()) {
+                continue;
+            }
+            if (!isTouchView(child, event)) {
+                continue;
+            }
+            if (child instanceof EditText) {
+                return child;
+            } else if (child instanceof ViewGroup) {
+                return findTouchEditText((ViewGroup) child, event);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 判断view是否在触摸区域内
+     *
+     * @param view  view
+     * @param event 点击事件
+     * @return view是否在触摸区域内
+     */
+    private static boolean isTouchView(View view, MotionEvent event) {
+        if (view == null || event == null) {
+            return false;
+        }
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
+        int left = location[0];
+        int top = location[1];
+        int right = left + view.getMeasuredWidth();
+        int bottom = top + view.getMeasuredHeight();
+        return event.getY() >= top && event.getY() <= bottom && event.getX() >= left
+                && event.getX() <= right;
     }
 
     /**
@@ -161,6 +205,20 @@ public final class Utils {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    /**
+     * 动态隐藏软键盘并且清除当前view的焦点
+     *
+     * @param view 视图
+     */
+    public static void hideSoftInputClearFocus(final View view) {
+        if (view == null) {
+            return;
+        }
+        hideSoftInput(view);
+        view.clearFocus();
+    }
+
+
     public static <T> T checkNotNull(T t, String message) {
         if (t == null) {
             throw new NullPointerException(message);
@@ -170,6 +228,7 @@ public final class Utils {
 
     /**
      * 获取Drawable属性（兼容VectorDrawable）
+     *
      * @param context
      * @param typedArray
      * @param index
@@ -218,6 +277,7 @@ public final class Utils {
 
     /**
      * 获取svg资源图片
+     *
      * @param context
      * @param resId
      * @return
@@ -228,7 +288,6 @@ public final class Utils {
         }
         return AppCompatResources.getDrawable(context, resId);
     }
-
 
 
     public static boolean resolveBoolean(Context context, @AttrRes int attr, boolean fallback) {

@@ -1089,11 +1089,20 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (Utils.isShouldHideInput(v, ev)) {
-                Utils.hideSoftInput(v);
-            }
+            handleDownAction(ev);
         }
         return super.dispatchTouchEvent(ev);
     }
+
+    /**
+     * 处理向下点击事件【默认在这里做隐藏输入框的处理，不想处理的话，可以重写改方法】
+     *
+     * @param ev 点击事件
+     */
+    protected void handleDownAction(MotionEvent ev) {
+        if (Utils.isShouldHideInput(getWindow(), ev)) {
+            Utils.hideSoftInputClearFocus(getCurrentFocus());
+        }
+    }
+
 }

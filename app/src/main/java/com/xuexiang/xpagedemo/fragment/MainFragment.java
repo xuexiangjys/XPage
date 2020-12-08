@@ -29,7 +29,8 @@ public class MainFragment extends XPageContainerListFragment {
                 AnimationFragment.class,
                 ComplexPageFragment.class,
                 PopBackFragment.class,
-                PageOptionFragment.class
+                PageOptionFragment.class,
+                TestEditTextFragment.class
         };
     }
 
