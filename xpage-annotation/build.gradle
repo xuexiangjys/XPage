@@ -1,7 +1,7 @@
 apply plugin: 'java'
 
 dependencies {
-    implementation 'com.alibaba:fastjson:1.2.41'
+    implementation 'com.alibaba:fastjson:1.2.47'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8

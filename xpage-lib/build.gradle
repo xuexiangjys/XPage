@@ -24,7 +24,7 @@ dependencies {
     annotationProcessor deps.butterknife.compiler
 
     api project(':xpage-annotation')
-    implementation 'com.alibaba:fastjson:1.2.41'
+    implementation 'com.alibaba:fastjson:1.2.47'
 
     //leak
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
