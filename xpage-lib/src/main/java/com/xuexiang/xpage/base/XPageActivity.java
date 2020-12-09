@@ -1095,7 +1095,7 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
     }
 
     /**
-     * 处理向下点击事件【默认在这里做隐藏输入框的处理，不想处理的话，可以重写改方法】
+     * 处理向下点击事件【默认在这里做隐藏输入框的处理，不想处理的话，可以重写该方法】
      *
      * @param ev 点击事件
      */

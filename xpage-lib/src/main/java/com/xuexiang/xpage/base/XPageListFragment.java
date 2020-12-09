@@ -40,4 +40,12 @@ public abstract class XPageListFragment extends XPageFragment implements Adapter
     protected ListView getListView() {
         return mListView;
     }
+
+    @Override
+    public void onDestroyView() {
+        if (mListView != null) {
+            mListView.setOnItemClickListener(null);
+        }
+        super.onDestroyView();
+    }
 }

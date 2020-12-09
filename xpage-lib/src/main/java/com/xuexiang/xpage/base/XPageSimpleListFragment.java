@@ -39,7 +39,8 @@ public abstract class XPageSimpleListFragment extends XPageListFragment {
     /**
      * 初始化例子
      *
-     * @return
+     * @param lists 例子数据
+     * @return 例子数据
      */
     protected abstract List<String> initSimpleData(List<String> lists);
 
@@ -51,11 +52,11 @@ public abstract class XPageSimpleListFragment extends XPageListFragment {
     protected abstract void onItemClick(int position);
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         if (mSimpleData != null && mSimpleData.size() > 0) {
             mSimpleData.clear();
         }
-        super.onDestroy();
+        super.onDestroyView();
     }
 
     protected String getSimpleDataItem(int position) {

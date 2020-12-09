@@ -4,7 +4,7 @@
 [![I](https://img.shields.io/github/issues/xuexiangjys/XPage.svg)](https://github.com/xuexiangjys/XPage/issues)
 [![Star](https://img.shields.io/github/stars/xuexiangjys/XPage.svg)](https://github.com/xuexiangjys/XPage)
 
-一个非常方便的fragment页面框架！还不赶紧点击[使用说明文档](https://github.com/xuexiangjys/XPage/wiki)，体验一下吧！
+一个非常方便的Fragment页面框架！还不赶紧点击[使用说明文档](https://github.com/xuexiangjys/XPage/wiki)，体验一下吧！
 
 另外，你还可以参见[XPage视频教程](https://space.bilibili.com/483850585/channel/detail?cid=150979)进行学习。
 
@@ -78,8 +78,8 @@ allprojects {
 dependencies {
   ...
   // XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.0'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.0'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.1'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.1'
   // ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:10.1.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
@@ -108,8 +108,8 @@ apply plugin: 'kotlin-kapt'
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.0'
-  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.0'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.1'
+  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.1'
   //ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:10.1.0'
   kapt 'com.jakewharton:butterknife-compiler:10.1.0'

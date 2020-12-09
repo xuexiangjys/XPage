@@ -42,21 +42,21 @@ public abstract class XPageContainerListFragment extends XPageSimpleListFragment
     /**
      * 获取页面的类集合[使用@Page注解进行注册的页面]
      *
-     * @return
+     * @return 页面的类集合
      */
     protected abstract Class[] getPagesClasses();
 
     /**
      * 获取页面名称集合
      *
-     * @param classes
-     * @return
+     * @param classes 页面类集合
+     * @return 页面名称集合
      */
     private List<String> getSimplePageNames(Class... classes) {
         List<String> simplePageList = new ArrayList<>();
         if (classes != null && classes.length > 0) {
-            for (int i = 0; i < classes.length; i++) {
-                simplePageList.add(PageConfig.getPageInfo(classes[i]).getName());
+            for (Class aClass : classes) {
+                simplePageList.add(PageConfig.getPageInfo(aClass).getName());
             }
         }
         return simplePageList;

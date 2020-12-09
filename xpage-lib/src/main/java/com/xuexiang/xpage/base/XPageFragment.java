@@ -646,7 +646,7 @@ public abstract class XPageFragment extends Fragment {
     /**
      * 获取根布局
      *
-     * @return
+     * @return 根布局
      */
     public View getRootView() {
         return mRootView;
@@ -725,7 +725,7 @@ public abstract class XPageFragment extends Fragment {
          *
          * @param requestCode 请求码
          * @param resultCode  结果码
-         * @param intent
+         * @param intent      返回的数据
          */
         void onFragmentResult(int requestCode, int resultCode, Intent intent);
     }
