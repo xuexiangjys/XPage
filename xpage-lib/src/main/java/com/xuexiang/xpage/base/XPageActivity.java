@@ -1101,8 +1101,15 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
      */
     protected void handleDownAction(MotionEvent ev) {
         if (Utils.isShouldHideInput(getWindow(), ev)) {
-            Utils.hideSoftInputClearFocus(getCurrentFocus());
+            hideCurrentPageSoftInput();
         }
+    }
+
+    /**
+     * 隐藏当前页面弹起的输入框【可以重写这里自定义自己隐藏输入框的方法】
+     */
+    protected void hideCurrentPageSoftInput() {
+        Utils.hideSoftInputClearFocus(getCurrentFocus());
     }
 
 }

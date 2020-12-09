@@ -206,7 +206,7 @@ public final class Utils {
     }
 
     /**
-     * 动态隐藏软键盘并且清除当前view的焦点
+     * 动态隐藏软键盘并且清除当前view的焦点【记住，要在xml的父布局加上android:focusable="true" 和 android:focusableInTouchMode="true"】
      *
      * @param view 视图
      */
