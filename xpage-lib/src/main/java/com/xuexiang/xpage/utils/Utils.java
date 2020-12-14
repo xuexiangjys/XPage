@@ -1,14 +1,19 @@
 package com.xuexiang.xpage.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -126,14 +131,17 @@ public final class Utils {
     }
 
     /**
-     * 根据用户点击的坐标获取用户在窗口上触摸到的View，判断这个View是否是EditText来判断是否隐藏键盘
+     * 根据用户点击的坐标获取用户在窗口上触摸到的View，判断这个View是否是EditText来判断是否需要隐藏键盘
      *
      * @param window 窗口
      * @param event  用户点击事件
-     * @return 是否隐藏键盘
+     * @return 是否需要隐藏键盘
      */
     public static boolean isShouldHideInput(Window window, MotionEvent event) {
         if (window == null || event == null) {
+            return false;
+        }
+        if (!isSoftInputShow(window)) {
             return false;
         }
         if (!(window.getCurrentFocus() instanceof EditText)) {
@@ -187,6 +195,81 @@ public final class Utils {
         return event.getY() >= top && event.getY() <= bottom && event.getX() >= left
                 && event.getX() <= right;
     }
+
+    /**
+     * 输入键盘是否在显示
+     *
+     * @param activity 应用窗口
+     */
+    public static boolean isSoftInputShow(Activity activity) {
+        return activity != null && isSoftInputShow(activity.getWindow());
+    }
+
+    /**
+     * 输入键盘是否在显示
+     *
+     * @param window 应用窗口
+     */
+    public static boolean isSoftInputShow(Window window) {
+        if (window != null && window.getDecorView() instanceof ViewGroup) {
+            return isSoftInputShow((ViewGroup) window.getDecorView());
+        }
+        return false;
+    }
+
+    /**
+     * 输入键盘是否在显示
+     *
+     * @param rootView 根布局
+     */
+    public static boolean isSoftInputShow(ViewGroup rootView) {
+        if (rootView == null) {
+            return false;
+        }
+        int viewHeight = rootView.getHeight();
+        //获取View可见区域的bottom
+        Rect rect = new Rect();
+        rootView.getWindowVisibleDisplayFrame(rect);
+        int space = viewHeight - rect.bottom - getNavigationBarHeight(rootView.getContext());
+        return space > 0;
+    }
+
+    /**
+     * 获取系统底部导航栏的高度
+     *
+     * @param context 上下文
+     * @return 系统状态栏的高度
+     */
+    public static int getNavigationBarHeight(Context context) {
+        WindowManager windowManager;
+        if (context instanceof Activity) {
+            windowManager = ((Activity) context).getWindowManager();
+        } else {
+            windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        }
+        if (windowManager == null) {
+            return 0;
+        }
+        Display defaultDisplay = windowManager.getDefaultDisplay();
+        DisplayMetrics realDisplayMetrics = new DisplayMetrics();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            defaultDisplay.getRealMetrics(realDisplayMetrics);
+        }
+        int realHeight = realDisplayMetrics.heightPixels;
+        int realWidth = realDisplayMetrics.widthPixels;
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        defaultDisplay.getMetrics(displayMetrics);
+
+        int displayHeight = displayMetrics.heightPixels;
+        int displayWidth = displayMetrics.widthPixels;
+
+        if (realHeight - displayHeight > 0) {
+            return realHeight - displayHeight;
+        }
+        return Math.max(realWidth - displayWidth, 0);
+    }
+
 
     /**
      * 动态隐藏软键盘

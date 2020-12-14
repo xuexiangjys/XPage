@@ -25,7 +25,6 @@ import com.xuexiang.xpage.core.CoreSwitchBean;
 import com.xuexiang.xpage.core.CoreSwitcher;
 import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xpage.logger.PageLog;
-import com.xuexiang.xpage.utils.Utils;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
@@ -778,7 +777,7 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
     /**
      * 设置根布局
      *
-     * @return
+     * @return 根布局
      */
     protected View getBaseLayout() {
         FrameLayout baseLayout = new FrameLayout(this);
@@ -786,27 +785,6 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
         baseLayout.setId(R.id.fragment_container);
         baseLayout.setLayoutParams(params);
         return baseLayout;
-    }
-
-    /**
-     * 如果fragment中处理了则fragment处理否则activity处理
-     *
-     * @param keyCode keyCode码
-     * @param event   KeyEvent对象
-     * @return 是否处理时间
-     */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        XPageFragment activeFragment = getActiveFragment();
-        boolean isHandled = false;
-        if (activeFragment != null) {
-            isHandled = activeFragment.onKeyDown(keyCode, event);
-        }
-        if (!isHandled) {
-            return super.onKeyDown(keyCode, event);
-        } else {
-            return isHandled;
-        }
     }
 
     /**
@@ -1083,33 +1061,40 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
 
     }
 
+    //========================= 生命周期 ==============================//
+
     /**
-     * -------------------------------------点击非输入区域键盘消失--------------------------------------------
-     **/
+     * 如果fragment中处理了则fragment处理否则activity处理
+     *
+     * @param keyCode keyCode码
+     * @param event   KeyEvent对象
+     * @return 是否处理事件
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        XPageFragment activeFragment = getActiveFragment();
+        boolean isHandled = false;
+        if (activeFragment != null) {
+            isHandled = activeFragment.onKeyDown(keyCode, event);
+        }
+        return isHandled || super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 如果fragment中处理了则fragment处理否则activity处理
+     *
+     * @param ev 触摸事件
+     * @return 是否处理事件
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            handleDownAction(ev);
+        XPageFragment activeFragment = getActiveFragment();
+        boolean isHandled = false;
+        if (activeFragment != null) {
+            isHandled = activeFragment.dispatchTouchEvent(ev);
         }
-        return super.dispatchTouchEvent(ev);
+        return isHandled || super.dispatchTouchEvent(ev);
     }
 
-    /**
-     * 处理向下点击事件【默认在这里做隐藏输入框的处理，不想处理的话，可以重写该方法】
-     *
-     * @param ev 点击事件
-     */
-    protected void handleDownAction(MotionEvent ev) {
-        if (Utils.isShouldHideInput(getWindow(), ev)) {
-            hideCurrentPageSoftInput();
-        }
-    }
-
-    /**
-     * 隐藏当前页面弹起的输入框【可以重写这里自定义自己隐藏输入框的方法】
-     */
-    protected void hideCurrentPageSoftInput() {
-        Utils.hideSoftInputClearFocus(getCurrentFocus());
-    }
 
 }

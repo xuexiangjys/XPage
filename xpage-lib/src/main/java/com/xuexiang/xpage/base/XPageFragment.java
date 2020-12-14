@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,6 +25,7 @@ import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpage.utils.TitleUtils;
+import com.xuexiang.xpage.utils.Utils;
 
 import java.lang.ref.WeakReference;
 
@@ -101,6 +103,9 @@ public abstract class XPageFragment extends Fragment {
         mRequestCode = code;
     }
 
+
+    //================生命周期处理===================//
+
     /**
      * 将Activity中onKeyDown在Fragment中实现，
      *
@@ -112,6 +117,42 @@ public abstract class XPageFragment extends Fragment {
         return false;
     }
 
+    /**
+     * 将Activity中dispatchTouchEvent在Fragment中实现，
+     *
+     * @param ev 点击事件
+     * @return 是否处理
+     */
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            onTouchDownAction(ev);
+        }
+        return false;
+    }
+
+    /**
+     * 处理向下点击事件【默认在这里做隐藏输入框的处理，不想处理的话，可以重写该方法】
+     *
+     * @param ev 点击事件
+     */
+    protected void onTouchDownAction(MotionEvent ev) {
+        if (getActivity() == null) {
+            return;
+        }
+        if (Utils.isShouldHideInput(getActivity().getWindow(), ev)) {
+            hideCurrentPageSoftInput();
+        }
+    }
+
+    /**
+     * 隐藏当前页面弹起的输入框【可以重写这里自定义自己隐藏输入框的方法】
+     */
+    protected void hideCurrentPageSoftInput() {
+        if (getActivity() == null) {
+            return;
+        }
+        Utils.hideSoftInput(getActivity().getCurrentFocus());
+    }
 
     //================页面返回===================//
 

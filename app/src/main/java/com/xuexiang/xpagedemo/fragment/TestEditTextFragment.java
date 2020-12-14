@@ -24,4 +24,5 @@ public class TestEditTextFragment extends XPageFragment {
     protected void initListeners() {
 
     }
+
 }
