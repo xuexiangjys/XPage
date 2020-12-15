@@ -27,7 +27,7 @@
 
 ## 如何使用
 
-1.先在项目根目录的 build.gradle 的 repositories 添加:
+1.先在项目根目录的 `build.gradle` 的 `repositories` 添加:
 ```
 allprojects {
      repositories {
@@ -47,8 +47,8 @@ allprojects {
 dependencies {
   ...
   // XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.1'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.1'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.2'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.2'
   // ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:10.1.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
@@ -77,8 +77,8 @@ apply plugin: 'kotlin-kapt'
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.1'
-  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.1'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.2'
+  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.2'
   //ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:10.1.0'
   kapt 'com.jakewharton:butterknife-compiler:10.1.0'
