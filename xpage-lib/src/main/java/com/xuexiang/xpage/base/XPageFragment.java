@@ -562,6 +562,10 @@ public abstract class XPageFragment extends Fragment {
         if (switcher != null) {
             CoreSwitchBean page = pageOption.toSwitch();
             if (pageOption.isOpenForResult()) {
+                if (pageOption.isNewActivity()) {
+                    throw new SecurityException("You can not call 'openPageForResult' method when you set 'isNewActivity' is true. " +
+                            "Because the two pages are not in the same activity, the status of fragment will be wrong!");
+                }
                 //openPageForResult一定要加入到堆栈中
                 page.setAddToBackStack(true);
                 return switcher.openPageForResult(page, this);
