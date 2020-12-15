@@ -186,23 +186,9 @@ public final class Utils {
         if (view == null || event == null) {
             return false;
         }
-        int[] location = new int[2];
-        view.getLocationOnScreen(location);
-        int left = location[0];
-        int top = location[1];
-        int right = left + view.getMeasuredWidth();
-        int bottom = top + view.getMeasuredHeight();
-        return event.getY() >= top && event.getY() <= bottom && event.getX() >= left
-                && event.getX() <= right;
-    }
-
-    /**
-     * 输入键盘是否在显示
-     *
-     * @param activity 应用窗口
-     */
-    public static boolean isSoftInputShow(Activity activity) {
-        return activity != null && isSoftInputShow(activity.getWindow());
+        Rect rect = new Rect();
+        view.getGlobalVisibleRect(rect);
+        return rect.contains((int) event.getX(), (int) event.getY());
     }
 
     /**
