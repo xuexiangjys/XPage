@@ -25,11 +25,6 @@ dependencies {
 
     api project(':xpage-annotation')
     implementation 'com.alibaba:fastjson:1.2.75'
-
-    //leak
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
-    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 }
 
 

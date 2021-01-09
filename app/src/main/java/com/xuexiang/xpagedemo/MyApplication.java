@@ -47,8 +47,6 @@ public class MyApplication extends Application {
                 })
                 //开启调试
                 .debug("PageLog")
-                //设置是否开启内存泄露监测
-                .enableWatcher(isDebug())
                 //设置默认的容器Activity
                 .setContainActivityClazz(XPageActivity.class)
                 //初始化页面配置

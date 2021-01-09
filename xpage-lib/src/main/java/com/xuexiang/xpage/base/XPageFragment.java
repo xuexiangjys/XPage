@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.squareup.leakcanary.RefWatcher;
 import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.core.CoreConfig;
 import com.xuexiang.xpage.core.CoreSwitchBean;
@@ -677,15 +676,6 @@ public abstract class XPageFragment extends Fragment {
         }
         super.onDestroyView();
 
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (PageConfig.getInstance().isEnableWatcher()) {
-            RefWatcher refWatcher = PageConfig.getInstance().getRefWatcher();
-            refWatcher.watch(this);
-        }
     }
 
     /**
