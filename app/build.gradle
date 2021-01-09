@@ -77,6 +77,7 @@ dependencies {
     // LeakCanary内存泄漏检测
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
 
+    implementation project(':module-test')
     //页面路由
     implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.1'
     annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.1'

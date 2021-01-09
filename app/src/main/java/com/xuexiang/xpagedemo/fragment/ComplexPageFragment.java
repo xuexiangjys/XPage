@@ -2,6 +2,7 @@ package com.xuexiang.xpagedemo.fragment;
 
 import android.content.Intent;
 
+import com.xuexiang.module_test.ModuleTestFragment;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xpagedemo.ComplexActivity;
@@ -13,7 +14,7 @@ import java.util.List;
  * @since 2018/5/30 下午6:11
  */
 @Page(name = "复杂使用")
-public class ComplexPageFragment extends XPageSimpleListFragment  {
+public class ComplexPageFragment extends XPageSimpleListFragment {
     /**
      * 初始化例子
      *
@@ -24,6 +25,7 @@ public class ComplexPageFragment extends XPageSimpleListFragment  {
     protected List<String> initSimpleData(List<String> lists) {
         lists.add("复杂页面使用（非ViewPager）");
         lists.add("Tab主页使用（ViewPager）");
+        lists.add("加载module中的页面");
         return lists;
     }
 
@@ -34,12 +36,15 @@ public class ComplexPageFragment extends XPageSimpleListFragment  {
      */
     @Override
     protected void onItemClick(int position) {
-        switch(position) {
+        switch (position) {
             case 0:
                 startActivity(new Intent(getContext(), ComplexActivity.class));
                 break;
             case 1:
                 openPage(BottomNavigationViewFragment.class);
+                break;
+            case 2:
+                openPage(ModuleTestFragment.class);
                 break;
             default:
                 break;
