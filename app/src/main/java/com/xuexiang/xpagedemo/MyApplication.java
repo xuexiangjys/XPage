@@ -1,18 +1,12 @@
 package com.xuexiang.xpagedemo;
 
 import android.app.Application;
-import android.content.Context;
 
-import com.xuexiang.xpage.AppPageConfig;
+import com.xuexiang.xpage.AutoPageConfiguration;
 import com.xuexiang.xpage.PageConfig;
-import com.xuexiang.xpage.PageConfiguration;
 import com.xuexiang.xpage.base.XPageActivity;
-import com.xuexiang.xpage.base.XPageSimpleListFragment;
-import com.xuexiang.xpage.model.PageInfo;
 import com.xuexiang.xrouter.launcher.XRouter;
 import com.xuexiang.xutil.XUtil;
-
-import java.util.List;
 
 /**
  * @author xuexiang
@@ -28,8 +22,8 @@ public class MyApplication extends Application {
         XUtil.debug(isDebug());
 
         PageConfig.getInstance()
-                //页面注册
-                .setPageConfiguration(new XPageConfiguration())
+//                //页面注册,默认不设置的话使用的就是自动注册
+//                .setPageConfiguration(new AutoPageConfiguration())
                 //开启调试
                 .debug("PageLog")
                 //设置默认的容器Activity

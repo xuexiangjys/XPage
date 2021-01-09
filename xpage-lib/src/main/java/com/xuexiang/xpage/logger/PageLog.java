@@ -326,4 +326,8 @@ public final class PageLog {
     private static boolean enableLog(int logPriority) {
         return sILogger != null && sIsDebug && logPriority >= sLogPriority;
     }
+
+    public static boolean debuggable() {
+        return sIsDebug;
+    }
 }

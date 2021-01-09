@@ -82,7 +82,10 @@ public class PageConfig {
      * @param context 上下文
      */
     private void initPages(Context context) {
-        Utils.checkNotNull(mPageConfiguration, "mPageConfiguration == null");
+        if (mPageConfiguration == null) {
+            // 没有设置的话，就使用自动注册配置
+            mPageConfiguration = new AutoPageConfiguration();
+        }
         registerPageInfos(mPageConfiguration.registerPages(context));
         CoreConfig.init(context, getPages());
     }

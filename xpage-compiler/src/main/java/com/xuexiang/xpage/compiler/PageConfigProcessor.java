@@ -68,9 +68,9 @@ public class PageConfigProcessor extends AbstractProcessor {
     /**
      * 页面配置所在的包名
      */
-    private static final String PACKAGE_NAME = "com.xuexiang.xpage";
+    private static final String PAGE_CONFIG_PACKAGE_NAME = "com.xuexiang.xpage.config";
 
-    private static final String PAGE_CONFIG_CLASS_NAME = "PageConfig";
+    private static final String PAGE_CONFIG_CLASS_NAME_SUFFIX = "PageConfig";
 
     private TypeMirror mFragment = null;
     @Override
@@ -133,7 +133,7 @@ public class PageConfigProcessor extends AbstractProcessor {
         if (CollectionUtils.isNotEmpty(pageElements)) {
             mLogger.info(">>> Found Pages, size is " + pageElements.size() + " <<<");
 
-            ClassName pageConfigClassName = ClassName.get(PACKAGE_NAME, upperFirstLetter(moduleName) + PAGE_CONFIG_CLASS_NAME);
+            ClassName pageConfigClassName = ClassName.get(PAGE_CONFIG_PACKAGE_NAME, upperFirstLetter(moduleName) + PAGE_CONFIG_CLASS_NAME_SUFFIX);
             TypeSpec.Builder pageConfigBuilder = TypeSpec.classBuilder(pageConfigClassName);
 
              /*
@@ -225,7 +225,7 @@ public class PageConfigProcessor extends AbstractProcessor {
                     .addMethod(constructorMethod)
                     .addMethod(instanceMethod)
                     .addMethod(getPagesMethod);
-            JavaFile.builder(PACKAGE_NAME, pageConfigBuilder.build()).build().writeTo(mFiler);
+            JavaFile.builder(PAGE_CONFIG_PACKAGE_NAME, pageConfigBuilder.build()).build().writeTo(mFiler);
         }
     }
 

@@ -17,7 +17,9 @@ public interface PageConfiguration {
 
     /**
      * 注册页面
-     * @param context
+     *
+     * @param context 上下文
+     * @return 注册的页面集合
      */
     List<PageInfo> registerPages(Context context);
 

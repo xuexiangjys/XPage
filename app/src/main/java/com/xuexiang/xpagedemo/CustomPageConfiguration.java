@@ -2,16 +2,16 @@ package com.xuexiang.xpagedemo;
 
 import android.content.Context;
 
-import com.xuexiang.xpage.AppPageConfig;
-import com.xuexiang.xpage.ModuletestPageConfig;
 import com.xuexiang.xpage.PageConfiguration;
+import com.xuexiang.xpage.config.AppPageConfig;
+import com.xuexiang.xpage.config.ModuletestPageConfig;
 import com.xuexiang.xpage.model.PageInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 动态注册XPage的页面实现接口
+ * 自定义注册XPage的页面实现接口【已经过时，框架会自动扫描并注册】
  * <p>
  * 注意！！！这里的AppPageConfig和ModuletestPageConfig都是自动注册页面。
  * 自动注册页面,是编译时自动生成的，build一下就出来了。
@@ -26,7 +26,8 @@ import java.util.List;
  * @author xuexiang
  * @since 2021/1/10 2:01 AM
  */
-public class XPageConfiguration implements PageConfiguration {
+@Deprecated
+public class CustomPageConfiguration implements PageConfiguration {
 
     @Override
     public List<PageInfo> registerPages(Context context) {
