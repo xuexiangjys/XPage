@@ -187,7 +187,6 @@ PageConfig.getInstance()
             }
         })
         .debug("PageLog")       //开启调试
-        .enableWatcher(false)   //设置是否开启内存泄露监测
         .init(this);            //初始化页面配置
 ```
 
