@@ -32,7 +32,6 @@
 * 支持Fragment页面的onKeyDown、onFragmentResult等生命周期
 * 支持Fragment和Fragment页面自由跳转以及数据交互。
 * 支持导航栏通过注解的方式自动添加及设置。
-* 支持进行内存泄露监测。
 * 支持自定义TitleBar全局主题属性。
 * 支持自定义Fragment页面容器。
 * 支持自定义Activity页面容器。
@@ -78,8 +77,8 @@ allprojects {
 dependencies {
   ...
   // XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.3'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.3'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.1.0'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.1.0'
   // ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:10.1.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
@@ -108,13 +107,15 @@ apply plugin: 'kotlin-kapt'
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.0.3'
-  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.0.3'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.1.0'
+  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.1.0'
   //ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:10.1.0'
   kapt 'com.jakewharton:butterknife-compiler:10.1.0'
 }
 ```
+
+【注意】：如果你使用的module不止一个的话，每个module下都需要增加XPage的依赖。
 
 3.进行moduleName注册
 
@@ -129,6 +130,7 @@ defaultConfig {
     }
 }
 ```
+
 【注意】：如果不注册的话，默认ModuleName为`app`。
 
 ### 2.2、页面注册
@@ -162,16 +164,10 @@ defaultConfig {
 
 ```
 PageConfig.getInstance()
-        .setPageConfiguration(new PageConfiguration() { //页面注册
-            @Override
-            public List<PageInfo> registerPages(Context context) {
-                //自动注册页面,是编译时自动生成的，build一下就出来了。如果你还没使用@Page的话，暂时是不会生成的。
-                return AppPageConfig.getInstance().getPages(); //自动注册页面
-            }
-        })
+//      //页面注册,默认不设置的话使用的就是自动注册
+//      .setPageConfiguration(new AutoPageConfiguration())
         .debug("PageLog")       //开启调试
         .setContainActivityClazz(XPageActivity.class) //设置默认的容器Activity
-        .enableWatcher(false)   //设置是否开启内存泄露监测
         .init(this);            //初始化页面配置
 ```
 
@@ -382,6 +378,7 @@ if (tabAFragment != null) {
 ---
 
 ## 特别感谢
+
 https://github.com/lizhangqu/CorePage/
 
 ## 如果觉得项目还不错，可以考虑打赏一波
