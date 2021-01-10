@@ -56,10 +56,10 @@ public class AutoPageConfiguration implements PageConfiguration {
         // 获取单例对象
         Method getInstanceMethod = clazz.getDeclaredMethod("getInstance");
         getInstanceMethod.setAccessible(true);
-        Object instance = getInstanceMethod.invoke(null, null);
+        Object instance = getInstanceMethod.invoke(null);
         // 获取页面信息
-        Method getPagesMethod = clazz.getDeclaredMethod("getPages", null);
+        Method getPagesMethod = clazz.getDeclaredMethod("getPages");
         getPagesMethod.setAccessible(true);
-        return (List<PageInfo>) getPagesMethod.invoke(instance, null);
+        return (List<PageInfo>) getPagesMethod.invoke(instance);
     }
 }
