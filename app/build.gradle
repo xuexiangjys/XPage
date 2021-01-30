@@ -64,6 +64,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation deps.androidx.appcompat
     implementation deps.androidx.design
+    implementation deps.androidx.multidex
     // butterknife的sdk
     implementation deps.butterknife.runtime
     annotationProcessor deps.butterknife.compiler
