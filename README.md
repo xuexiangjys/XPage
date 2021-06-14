@@ -41,7 +41,7 @@
 
 ## 1、演示（请star支持）
 
-![xpage.gif](https://img.rruu.net/image/5f7d926d8f059)
+![xpage.gif](https://ss.im5i.com/2021/06/14/6Ts21.gif)
 
 ### Demo下载
 
@@ -385,14 +385,14 @@ https://github.com/lizhangqu/CorePage/
 
 > 你的打赏是我维护的动力，我将会列出所有打赏人员的清单在下方作为凭证，打赏前请留下打赏项目的备注！
 
-![pay.png](https://img.rruu.net/image/5f871d00045da)
+![pay.png](https://ss.im5i.com/2021/06/14/6twG6.png)
 
 ## 联系方式
 
 [![](https://img.shields.io/badge/点击一键加入QQ交流群-602082750-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=9922861ef85c19f1575aecea0e8680f60d9386080a97ed310c971ae074998887)
 
-![gzh_weixin.jpg](https://img.rruu.net/image/5f871cfff3194)
+![gzh_weixin.jpg](https://ss.im5i.com/2021/06/14/65yoL.jpg)
 
 [download-svg]: https://img.shields.io/badge/downloads-1M-blue.svg
 [download-url]: https://github.com/xuexiangjys/XPage/blob/master/apk/xpage_demo.apk?raw=true
-[download-img]: https://img.rruu.net/image/5f7d92e8c1943
+[download-img]: https://ss.im5i.com/2021/06/14/6TcfJ.png
