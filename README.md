@@ -38,6 +38,9 @@
 * 支持Fragment之间、activity和fragment之间的数据交互。
 * 兼容kotlin和androidx。
 
+## Star趋势图
+
+[![Stargazers over time](https://starchart.cc/xuexiangjys/XPage.svg)](https://starchart.cc/xuexiangjys/XPage)
 
 ## 1、演示（请star支持）
 
