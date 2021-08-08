@@ -46,13 +46,12 @@ allprojects {
 dependencies {
   ...
   // XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.2.0'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.2.0'
-  // ButterKnife的sdk
-  implementation 'com.jakewharton:butterknife:10.1.0'
-  annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.3.0'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.3.0'
 }
 ```
+
+【注意】3.3.0及以上版本去除了ButterKnife的依赖。
 
 * support版本：2.3.0及以下
 
@@ -76,11 +75,8 @@ apply plugin: 'kotlin-kapt'
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.2.0'
-  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.2.0'
-  //ButterKnife的sdk
-  implementation 'com.jakewharton:butterknife:10.1.0'
-  kapt 'com.jakewharton:butterknife-compiler:10.1.0'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.3.0'
+  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.3.0'
 }
 ```
 
