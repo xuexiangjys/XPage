@@ -1,15 +1,15 @@
 package com.xuexiang.xpagedemo.fragment;
 
-import android.widget.TextView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.utils.TitleBar;
-import com.xuexiang.xpagedemo.R;
-
-import butterknife.BindView;
+import com.xuexiang.xpagedemo.databinding.FragmentTestBinding;
 
 /**
  * @author xuexiang
@@ -18,8 +18,7 @@ import butterknife.BindView;
 @Page(name = "TabA", anim = CoreAnim.none)
 public class TabAFragment extends XPageFragment {
 
-    @BindView(R.id.tv_content)
-    TextView tvContent;
+    FragmentTestBinding binding;
 
     private int mData;
 
@@ -28,14 +27,10 @@ public class TabAFragment extends XPageFragment {
         return null;
     }
 
-    /**
-     * 布局的资源id
-     *
-     * @return
-     */
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_test;
+    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
+        binding = FragmentTestBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     /**
@@ -43,8 +38,7 @@ public class TabAFragment extends XPageFragment {
      */
     @Override
     protected void initViews() {
-        tvContent.setText("这里是 " + getPageName() + " 页面");
-
+        binding.tvContent.setText("这里是 " + getPageName() + " 页面");
         mData = (int) (Math.random() * 1000);
     }
 

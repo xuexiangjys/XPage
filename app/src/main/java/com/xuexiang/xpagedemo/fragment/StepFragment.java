@@ -17,21 +17,19 @@
 
 package com.xuexiang.xpagedemo.fragment;
 
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.core.PageOption;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpagedemo.R;
+import com.xuexiang.xpagedemo.databinding.FragmentStepBinding;
 import com.xuexiang.xrouter.annotation.AutoWired;
 import com.xuexiang.xrouter.launcher.XRouter;
 import com.xuexiang.xutil.resource.ResUtils;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @author xuexiang
@@ -44,10 +42,7 @@ public class StepFragment extends XPageFragment {
 
     public static final int MAX_STEP = 5;
 
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.btn_next)
-    Button btnNext;
+    FragmentStepBinding binding;
 
     @AutoWired(name = KEY_STEP)
     int mIndex = 0;
@@ -65,40 +60,38 @@ public class StepFragment extends XPageFragment {
     }
 
     @Override
+    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
+        binding = FragmentStepBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
     protected void initArgs() {
         XRouter.getInstance().inject(this);
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_step;
-    }
-
-    @Override
     protected void initViews() {
         if (mIndex < MAX_STEP) {
-            tvTitle.setText(String.format("当前为第%d步", mIndex + 1));
-            btnNext.setText("下一步");
+            binding.tvTitle.setText(String.format("当前为第%d步", mIndex + 1));
+            binding.btnNext.setText("下一步");
         } else {
-            tvTitle.setText("恭喜你完成所有步骤！");
-            btnNext.setText("知道了");
+            binding.tvTitle.setText("恭喜你完成所有步骤！");
+            binding.btnNext.setText("知道了");
         }
     }
 
     @Override
     protected void initListeners() {
-
-    }
-
-    @OnClick(R.id.btn_next)
-    public void onViewClicked(View view) {
-        if (mIndex < MAX_STEP) {
-            PageOption.to(StepFragment.class)
-                    .setAddToBackStack(false)
-                    .putInt(KEY_STEP, mIndex + 1)
-                    .open(this);
-        } else {
-            popToBack();
-        }
+        binding.btnNext.setOnClickListener(v -> {
+            if (mIndex < MAX_STEP) {
+                PageOption.to(StepFragment.class)
+                        .setAddToBackStack(false)
+                        .putInt(KEY_STEP, mIndex + 1)
+                        .open(StepFragment.this);
+            } else {
+                popToBack();
+            }
+        });
     }
 }

@@ -19,9 +19,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation deps.androidx.appcompat
-    //butterKnife的sdk
-    implementation deps.butterknife.runtime
-    annotationProcessor deps.butterknife.compiler
 
     api project(':xpage-annotation')
     implementation deps.gson

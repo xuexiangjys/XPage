@@ -1,17 +1,16 @@
 package com.xuexiang.xpagedemo.fragment;
 
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.core.PageOption;
 import com.xuexiang.xpage.utils.TitleBar;
-import com.xuexiang.xpagedemo.R;
+import com.xuexiang.xpagedemo.databinding.FragmentSimpleBinding;
 import com.xuexiang.xrouter.annotation.AutoWired;
 import com.xuexiang.xrouter.launcher.XRouter;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * 注意，这个页面并没有使用@Page进行标记，并不能使用XPage路由打开！！
@@ -22,8 +21,8 @@ import butterknife.OnClick;
 public class SimpleListFragment extends XPageFragment {
 
     private static final String KEY_TITLE = "key_title";
-    @BindView(R.id.tv_content)
-    TextView tvContent;
+
+    FragmentSimpleBinding binding;
 
     public static SimpleListFragment newInstance(String title) {
         Bundle args = new Bundle();
@@ -43,31 +42,28 @@ public class SimpleListFragment extends XPageFragment {
     }
 
     @Override
+    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
+        binding = FragmentSimpleBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
     protected void initArgs() {
         super.initArgs();
         XRouter.getInstance().inject(this);
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_simple;
-    }
-
-    @Override
     protected void initViews() {
-        tvContent.setText(String.format("这个是%s页面！！！", title));
+        binding.tvContent.setText(String.format("这个是%s页面！！！", title));
     }
 
     @Override
     protected void initListeners() {
-
-    }
-
-    @OnClick(R.id.tv_test)
-    public void onViewClicked() {
-        PageOption.to(TestFragment.class)
+        binding.tvTest.setOnClickListener(v -> PageOption.to(TestFragment.class)
                 //新建一个容器，以不影响当前容器
                 .setNewActivity(true)
-                .open(this);
+                .open(SimpleListFragment.this));
     }
+
 }

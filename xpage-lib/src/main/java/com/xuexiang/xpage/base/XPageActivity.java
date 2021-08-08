@@ -759,19 +759,21 @@ public class XPageActivity extends AppCompatActivity implements CoreSwitcher {
      * 设置根布局
      */
     protected void setContentView() {
-        int layoutId = getLayoutId();
-        if (layoutId != -1) {
-            setContentView(layoutId);
+        View rootView = getCustomRootView();
+        if (rootView != null) {
+            setContentView(rootView);
         } else {
             setContentView(getBaseLayout());
         }
     }
 
     /**
-     * @return 获取布局的id
+     * 获取自定义根布局
+     *
+     * @return 自定义根布局
      */
-    protected int getLayoutId() {
-        return -1;
+    protected View getCustomRootView() {
+        return null;
     }
 
     /**

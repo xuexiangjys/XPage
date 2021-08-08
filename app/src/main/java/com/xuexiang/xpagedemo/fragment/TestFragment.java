@@ -1,20 +1,19 @@
 package com.xuexiang.xpagedemo.fragment;
 
+import static com.xuexiang.xpagedemo.fragment.DateReceiveFragment.KEY_BACK_DATA;
+import static com.xuexiang.xpagedemo.fragment.DateReceiveFragment.KEY_IS_NEED_BACK;
+
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.utils.TitleBar;
-import com.xuexiang.xpagedemo.R;
+import com.xuexiang.xpagedemo.databinding.FragmentTestBinding;
 import com.xuexiang.xrouter.annotation.AutoWired;
 import com.xuexiang.xrouter.launcher.XRouter;
-
-import butterknife.BindView;
-
-import static com.xuexiang.xpagedemo.fragment.DateReceiveFragment.KEY_BACK_DATA;
-import static com.xuexiang.xpagedemo.fragment.DateReceiveFragment.KEY_IS_NEED_BACK;
 
 /**
  * @author xuexiang
@@ -25,37 +24,29 @@ public class TestFragment extends XPageFragment {
     public final static String PAGE_NAME = "测试页面";
     public final static String KEY_POP_BACK_NAME = "key_pop_back_name";
 
-    @BindView(R.id.tv_content)
-    TextView tvContent;
+    FragmentTestBinding binding;
 
     @AutoWired(name = KEY_IS_NEED_BACK)
     boolean isNeedBack;
     @AutoWired(name = KEY_POP_BACK_NAME)
     String popBackName;
 
-    /**
-     * 布局的资源id
-     *
-     * @return
-     */
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_test;
+    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
+        binding = FragmentTestBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     protected TitleBar initTitleBar() {
-        return super.initTitleBar().setLeftClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isNeedBack) {
-                    Intent intent = new Intent()
-                            .putExtra(KEY_BACK_DATA, "==【返回的数据】==");
-                    setFragmentResult(500, intent);
-                }
-                //回到指定的页面
-                popToBack(popBackName, null);
+        return super.initTitleBar().setLeftClickListener(v -> {
+            if (isNeedBack) {
+                Intent intent = new Intent()
+                        .putExtra(KEY_BACK_DATA, "==【返回的数据】==");
+                setFragmentResult(500, intent);
             }
+            //回到指定的页面
+            popToBack(popBackName, null);
         });
     }
 
@@ -69,7 +60,7 @@ public class TestFragment extends XPageFragment {
      */
     @Override
     protected void initViews() {
-        tvContent.setText(getPageName());
+        binding.tvContent.setText(getPageName());
     }
 
     /**

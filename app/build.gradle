@@ -58,6 +58,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -65,9 +68,6 @@ dependencies {
     implementation deps.androidx.appcompat
     implementation deps.androidx.design
     implementation deps.androidx.multidex
-    // butterknife的sdk
-    implementation deps.butterknife.runtime
-    annotationProcessor deps.butterknife.compiler
 
     implementation project(':xpage-lib')
     annotationProcessor project(':xpage-compiler')

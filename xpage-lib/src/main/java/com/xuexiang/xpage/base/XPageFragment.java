@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,9 +29,6 @@ import com.xuexiang.xpage.utils.Utils;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * 全局基类BaseFragment
  *
@@ -54,14 +52,14 @@ public abstract class XPageFragment extends Fragment {
      * openPageForResult接口，用于传递返回结果
      */
     private CoreSwitcher mPageCoreSwitcher;
-
+    /**
+     * 页面跳转返回的监听接口
+     */
     private OnFragmentFinishListener mFragmentFinishListener;
-
     /**
      * 根布局
      */
     protected View mRootView;
-    protected Unbinder mUnbinder;
 
     /**
      * 设置该接口用于返回结果
@@ -220,7 +218,7 @@ public abstract class XPageFragment extends Fragment {
             // 加强保护，保证pageSwitcher 不为null
             if (mPageCoreSwitcher == null) {
                 Context context = getAttachContext();
-                if (context != null && context instanceof CoreSwitcher) {
+                if (context instanceof CoreSwitcher) {
                     mPageCoreSwitcher = (CoreSwitcher) context;
                 }
                 if (mPageCoreSwitcher == null) {
@@ -580,7 +578,7 @@ public abstract class XPageFragment extends Fragment {
     //======================生命周期=======================//
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mAttachContext = new WeakReference<>(context);
     }
@@ -589,19 +587,10 @@ public abstract class XPageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getPageName() != null) {
+        if (!TextUtils.isEmpty(getPageName())) {
             PageLog.d("====Fragment.onCreate====" + getPageName());
         }
     }
-
-    /**
-     * 布局的资源id
-     *
-     * @return
-     */
-    @LayoutRes
-    protected abstract int getLayoutId();
-
 
     /**
      * 获取页面标题
@@ -609,6 +598,15 @@ public abstract class XPageFragment extends Fragment {
     protected String getPageTitle() {
         return PageConfig.getPageInfo(getClass()).getName();
     }
+
+    /**
+     * 加载控件
+     *
+     * @param inflater  inflater
+     * @param container 容器
+     * @return 根布局
+     */
+    protected abstract View inflateView(LayoutInflater inflater, ViewGroup container);
 
     /**
      * 初始化参数
@@ -631,21 +629,9 @@ public abstract class XPageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflateView(inflater, container);
-        mUnbinder = ButterKnife.bind(this, mRootView);
         initArgs();
         initPage();
         return mRootView;
-    }
-
-    /**
-     * 加载控件
-     *
-     * @param inflater
-     * @param container
-     * @return
-     */
-    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(getLayoutId(), container, false);
     }
 
     /**
@@ -671,11 +657,8 @@ public abstract class XPageFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-        }
+        mFragmentFinishListener = null;
         super.onDestroyView();
-
     }
 
     /**
@@ -752,7 +735,7 @@ public abstract class XPageFragment extends Fragment {
     }
 
     /**
-     * 页面跳转接口
+     * 页面跳转返回的监听接口
      */
     public interface OnFragmentFinishListener {
         /**

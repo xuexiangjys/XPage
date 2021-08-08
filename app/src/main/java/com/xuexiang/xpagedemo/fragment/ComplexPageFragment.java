@@ -61,4 +61,5 @@ public class ComplexPageFragment extends XPageSimpleListFragment {
                 break;
         }
     }
+
 }

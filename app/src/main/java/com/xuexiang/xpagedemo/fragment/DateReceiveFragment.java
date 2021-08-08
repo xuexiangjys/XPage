@@ -2,20 +2,18 @@ package com.xuexiang.xpagedemo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.utils.TitleBar;
-import com.xuexiang.xpagedemo.R;
+import com.xuexiang.xpagedemo.databinding.FragmentDatereceiveBinding;
 import com.xuexiang.xrouter.annotation.AutoWired;
 import com.xuexiang.xrouter.launcher.XRouter;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @author xuexiang
@@ -28,10 +26,7 @@ public class DateReceiveFragment extends XPageFragment {
     public final static String KEY_EVENT_DATA = "event_data";
     public final static String KEY_BACK_DATA = "back_data";
 
-    @BindView(R.id.tv_display)
-    TextView mTvDisplay;
-    @BindView(R.id.btn_back)
-    Button mBtnBack;
+    FragmentDatereceiveBinding binding;
 
     @AutoWired(name = KEY_IS_NEED_BACK)
     boolean isNeedBack;
@@ -44,16 +39,6 @@ public class DateReceiveFragment extends XPageFragment {
     int Number = 1000;
 
     boolean isChanged;
-
-    /**
-     * 布局的资源id
-     *
-     * @return
-     */
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_datereceive;
-    }
 
     @Override
     protected TitleBar initTitleBar() {
@@ -69,6 +54,12 @@ public class DateReceiveFragment extends XPageFragment {
     }
 
     @Override
+    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
+        binding = FragmentDatereceiveBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
     protected void initArgs() {
         XRouter.getInstance().inject(this);
     }
@@ -80,22 +71,14 @@ public class DateReceiveFragment extends XPageFragment {
     protected void initViews() {
         update();
         if (isNeedBack) {
-            mBtnBack.setVisibility(View.VISIBLE);
+            binding.btnBack.setVisibility(View.VISIBLE);
         } else {
-            mBtnBack.setVisibility(View.GONE);
+            binding.btnBack.setVisibility(View.GONE);
         }
     }
 
     private void update() {
-        mTvDisplay.setText(String.format("接收到数据\n 事件名：%s\n 事件数据：%s\n 数字：%d", eventName, eventData, Number));
-    }
-
-    @OnClick(R.id.btn_back)
-    void back(View v) {
-        Intent intent = new Intent();
-        intent.putExtra(KEY_BACK_DATA, "==【返回的数据】==");
-        setFragmentResult(500, intent);
-        popToBack();
+        binding.tvDisplay.setText(String.format("接收到数据\n 事件名：%s\n 事件数据：%s\n 数字：%d", eventName, eventData, Number));
     }
 
     @Override
@@ -109,6 +92,11 @@ public class DateReceiveFragment extends XPageFragment {
      */
     @Override
     protected void initListeners() {
-
+        binding.btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(KEY_BACK_DATA, "==【返回的数据】==");
+            setFragmentResult(500, intent);
+            popToBack();
+        });
     }
 }

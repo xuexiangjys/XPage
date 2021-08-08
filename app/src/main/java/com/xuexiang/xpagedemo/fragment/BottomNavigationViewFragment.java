@@ -1,22 +1,21 @@
 package com.xuexiang.xpagedemo.fragment;
 
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpagedemo.R;
+import com.xuexiang.xpagedemo.databinding.FragmentBottomNavigationviewBinding;
 import com.xuexiang.xutil.common.CollectionUtils;
 import com.xuexiang.xutil.tip.ToastUtils;
-
-import butterknife.BindView;
 
 /**
  * @author xuexiang
@@ -25,25 +24,19 @@ import butterknife.BindView;
 @Page(name = "Tab主页联动使用")
 public class BottomNavigationViewFragment extends XPageFragment implements ViewPager.OnPageChangeListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-    @BindView(R.id.bottom_navigation)
-    BottomNavigationView bottomNavigation;
+    FragmentBottomNavigationviewBinding binding;
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_bottom_navigationview;
+    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
+        binding = FragmentBottomNavigationviewBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     protected TitleBar initTitleBar() {
-        toolbar.setNavigationIcon(R.drawable.ic_navigation_back_white);
-        toolbar.setTitle("Tab主页联动使用");
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        binding.toolbar.setNavigationIcon(R.drawable.ic_navigation_back_white);
+        binding.toolbar.setTitle("Tab主页联动使用");
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popToBack();
@@ -61,15 +54,15 @@ public class BottomNavigationViewFragment extends XPageFragment implements ViewP
         for (String title : titles) {
             adapter.addFragment(SimpleListFragment.newInstance(title), title);
         }
-        viewPager.setOffscreenPageLimit(titles.length - 1);
-        viewPager.setAdapter(adapter);
+        binding.viewPager.setOffscreenPageLimit(titles.length - 1);
+        binding.viewPager.setAdapter(adapter);
     }
 
     @Override
     protected void initListeners() {
-        viewPager.addOnPageChangeListener(this);
-        bottomNavigation.setOnNavigationItemSelectedListener(this);
-        fab.setOnClickListener(new View.OnClickListener() {
+        binding.viewPager.addOnPageChangeListener(this);
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(this);
+        binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ToastUtils.toast("新建");
@@ -84,7 +77,7 @@ public class BottomNavigationViewFragment extends XPageFragment implements ViewP
 
     @Override
     public void onPageSelected(int position) {
-        bottomNavigation.getMenu().getItem(position).setChecked(true);
+        binding.bottomNavigation.getMenu().getItem(position).setChecked(true);
     }
 
     @Override
@@ -96,7 +89,7 @@ public class BottomNavigationViewFragment extends XPageFragment implements ViewP
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int index = CollectionUtils.arrayIndexOf(titles, menuItem.getTitle());
         if (index != -1) {
-            viewPager.setCurrentItem(index, true);
+            binding.viewPager.setCurrentItem(index, true);
             return true;
         }
         return false;

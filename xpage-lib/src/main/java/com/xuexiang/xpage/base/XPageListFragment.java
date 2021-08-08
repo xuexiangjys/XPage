@@ -1,5 +1,8 @@
 package com.xuexiang.xpage.base;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -16,8 +19,8 @@ public abstract class XPageListFragment extends XPageFragment implements Adapter
     protected ListView mListView;
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.xpage_fragment_listview;
+    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(R.layout.xpage_fragment_listview, container, false);
     }
 
     @Override
