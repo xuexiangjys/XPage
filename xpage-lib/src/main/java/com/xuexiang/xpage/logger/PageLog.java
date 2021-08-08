@@ -101,7 +101,7 @@ public final class PageLog {
     /**
      * 设置是否打开调试
      *
-     * @param isDebug
+     * @param isDebug 是否打开调试
      */
     public static void debug(boolean isDebug) {
         if (isDebug) {
@@ -114,7 +114,7 @@ public final class PageLog {
     /**
      * 设置调试模式
      *
-     * @param tag
+     * @param tag 日志标记
      */
     public static void debug(String tag) {
         if (!TextUtils.isEmpty(tag)) {

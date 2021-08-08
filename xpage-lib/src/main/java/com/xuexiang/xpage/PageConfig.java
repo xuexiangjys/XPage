@@ -67,6 +67,16 @@ public class PageConfig {
     }
 
     /**
+     * 设置是否打开调试
+     *
+     * @param isDebug 是否打开调试
+     */
+    public PageConfig debug(boolean isDebug) {
+        PageLog.debug(isDebug);
+        return this;
+    }
+
+    /**
      * 设置调试模式
      *
      * @param tag 标记

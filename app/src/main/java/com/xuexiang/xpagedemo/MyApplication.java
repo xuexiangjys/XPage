@@ -2,7 +2,6 @@ package com.xuexiang.xpagedemo;
 
 import android.app.Application;
 
-import com.xuexiang.xpage.AutoPageConfiguration;
 import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.base.XPageActivity;
 import com.xuexiang.xrouter.launcher.XRouter;
@@ -25,7 +24,7 @@ public class MyApplication extends Application {
 //                //页面注册,默认不设置的话使用的就是自动注册
 //                .setPageConfiguration(new AutoPageConfiguration())
                 //开启调试
-                .debug("PageLog")
+                .debug(isDebug())
                 //设置默认的容器Activity
                 .setContainActivityClazz(XPageActivity.class)
                 //初始化页面配置

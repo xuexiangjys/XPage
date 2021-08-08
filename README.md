@@ -80,8 +80,8 @@ allprojects {
 dependencies {
   ...
   // XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.1.1'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.1.1'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.2.0'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.2.0'
   // ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:10.1.0'
   annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
@@ -110,8 +110,8 @@ apply plugin: 'kotlin-kapt'
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.1.1'
-  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.1.1'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.2.0'
+  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.2.0'
   //ButterKnife的sdk
   implementation 'com.jakewharton:butterknife:10.1.0'
   kapt 'com.jakewharton:butterknife-compiler:10.1.0'
@@ -366,6 +366,31 @@ if (tabAFragment != null) {
 
 
 ## 混淆配置
+
+* 3.2.0及以上版本，使用的是gson进行序列化的，所以配置如下：
+
+```
+# gson
+-keepattributes Signature
+-keepattributes *Annotation*
+-dontwarn sun.misc.**
+-keep class com.google.gson.examples.android.model.** { <fields>; }
+-keep class * extends com.google.gson.TypeAdapter
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer
+-keepclassmembers,allowobfuscation class * {
+  @com.google.gson.annotations.SerializedName <fields>;
+}
+-keep,allowobfuscation,allowshrinking class com.google.gson.reflect.TypeToken
+-keep,allowobfuscation,allowshrinking class * extends com.google.gson.reflect.TypeToken
+
+# xpage
+-keep class com.xuexiang.xpage.annotation.** { *; }
+-keep class com.xuexiang.xpage.config.** { *; }
+```
+
+* 3.1.1及以下版本，使用的是fastjson进行序列化的，所以配置如下：
 
 ```
 # fastjson
