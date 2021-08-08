@@ -2,25 +2,24 @@ package com.xuexiang.xpage.core;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.google.gson.reflect.TypeToken;
 import com.xuexiang.xpage.R;
 import com.xuexiang.xpage.base.XPageActivity;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.logger.PageLog;
+import com.xuexiang.xpage.utils.GsonUtils;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -73,7 +72,7 @@ public class CorePageManager {
      */
     public void init(Context context) {
         try {
-            String content = readFileFromAssets(context, PAGE_INFO_JSON);
+            String content = readConfigFromAssets(context);
             readConfig(content);
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,45 +96,41 @@ public class CorePageManager {
         }
 
         PageLog.d("readConfig from json");
-        JSONArray jsonArray = JSON.parseArray(content);
-        Iterator<Object> iterator = jsonArray.iterator();
-        JSONObject jsonPage;
-        String pageName;
-        String pageClazz;
-        String pageParams;
-        while (iterator.hasNext()) {
-            jsonPage = (JSONObject) iterator.next();
-            pageName = jsonPage.getString(CorePage.KEY_PAGE_NAME);
-            pageClazz = jsonPage.getString(CorePage.KEY_PAGE_CLAZZ);
-            pageParams = jsonPage.getString(CorePage.KEY_PAGE_PARAMS);
-            if (TextUtils.isEmpty(pageName) || TextUtils.isEmpty(pageClazz)) {
+        List<CorePage> pages = GsonUtils.fromJson(content, new TypeToken<List<CorePage>>() {
+        }.getType());
+        if (pages == null || pages.isEmpty()) {
+            PageLog.e("readConfig is failed, pages is empty!");
+            return;
+        }
+        for (CorePage page : pages) {
+            String pageName = page.getName();
+            if (TextUtils.isEmpty(pageName) || TextUtils.isEmpty(page.getClazz())) {
                 PageLog.d("page Name is null or pageClass is null");
-                return;
+                continue;
             }
-            mPageMap.put(pageName, new CorePage(pageName, pageClazz, pageParams));
+            mPageMap.put(pageName, page);
             PageLog.d("put a page:" + pageName);
         }
-        PageLog.d("finished read pages,page size：" + mPageMap.size());
+        PageLog.d("finished read pages, page size：" + mPageMap.size());
     }
 
     /**
-     * 从assets目录下读取文件
+     * 从assets目录下读取配置文件
      *
-     * @param context  上下文
-     * @param fileName 文件名
-     * @return
+     * @param context 上下文
+     * @return 配置文件
      */
-    private String readFileFromAssets(Context context, String fileName) {
+    private String readConfigFromAssets(Context context) {
         StringBuilder s = new StringBuilder();
         BufferedReader br = null;
         try {
-            InputStreamReader inputReader = new InputStreamReader(context.getResources().getAssets().open(fileName));
+            InputStreamReader inputReader = new InputStreamReader(context.getResources().getAssets().open(CorePageManager.PAGE_INFO_JSON));
             br = new BufferedReader(inputReader);
             String line;
             while ((line = br.readLine()) != null) {
                 s.append(line);
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         } finally {
             closeIO(br);
@@ -195,7 +190,7 @@ public class CorePageManager {
         if (params == null) {
             return "";
         }
-        String result = JSON.toJSONString(params);
+        String result = GsonUtils.toJson(params);
         PageLog.d("params:" + result);
         return result;
     }
@@ -336,11 +331,9 @@ public class CorePageManager {
     /**
      * 根据CorePage加载XPageFragment
      *
-     * @param corePage
-     * @return
-     * @throws ClassNotFoundException
-     * @throws IllegalAccessException
-     * @throws InstantiationException
+     * @param corePage 页面配置信息
+     * @param pageName 页面名
+     * @param bundle   参数
      */
     private XPageFragment loadXPageFragmentByCorePage(CorePage corePage, String pageName, Bundle bundle) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         XPageFragment fragment;
@@ -375,19 +368,13 @@ public class CorePageManager {
      */
     private Bundle buildBundle(CorePage corePage) {
         Bundle bundle = new Bundle();
-        String key = null;
-        Object value = null;
         if (corePage != null && corePage.getParams() != null) {
-            JSONObject j = JSON.parseObject(corePage.getParams());
-            if (j != null) {
-                Set<String> keySet = j.keySet();
-                if (keySet != null) {
-                    Iterator<String> ite = keySet.iterator();
-                    while (ite.hasNext()) {
-                        key = ite.next();
-                        value = j.get(key);
-                        bundle.putString(key, String.valueOf(value));
-                    }
+            Map<String, Object> params = GsonUtils.fromJson(corePage.getParams(), new TypeToken<Map<String, Object>>() {
+            }.getType());
+            if (params != null && !params.isEmpty()) {
+                Set<String> keySet = params.keySet();
+                for (String key : keySet) {
+                    bundle.putString(key, String.valueOf(params.get(key)));
                 }
             }
         }
@@ -402,7 +389,7 @@ public class CorePageManager {
      * @return 是否是栈顶Fragment
      */
     public boolean isFragmentTop(Context context, String fragmentTag) {
-        if (context != null && context instanceof CoreSwitcher) {
+        if (context instanceof CoreSwitcher) {
             return ((CoreSwitcher) context).isFragmentTop(fragmentTag);
         } else {
             XPageActivity topActivity = XPageActivity.getTopActivity();

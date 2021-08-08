@@ -50,16 +50,6 @@ public final class Utils {
     }
 
     /**
-     * 获取dimes值，返回的是【去余取整】的值
-     *
-     * @param resId
-     * @return
-     */
-    public static int getDimensionPixelOffset(Context context, @DimenRes int resId) {
-        return getResources(context).getDimensionPixelOffset(resId);
-    }
-
-    /**
      * 获取dimes值，返回的是【4舍5入】的值
      *
      * @param resId

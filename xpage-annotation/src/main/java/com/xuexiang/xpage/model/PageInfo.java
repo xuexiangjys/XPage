@@ -1,7 +1,7 @@
 package com.xuexiang.xpage.model;
 
-import com.alibaba.fastjson.JSON;
 import com.xuexiang.xpage.enums.CoreAnim;
+import com.xuexiang.xpage.utils.GsonUtils;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -65,16 +65,16 @@ public class PageInfo implements Serializable {
     public PageInfo(String name, Class<?> clazz, Map<String, Object> params) {
         this.name = name;
         this.classPath = clazz.getName();
-        this.params = JSON.toJSONString(params);
+        this.params = GsonUtils.toJson(params);
     }
 
     /**
      * 自动编译生成需要使用的构造函数
      *
-     * @param name
-     * @param classPath
-     * @param params
-     * @param anim
+     * @param name      页面名
+     * @param classPath 页面class
+     * @param params    页面传递的参数
+     * @param anim      页面跳转的动画
      */
     public PageInfo(String name, String classPath, String params, CoreAnim anim, int extra) {
         this.name = name;
@@ -87,10 +87,10 @@ public class PageInfo implements Serializable {
     public static String getParams(String[] params) {
         if (params != null && params.length > 0) {
             Map<String, Object> paramMaps = new HashMap<>();
-            for (int i = 0; i < params.length; i++) {
-                paramMaps.put(params[i], "");
+            for (String param : params) {
+                paramMaps.put(param, "");
             }
-            return JSON.toJSONString(paramMaps);
+            return GsonUtils.toJson(paramMaps);
         }
         return "";
     }
@@ -128,15 +128,15 @@ public class PageInfo implements Serializable {
     }
 
     public PageInfo setParams(Map<String, Object> params) {
-        this.params = JSON.toJSONString(params);
+        this.params = GsonUtils.toJson(params);
         return this;
     }
 
     public PageInfo setParams(String[] params) {
         if (params != null && params.length > 0) {
             Map<String, Object> paramMaps = new HashMap<>();
-            for (int i = 0; i < params.length; i++) {
-                paramMaps.put(params[i], "");
+            for (String param : params) {
+                paramMaps.put(param, "");
             }
             setParams(paramMaps);
         }

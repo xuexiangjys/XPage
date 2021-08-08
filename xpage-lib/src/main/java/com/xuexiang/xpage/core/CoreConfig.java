@@ -2,8 +2,8 @@ package com.xuexiang.xpage.core;
 
 import android.content.Context;
 
-import com.alibaba.fastjson.JSON;
 import com.xuexiang.xpage.model.PageInfo;
+import com.xuexiang.xpage.utils.GsonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +67,7 @@ public class CoreConfig {
      * @param pageInfoList 配置的页面信息
      */
     public static void init(Context context, List<PageInfo> pageInfoList) {
-        CoreConfig.init(context, JSON.toJSONString(pageInfoList));
+        CoreConfig.init(context, GsonUtils.toJson(pageInfoList));
     }
 
     /**
