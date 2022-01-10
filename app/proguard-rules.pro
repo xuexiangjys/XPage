@@ -169,17 +169,6 @@
 -dontwarn javax.annotation.ParametersAreNonnullByDefault
 -dontwarn javax.annotation.**
 
-#如果用到Gson解析包的，直接添加下面这几行就能成功混淆，不然会报错
--keepattributes Signature
--keep class com.google.gson.stream.** { *; }
--keepattributes EnclosingMethod
--keep class org.xz_sale.entity.**{*;}
--keep class com.google.gson.** {*;}
--keep class com.google.**{*;}
--keep class sun.misc.Unsafe { *; }
--keep class com.google.gson.stream.** { *; }
--keep class com.google.gson.examples.android.model.** { *; }
-
 # Retrofit
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
@@ -202,15 +191,6 @@
 -dontwarn javax.annotation.Nullable
 -dontwarn javax.annotation.ParametersAreNonnullByDefault
 -dontwarn javax.annotation.**
-
-# fastjson
--dontwarn com.alibaba.fastjson.**
--keep class com.alibaba.fastjson.** { *; }
--keepattributes Signature
-
-# xpage
--keep class com.xuexiang.xpage.annotation.** { *; }
--keep class com.xuexiang.xpage.config.** { *; }
 
 # xaop
 -keep @com.xuexiang.xaop.annotation.* class * {*;}
