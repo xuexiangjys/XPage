@@ -12,7 +12,7 @@
 
 | 公众号   | 掘金     |  知乎    |  CSDN   |   简书   |   思否  |   哔哩哔哩  |   今日头条
 |---------|---------|--------- |---------|---------|---------|---------|---------|
-| [我的Android开源之旅](https://ss.im5i.com/2021/06/14/6tqAU.png)  |  [点我](https://juejin.im/user/598feef55188257d592e56ed/posts)    |   [点我](https://www.zhihu.com/people/xuexiangjys/posts)       |   [点我](https://xuexiangjys.blog.csdn.net/)  |   [点我](https://www.jianshu.com/u/6bf605575337)  |   [点我](https://segmentfault.com/u/xuexiangjys)  |   [点我](https://space.bilibili.com/483850585)  |   [点我](https://img.rruu.net/image/5ff34ff7b02dd)
+| [我的Android开源之旅](https://t.1yb.co/Irse)  |  [点我](https://juejin.im/user/598feef55188257d592e56ed/posts)    |   [点我](https://www.zhihu.com/people/xuexiangjys/posts)       |   [点我](https://xuexiangjys.blog.csdn.net/)  |   [点我](https://www.jianshu.com/u/6bf605575337)  |   [点我](https://segmentfault.com/u/xuexiangjys)  |   [点我](https://space.bilibili.com/483850585)  |   [点我](https://img.rruu.net/image/5ff34ff7b02dd)
 
 ## X系列库快速集成
 
@@ -46,7 +46,7 @@
 
 ## 1、演示（请star支持）
 
-![xpage.gif](https://ss.im5i.com/2021/06/14/6Ts21.gif)
+![xpage.gif](./img/1.gif)
 
 ### Demo下载
 
@@ -412,14 +412,14 @@ https://github.com/lizhangqu/CorePage/
 
 > 你的打赏是我维护的动力，我将会列出所有打赏人员的清单在下方作为凭证，打赏前请留下打赏项目的备注！
 
-![pay.png](https://ss.im5i.com/2021/06/14/6twG6.png)
+![pay.png](https://raw.githubusercontent.com/xuexiangjys/Resource/master/img/pay/pay.png)
 
 ## 联系方式
 
 [![](https://img.shields.io/badge/点击一键加入QQ交流群-602082750-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=9922861ef85c19f1575aecea0e8680f60d9386080a97ed310c971ae074998887)
 
-![gzh_weixin.jpg](https://ss.im5i.com/2021/06/14/65yoL.jpg)
+![](https://s1.ax1x.com/2022/04/27/LbGMJH.jpg)
 
 [download-svg]: https://img.shields.io/badge/downloads-1M-blue.svg
 [download-url]: https://github.com/xuexiangjys/XPage/blob/master/apk/xpage_demo.apk?raw=true
-[download-img]: https://ss.im5i.com/2021/06/14/6TcfJ.png
+[download-img]: ./img/download.png
