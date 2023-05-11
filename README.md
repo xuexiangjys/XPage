@@ -82,12 +82,21 @@ allprojects {
 dependencies {
   ...
   // XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.3.0'
-  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.3.0'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.4.0'
+  annotationProcessor 'com.github.xuexiangjys.XPage:xpage-compiler:3.4.0'
 }
 ```
 
 【注意】3.3.0及以上版本去除了ButterKnife的依赖。
+
+从 3.3.0以下 -> 3.4.0及以上：
+
+```java
+    protected abstract View inflateView(LayoutInflater inflater, ViewGroup container);
+    -> 替换为
+    protected abstract View onCreateContentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, boolean attachToRoot);
+```
+
 
 * support版本：2.3.0及以下
 
@@ -111,8 +120,8 @@ apply plugin: 'kotlin-kapt'
 dependencies {
   ...
   //XPage
-  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.3.0'
-  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.3.0'
+  implementation 'com.github.xuexiangjys.XPage:xpage-lib:3.4.0'
+  kapt 'com.github.xuexiangjys.XPage:xpage-compiler:3.4.0'
 }
 ```
 
