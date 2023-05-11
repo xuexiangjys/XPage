@@ -89,13 +89,17 @@ dependencies {
 
 【注意】3.3.0及以上版本去除了ButterKnife的依赖。
 
-从 3.3.0以下 -> 3.4.0及以上：
+从 3.3.0以下 升级到 3.4.0及以上：
 
 ```java
-    protected abstract View inflateView(LayoutInflater inflater, ViewGroup container);
-    -> 替换为
+    @Deprecated
+protected abstract View inflateView(LayoutInflater inflater, ViewGroup container);
+```
+------> 替换为
+```java
     protected abstract View onCreateContentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, boolean attachToRoot);
 ```
+
 
 
 * support版本：2.3.0及以下
