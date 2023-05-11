@@ -4,6 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.enums.CoreAnim;
@@ -28,8 +31,8 @@ public class TabAFragment extends XPageFragment {
     }
 
     @Override
-    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
-        binding = FragmentTestBinding.inflate(inflater, container, false);
+    protected View onCreateContentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, boolean attachToRoot) {
+        binding = FragmentTestBinding.inflate(inflater, container, attachToRoot);
         return binding.getRoot();
     }
 

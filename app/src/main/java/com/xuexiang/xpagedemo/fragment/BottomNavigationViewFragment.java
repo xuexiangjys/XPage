@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,8 +28,8 @@ public class BottomNavigationViewFragment extends XPageFragment implements ViewP
     FragmentBottomNavigationviewBinding binding;
 
     @Override
-    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
-        binding = FragmentBottomNavigationviewBinding.inflate(inflater, container, false);
+    protected View onCreateContentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, boolean attachToRoot) {
+        binding = FragmentBottomNavigationviewBinding.inflate(inflater, container, attachToRoot);
         return binding.getRoot();
     }
 

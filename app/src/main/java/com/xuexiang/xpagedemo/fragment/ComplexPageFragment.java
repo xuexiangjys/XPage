@@ -2,6 +2,8 @@ package com.xuexiang.xpagedemo.fragment;
 
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+
 import com.xuexiang.module_test.ModuleTestFragment;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageSimpleListFragment;
@@ -23,8 +25,9 @@ public class ComplexPageFragment extends XPageSimpleListFragment {
      * @param lists
      * @return
      */
+    @NonNull
     @Override
-    protected List<String> initSimpleData(List<String> lists) {
+    protected List<String> initSimpleData(@NonNull List<String> lists) {
         lists.add("复杂页面使用（非ViewPager）");
         lists.add("Tab主页使用（ViewPager）");
         lists.add("加载module中的页面");

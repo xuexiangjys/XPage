@@ -1,5 +1,7 @@
 package com.xuexiang.xpagedemo.fragment;
 
+import androidx.annotation.NonNull;
+
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xpage.enums.CoreAnim;
@@ -20,8 +22,9 @@ public class AnimationFragment extends XPageSimpleListFragment {
      * @param lists
      * @return
      */
+    @NonNull
     @Override
-    protected List<String> initSimpleData(List<String> lists) {
+    protected List<String> initSimpleData(@NonNull List<String> lists) {
         lists.add("没有动画");
         lists.add("由下到上动画");
         lists.add("从左到右动画");

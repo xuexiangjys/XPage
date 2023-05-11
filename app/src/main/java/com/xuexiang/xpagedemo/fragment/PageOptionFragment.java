@@ -14,6 +14,8 @@ import java.util.List;
 
 import static com.xuexiang.xpagedemo.fragment.TestFragment.KEY_POP_BACK_NAME;
 
+import androidx.annotation.NonNull;
+
 /**
  * @author XUE
  * @since 2019/3/21 10:56
@@ -27,8 +29,9 @@ public class PageOptionFragment extends XPageSimpleListFragment {
      * @param lists
      * @return
      */
+    @NonNull
     @Override
-    protected List<String> initSimpleData(List<String> lists) {
+    protected List<String> initSimpleData(@NonNull List<String> lists) {
         lists.add("普通打开");
         lists.add("设置动画");
         lists.add("是否支持数据返回");

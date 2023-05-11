@@ -77,7 +77,7 @@ public class CoreConfig {
      * @param pageInfo 配置的页面信息
      */
     public static void init(Context context, PageInfo pageInfo) {
-        List<PageInfo> list = new ArrayList<PageInfo>();
+        List<PageInfo> list = new ArrayList<>();
         list.add(pageInfo);
         CoreConfig.init(context, list);
     }

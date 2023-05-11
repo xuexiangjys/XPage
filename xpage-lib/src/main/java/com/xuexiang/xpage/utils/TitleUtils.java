@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 
@@ -28,7 +27,7 @@ public final class TitleUtils {
      * 利用TitleBar初始化ActionBar
      */
     public static TitleBar initTitleBar(final Activity activity, int titleBarResId, String title) {
-        TitleBar titleBar = (TitleBar) activity.findViewById(titleBarResId);
+        TitleBar titleBar = activity.findViewById(titleBarResId);
         initTitleBarStyle(titleBar, title, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,7 +41,7 @@ public final class TitleUtils {
      * 利用TitleBar初始化ActionBar
      */
     public static TitleBar initTitleBar(ViewGroup viewGroup, int titleBarResId, String title, View.OnClickListener listener) {
-        TitleBar titleBar = (TitleBar) viewGroup.findViewById(titleBarResId);
+        TitleBar titleBar = viewGroup.findViewById(titleBarResId);
         initTitleBarStyle(titleBar, title, listener);
         return titleBar;
     }
@@ -118,12 +117,9 @@ public final class TitleUtils {
      */
     public static TitleBar initTitleBarDynamic(Context context, String title, View.OnClickListener listener) {
         TitleBar titleBar = new TitleBar(context);
-        RelativeLayout.LayoutParams titleBarParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        titleBarParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        ViewGroup.LayoutParams titleBarParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         titleBar.setLayoutParams(titleBarParams);
-
         initTitleBarStyle(titleBar, title, listener);
-
         return titleBar;
     }
 
@@ -134,7 +130,7 @@ public final class TitleUtils {
      * @return
      */
     public static ViewGroup getRootView(Activity activity) {
-        return (ViewGroup) activity.getWindow().getDecorView().findViewById(android.R.id.content);
+        return activity.getWindow().getDecorView().findViewById(android.R.id.content);
     }
 
     /**

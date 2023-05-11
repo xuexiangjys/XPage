@@ -10,13 +10,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.xuexiang.xpage.PageConfig;
+import com.xuexiang.xpage.R;
 import com.xuexiang.xpage.core.CoreConfig;
 import com.xuexiang.xpage.core.CoreSwitchBean;
 import com.xuexiang.xpage.core.CoreSwitcher;
@@ -60,6 +61,14 @@ public abstract class XPageFragment extends Fragment {
      * 根布局
      */
     protected View mRootView;
+    /**
+     * 标题布局
+     */
+    private FrameLayout mToolbarContainer;
+    /**
+     * 主体内容布局
+     */
+    private FrameLayout mContentContainer;
 
     /**
      * 设置该接口用于返回结果
@@ -583,7 +592,6 @@ public abstract class XPageFragment extends Fragment {
         mAttachContext = new WeakReference<>(context);
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -599,14 +607,60 @@ public abstract class XPageFragment extends Fragment {
         return PageConfig.getPageInfo(getClass()).getName();
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mRootView = createRootView(inflater, container);
+        initArgs();
+        initPage();
+        return mRootView;
+    }
+
     /**
-     * 加载控件
+     * 创建根布局
      *
      * @param inflater  inflater
      * @param container 容器
      * @return 根布局
      */
-    protected abstract View inflateView(LayoutInflater inflater, ViewGroup container);
+    @Nullable
+    protected View createRootView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
+        View rootView = onCreateRootView(inflater, container);
+        if (rootView != null) {
+            mToolbarContainer = rootView.findViewById(R.id.toolbar_container);
+            mContentContainer = rootView.findViewById(R.id.content_container);
+            onCreateContentView(inflater, mContentContainer, true);
+            return rootView;
+        } else {
+            // 不使用页面模板
+            return onCreateContentView(inflater, container, false);
+        }
+    }
+
+    /**
+     * 加载页面根布局，可重写该方法自定义模板。
+     * <p>
+     * 如果不想使用模板，直接加载ContentView，该方法返回null
+     *
+     * @param inflater  inflater
+     * @param container 容器
+     * @return 根布局
+     */
+    @Nullable
+    protected View onCreateRootView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
+        return inflater.inflate(R.layout.xpage_fragment_template, container, false);
+    }
+
+    /**
+     * 加载控件
+     *
+     * @param inflater     inflater
+     * @param container    容器
+     * @param attachToRoot 是否添加到根布局
+     * @return 根布局
+     */
+    @Nullable
+    protected abstract View onCreateContentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, boolean attachToRoot);
 
     /**
      * 初始化参数
@@ -625,15 +679,6 @@ public abstract class XPageFragment extends Fragment {
      */
     protected abstract void initListeners();
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflateView(inflater, container);
-        initArgs();
-        initPage();
-        return mRootView;
-    }
-
     /**
      * 初始化页面, 可以重写该方法，以增强灵活性
      */
@@ -647,7 +692,7 @@ public abstract class XPageFragment extends Fragment {
      * 初始化标题，可进行重写
      */
     protected TitleBar initTitleBar() {
-        return TitleUtils.addTitleBarDynamic((ViewGroup) mRootView, getPageTitle(), new View.OnClickListener() {
+        return TitleUtils.addTitleBarDynamic(getToolbarContainer(), getPageTitle(), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popToBack();
@@ -668,6 +713,24 @@ public abstract class XPageFragment extends Fragment {
      */
     public View getRootView() {
         return mRootView;
+    }
+
+    /**
+     * 获取Toolbar容器
+     *
+     * @return Toolbar容器
+     */
+    public ViewGroup getToolbarContainer() {
+        return mToolbarContainer != null ? mToolbarContainer : (ViewGroup) mRootView;
+    }
+
+    /**
+     * 获取主体内容容器
+     *
+     * @return 主体内容容器
+     */
+    public ViewGroup getContentContainer() {
+        return mContentContainer != null ? mContentContainer : (ViewGroup) mRootView;
     }
 
     /**

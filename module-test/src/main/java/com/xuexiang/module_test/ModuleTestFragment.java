@@ -4,6 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.xuexiang.module_test.databinding.FragmentModuleTestBinding;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageFragment;
@@ -16,8 +19,8 @@ import com.xuexiang.xpage.base.XPageFragment;
 public class ModuleTestFragment extends XPageFragment {
 
     @Override
-    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
-        return FragmentModuleTestBinding.inflate(inflater, container, false).getRoot();
+    protected View onCreateContentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, boolean attachToRoot) {
+        return FragmentModuleTestBinding.inflate(inflater, container, attachToRoot).getRoot();
     }
 
     @Override

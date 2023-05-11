@@ -5,6 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.core.PageOption;
 import com.xuexiang.xpage.utils.TitleBar;
@@ -42,8 +45,8 @@ public class SimpleListFragment extends XPageFragment {
     }
 
     @Override
-    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
-        binding = FragmentSimpleBinding.inflate(inflater, container, false);
+    protected View onCreateContentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, boolean attachToRoot) {
+        binding = FragmentSimpleBinding.inflate(inflater, container, attachToRoot);
         return binding.getRoot();
     }
 

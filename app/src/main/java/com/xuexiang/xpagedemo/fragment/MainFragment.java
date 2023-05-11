@@ -23,7 +23,7 @@ public class MainFragment extends XPageContainerListFragment {
      * @return
      */
     @Override
-    protected Class[] getPagesClasses() {
+    protected Class<?>[] getPagesClasses() {
         return new Class[]{
                 DataTransmitFragment.class,
                 AnimationFragment.class,

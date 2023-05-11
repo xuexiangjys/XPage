@@ -1,5 +1,7 @@
 package com.xuexiang.xpage.base;
 
+import androidx.annotation.NonNull;
+
 import com.xuexiang.xpage.PageConfig;
 
 import java.util.ArrayList;
@@ -12,21 +14,17 @@ import java.util.List;
  * @since 2018/5/24 下午3:48
  */
 public abstract class XPageContainerListFragment extends XPageSimpleListFragment {
-    /**
-     * 初始化页面容器内容
-     *
-     * @param lists
-     * @return
-     */
+
+    @NonNull
     @Override
-    protected List<String> initSimpleData(List<String> lists) {
+    protected List<String> initSimpleData(@NonNull List<String> lists) {
         return getSimplePageNames(getSimplePageClasses());
     }
 
     /**
      * 条目点击
      *
-     * @param position
+     * @param position 点击的条目索引
      */
     @Override
     protected void onItemClick(int position) {
@@ -35,7 +33,7 @@ public abstract class XPageContainerListFragment extends XPageSimpleListFragment
 
 
     @Override
-    public Class[] getSimplePageClasses() {
+    public Class<?>[] getSimplePageClasses() {
         return getPagesClasses();
     }
 
@@ -44,7 +42,7 @@ public abstract class XPageContainerListFragment extends XPageSimpleListFragment
      *
      * @return 页面的类集合
      */
-    protected abstract Class[] getPagesClasses();
+    protected abstract Class<?>[] getPagesClasses();
 
     /**
      * 获取页面名称集合
@@ -52,10 +50,10 @@ public abstract class XPageContainerListFragment extends XPageSimpleListFragment
      * @param classes 页面类集合
      * @return 页面名称集合
      */
-    private List<String> getSimplePageNames(Class... classes) {
+    private List<String> getSimplePageNames(Class<?>... classes) {
         List<String> simplePageList = new ArrayList<>();
         if (classes != null && classes.length > 0) {
-            for (Class aClass : classes) {
+            for (Class<?> aClass : classes) {
                 simplePageList.add(PageConfig.getPageInfo(aClass).getName());
             }
         }

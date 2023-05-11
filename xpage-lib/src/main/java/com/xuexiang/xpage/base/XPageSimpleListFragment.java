@@ -4,6 +4,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +44,8 @@ public abstract class XPageSimpleListFragment extends XPageListFragment {
      * @param lists 例子数据
      * @return 例子数据
      */
-    protected abstract List<String> initSimpleData(List<String> lists);
+    @NonNull
+    protected abstract List<String> initSimpleData(@NonNull List<String> lists);
 
     /**
      * 条目点击
@@ -68,7 +71,7 @@ public abstract class XPageSimpleListFragment extends XPageListFragment {
      *
      * @return 页面类的集合
      */
-    public Class[] getSimplePageClasses() {
+    public Class<?>[] getSimplePageClasses() {
         return new Class[0];
     }
 

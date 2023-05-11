@@ -6,6 +6,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.xuexiang.xpage.R;
 
 /**
@@ -18,9 +21,17 @@ public abstract class XPageListFragment extends XPageFragment implements Adapter
 
     protected ListView mListView;
 
+    // 不使用模板
+    @Nullable
     @Override
-    protected View inflateView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.xpage_fragment_listview, container, false);
+    protected View onCreateRootView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
+        return null;
+    }
+
+    // 直接加载布局
+    @Override
+    protected View onCreateContentView(@NonNull LayoutInflater inflater, ViewGroup container, boolean attachToRoot) {
+        return inflater.inflate(R.layout.xpage_fragment_listview, container, attachToRoot);
     }
 
     @Override

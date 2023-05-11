@@ -3,6 +3,8 @@ package com.xuexiang.xpagedemo.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xpage.core.PageOption;
@@ -22,8 +24,9 @@ public class DataTransmitFragment extends XPageSimpleListFragment {
      * @param lists
      * @return
      */
+    @NonNull
     @Override
-    protected List<String> initSimpleData(List<String> lists) {
+    protected List<String> initSimpleData(@NonNull List<String> lists) {
         lists.add("传递数据<-->不返回数据");
         lists.add("传递数据<-->返回数据");
         return lists;

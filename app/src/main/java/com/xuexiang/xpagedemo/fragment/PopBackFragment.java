@@ -1,5 +1,7 @@
 package com.xuexiang.xpagedemo.fragment;
 
+import androidx.annotation.NonNull;
+
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageSimpleListFragment;
 
@@ -17,8 +19,9 @@ public class PopBackFragment extends XPageSimpleListFragment {
      * @param lists
      * @return
      */
+    @NonNull
     @Override
-    protected List<String> initSimpleData(List<String> lists) {
+    protected List<String> initSimpleData(@NonNull List<String> lists) {
         lists.add("AddToBackStack = true");
         lists.add("AddToBackStack = false");
         return lists;
