@@ -13,6 +13,7 @@ import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xpage.logger.PageLog;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xpagedemo.databinding.FragmentTestBinding;
+import com.xuexiang.xutil.tip.ToastUtils;
 
 /**
  * @author xuexiang
@@ -44,6 +45,16 @@ public class TabBFragment extends XPageFragment {
         binding.tvContent.setText("这里是 " + getPageName() + " 页面");
 
         mData = (int) (Math.random() * 1000);
+
+        binding.button.setVisibility(View.VISIBLE);
+        binding.button.setOnClickListener(v -> {
+            TabAFragment tabAFragment = getPage(TabAFragment.class);
+            if (tabAFragment != null) {
+                ToastUtils.toast(tabAFragment.getData());
+            } else {
+                ToastUtils.toast("页面还未加载！");
+            }
+        });
     }
 
     /**

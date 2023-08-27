@@ -1,5 +1,6 @@
 package com.xuexiang.xpage.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -38,6 +39,10 @@ import java.lang.ref.WeakReference;
  */
 public abstract class XPageFragment extends Fragment {
     /**
+     * 根布局
+     */
+    protected View mRootView;
+    /**
      * 所在activity
      */
     private WeakReference<Context> mAttachContext;
@@ -57,10 +62,6 @@ public abstract class XPageFragment extends Fragment {
      * 页面跳转返回的监听接口
      */
     private OnFragmentFinishListener mFragmentFinishListener;
-    /**
-     * 根布局
-     */
-    protected View mRootView;
     /**
      * 标题布局
      */
@@ -171,11 +172,6 @@ public abstract class XPageFragment extends Fragment {
 
     }
 
-
-    public interface PopCallback {
-        void run();
-    }
-
     /**
      * 用于openPageForResult，获得返回内容后需要再次调openPage的场景，只适合不新开Activity的情况，如果新开activity请像Activity返回结果那样操作
      *
@@ -241,14 +237,6 @@ public abstract class XPageFragment extends Fragment {
         return mPageCoreSwitcher;
     }
 
-    @Nullable
-    public Context getAttachContext() {
-        if (mAttachContext != null) {
-            return mAttachContext.get();
-        }
-        return null;
-    }
-
     /**
      * 设置Switcher
      *
@@ -257,6 +245,14 @@ public abstract class XPageFragment extends Fragment {
     public XPageFragment setSwitcher(CoreSwitcher pageCoreSwitcher) {
         mPageCoreSwitcher = pageCoreSwitcher;
         return this;
+    }
+
+    @Nullable
+    public Context getAttachContext() {
+        if (mAttachContext != null) {
+            return mAttachContext.get();
+        }
+        return null;
     }
 
     /**
@@ -277,7 +273,34 @@ public abstract class XPageFragment extends Fragment {
             PageLog.d("pageSwitch is null");
             return false;
         }
+    }
 
+    /**
+     * 根据页面的类获取XPageFragment
+     *
+     * @return 获取的页面
+     */
+    public <T extends XPageFragment> T getPage(Class<T> clazz) {
+        XPageActivity parent = getParentActivity();
+        return parent.getPage(clazz);
+    }
+
+    /**
+     * 根据页面的名称获取XPageFragment
+     *
+     * @return 获取的页面
+     */
+    public XPageFragment getPageByName(String pageName) {
+        XPageActivity parent = getParentActivity();
+        return parent.getPageByName(pageName);
+    }
+
+    public XPageActivity getParentActivity() {
+        Activity activity = getActivity();
+        if (activity instanceof XPageActivity) {
+            return (XPageActivity) activity;
+        }
+        return null;
     }
 
     /**
@@ -308,8 +331,6 @@ public abstract class XPageFragment extends Fragment {
         PageLog.d("onFragmentResult from baseFragment：requestCode-" + requestCode + "  resultCode-" + resultCode);
     }
 
-    //====================openPage=========================//
-
     /**
      * 打开fragment[使用注解反射]
      *
@@ -318,6 +339,8 @@ public abstract class XPageFragment extends Fragment {
     public <T extends XPageFragment> T openPage(Class<T> clazz) {
         return (T) openPage(PageConfig.getPageInfo(clazz).getName(), null, PageConfig.getPageInfo(clazz).getAnim());
     }
+
+    //====================openPage=========================//
 
     /**
      * 打开fragment[使用注解反射]
@@ -362,7 +385,6 @@ public abstract class XPageFragment extends Fragment {
         return openPage(pageName, null, CoreAnim.slide);
     }
 
-
     /**
      * 打开fragment
      *
@@ -389,7 +411,7 @@ public abstract class XPageFragment extends Fragment {
     /**
      * 在当前activity中打开一个fragment，并设置是否添加到返回栈
      *
-     * @param pageName       Fragemnt 名，在page.json中配置。
+     * @param pageName       Fragment 名，在page.json中配置。
      * @param bundle         页面跳转时传递的参数
      * @param anim           指定的动画理性 none/slide(左右平移)/present(由下向上)/fade(fade 动画)
      * @param addToBackStack 是否添加到用户操作栈中
@@ -427,7 +449,7 @@ public abstract class XPageFragment extends Fragment {
     /**
      * 在当前activity中打开一个fragment，并添加到返回栈中
      *
-     * @param pageName Fragemnt 名，在page.json中配置。
+     * @param pageName Fragment 名，在page.json中配置。
      * @param bundle   页面跳转时传递的参数
      * @param anim     指定的动画理性 none/slide(左右平移)/present(由下向上)/fade(fade 动画)
      * @return 打开的fragment对象
@@ -439,7 +461,7 @@ public abstract class XPageFragment extends Fragment {
     /**
      * 在当前activity中打开一个fragment，并设置是否添加到返回栈
      *
-     * @param pageName       Fragemnt 名，在page.json中配置。
+     * @param pageName       Fragment 名，在page.json中配置。
      * @param bundle         页面跳转时传递的参数
      * @param coreAnim       指定的动画理性 none/slide(左右平移)/present(由下向上)/fade(fade 动画)
      * @param addToBackStack 是否添加到用户操作栈中
@@ -452,7 +474,7 @@ public abstract class XPageFragment extends Fragment {
     /**
      * 打开一个fragment并设置是否新开activity，设置是否添加返回栈
      *
-     * @param pageName       Fragemnt 名，在page.json中配置。
+     * @param pageName       Fragment 名，在page.json中配置。
      * @param bundle         页面跳转时传递的参数
      * @param coreAnim       指定的动画理性 none/slide(左右平移)/present(由下向上)/fade(fade 动画)
      * @param addToBackStack 是否添加到用户操作栈中
@@ -584,13 +606,13 @@ public abstract class XPageFragment extends Fragment {
         }
     }
 
-    //======================生命周期=======================//
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mAttachContext = new WeakReference<>(context);
     }
+
+    //======================生命周期=======================//
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -795,6 +817,10 @@ public abstract class XPageFragment extends Fragment {
         } else {
             PageLog.e("[resolveActivity failed]: " + (intent.getComponent() != null ? intent.getComponent() : intent.getAction()) + " do not register in manifest");
         }
+    }
+
+    public interface PopCallback {
+        void run();
     }
 
     /**

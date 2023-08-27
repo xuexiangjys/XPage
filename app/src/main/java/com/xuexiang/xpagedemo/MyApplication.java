@@ -13,7 +13,6 @@ import com.xuexiang.xutil.XUtil;
  */
 public class MyApplication extends Application {
 
-
     @Override
     public void onCreate() {
         super.onCreate();
